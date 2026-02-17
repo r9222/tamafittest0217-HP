@@ -3,243 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>たまフィット | 高松市今里町のパーソナルジム</title>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <title>たまフィット｜高松市今里町の正直なパーソナルジム</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 60-30-10ルールに基づく配色 [cite: 79, 81] */
-            --primary: #ff1a7d;       /* Neon Pulse: アクセント10% */
-            --bg-base: #121212;       /* Obsidian: ベース60% */
-            --bg-surface: #1e1e1e;    /* サブカラー30% */
-            --text-main: #ffffff;
-            --text-body: #e0e0e0;     /* 目に優しい白 [cite: 83] */
-            --accent: #ffb400;
-            --radius: 24px;
-            --font-main: 'M PLUS Rounded 1c', sans-serif;
+            --color-bg-base: #FFFFFF;
+            --color-bg-surface: #F8F9FA;
+            --color-brand-primary: #ff1a7d; /* たまフィット・ピンク */
+            --color-text-main: #2D2D2D;
+            --color-text-body: #4A4A4A;
+            --radius-card: 24px;
         }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg-base);
-            color: var(--text-body);
-            margin: 0; padding: 0;
-            line-height: 1.9; /* 高級感を出す広い行間 [cite: 88] */
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--color-bg-base);
+            color: var(--color-text-main);
+            margin: 0;
+            line-height: 1.9; /* 高級感を出す広めの行間 [cite: 33] */
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
         }
 
-        /* 文節で適切に改行させる最新技術 [cite: 90] */
-        h1, h2, h3 { word-break: auto-phrase; text-wrap: balance; color: var(--text-main); }
-
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-        /* --- スティッキーフッター（追従ボタン） [cite: 41] --- */
-        .sticky-cta {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
+        /* 1. ヒーローセクション：100svhで没入感を演出 [cite: 17] */
+        .hero {
+            height: 100svh;
             display: flex;
-            z-index: 2000;
-            padding: 10px;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('gym-interior.jpg') center/cover;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2rem, 5vw + 1rem, 3.5rem); /* 流動的タイポグラフィ [cite: 109] */
+            letter-spacing: 0.08em; /* 高級感を出す字送り [cite: 33] */
+            word-break: auto-phrase; /* 文節での自動改行 [cite: 35] */
+        }
+
+        /* 2. ベントーグリッド：情報を整理  */
+        .bento-container {
+            display: grid;
+            gap: 20px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); /* メディアクエリ不要のレスポンシブ [cite: 90, 91] */
+        }
+
+        .card {
+            background: var(--color-bg-surface);
+            padding: 30px;
+            border-radius: var(--radius-card);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* マイクロインタラクション [cite: 16] */
+        }
+
+        .card-pink { background-color: #FFF0F5; border: none; } /* ピンクのアクセントカード */
+
+        /* 3. 価格表のスタイル */
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .price-table td {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .price-highlight {
+            color: var(--color-brand-primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* 4. スティッキーフッター：スマホ予約導線 [cite: 144] */
+        .sticky-footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
             gap: 10px;
-            background: rgba(18, 18, 18, 0.8);
+            padding: 15px;
+            background: rgba(255,255,255,0.9);
             backdrop-filter: blur(10px);
             box-sizing: border-box;
-        }
-        .cta-line {
-            flex: 1;
-            background: #06C755;
-            color: #fff;
-            text-align: center;
-            padding: 15px 0;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 14px;
-            text-decoration: none;
-        }
-        .cta-web {
-            flex: 2;
-            background: var(--primary);
-            color: #fff;
-            text-align: center;
-            padding: 15px 0;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 14px;
-            text-decoration: none;
-            box-shadow: 0 0 20px rgba(255, 26, 125, 0.4);
-            animation: pulse 2s infinite; /* 注意を惹くアニメーション [cite: 42] */
-        }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.8; } 100% { opacity: 1; } }
-
-        /* --- ヒーローセクション（Deep Glass実装） [cite: 67, 72] --- */
-        .hero {
-            height: 100svh; /* 100svhで没入型 [cite: 72] */
-            display: flex;
-            align-items: flex-end;
-            background: url('hero.jpg') no-repeat center center / cover;
-            position: relative;
-        }
-        /* ファントム・グラデーション [cite: 75] */
-        .hero::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: linear-gradient(to bottom, rgba(18,18,18,0.2) 0%, rgba(18,18,18,0.95) 90%);
+            z-index: 100;
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            padding: 0 24px 120px; /* 下部にフッター分の余白 */
-            text-align: center;
-        }
-        .hero-slogan { font-size: 14px; font-weight: 800; color: var(--primary); letter-spacing: 0.2em; display: block; margin-bottom: 10px; }
-        .hero-title { 
-            font-size: 15vw; 
-            margin: 0; 
-            line-height: 1; 
-            white-space: nowrap;
-            text-shadow: 0 0 20px rgba(255, 26, 125, 0.5); /* ピンクのグロー [cite: 84] */
-        }
-        .hero-copy { font-size: 18px; font-weight: 800; margin-top: 20px; }
+        .btn-line { background: #06C755; color: white; text-align: center; border-radius: 50px; text-decoration: none; padding: 12px; font-weight: bold; }
+        .btn-reserve { background: var(--color-brand-primary); color: white; text-align: center; border-radius: 50px; text-decoration: none; padding: 12px; font-weight: bold; box-shadow: 0 4px 15px var(--color-brand-primary); }
 
-        /* --- ベントーグリッド（特徴） [cite: 60] --- */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-            gap: 16px;
-            margin-top: 40px;
-        }
-        .bento-card {
-            background: var(--bg-surface);
-            padding: 32px;
-            border-radius: var(--radius);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .bento-card h4 { color: var(--primary); margin: 0 0 10px; font-size: 20px; }
-
-        /* --- 料金表（心理的フレーミング） [cite: 36] --- */
-        .price-section { background: #fff; color: var(--bg-base); padding: 80px 0; border-radius: 40px 40px 0 0; }
-        .price-section h2 { color: var(--primary); text-align: center; }
-        .admission-free { 
-            display: block; width: fit-content; margin: 0 auto 30px;
-            background: var(--primary); color: #fff; padding: 12px 40px; border-radius: 50px; font-weight: 900; 
-        }
-        .price-table-container { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 500px; }
-        th, td { padding: 20px; border: 1px solid #eee; text-align: center; }
-        th { background: #f9f9f9; color: var(--primary); }
-        .price-val { font-family: 'Oswald', sans-serif; font-size: 28px; font-weight: 700; color: var(--bg-base); }
-
-        /* --- アクセス（高松市特化）  --- */
-        .access-card { background: var(--bg-surface); border-radius: var(--radius); overflow: hidden; }
-        .access-info { padding: 40px 24px; }
-        .parking-highlight { color: var(--accent); font-weight: 900; }
-
-        footer { padding: 60px 0 120px; text-align: center; font-size: 12px; color: #666; }
-
-        @media (min-width: 768px) {
-            .hero-title { font-size: 100px; }
-            .hero-content { text-align: left; padding-left: 10%; }
-            .bento-grid { grid-template-columns: repeat(2, 1fr); }
-            .access-card { display: flex; }
-            .access-info { flex: 1; }
-            .map-area { flex: 1; min-height: 400px; }
-            .sticky-cta { display: none; } /* PCでは追従不要 */
-        }
     </style>
 </head>
 <body>
 
-    <div class="sticky-cta">
-        <a href="https://line.me/R/ti/p/@072WKBWC" class="cta-line">LINEで相談</a>
-        <a href="https://line.me/R/ti/p/@072WKBWC" class="cta-web">無料体験を予約する</a>
-    </div>
-
-    <header style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <div class="logo" style="font-weight: 900; color: var(--primary); font-size: 24px;">たまフィット</div>
-    </header>
-
     <section class="hero">
         <div class="hero-content">
-            <span class="hero-slogan">人生を変える 寄り添いの場所</span>
-            <h1 class="hero-title">たまフィット</h1>
-            <p class="hero-copy">高松市今里町の「リバウンド防止」特化型ジム。<br>3ヶ月後、自信を持って「着たい服」を着こなすあなたへ。</p>
+            <p style="color: var(--color-brand-primary); font-weight: bold;">高松市今里町のパーソナルジム</p>
+            <h1>今里町で、<br>嘘のない体づくりを。</h1>
+            <p>3ヶ月で激変！なんて、無責任なことは言いません。<br>私たちが作るのは、10年後も動ける本物の身体です。</p>
         </div>
     </section>
 
-    <section id="features">
-        <div class="container">
-            <h2 style="text-align: center; margin-bottom: 40px;">たまフィットが選ばれる理由</h2>
-            <div class="bento-grid">
-                <div class="bento-card">
-                    <h4>解剖学×オーダーメイド</h4>
-                    <p>骨格や筋肉量を分析し、あなただけに効くメニューを作成。だから最短距離で結果が出ます。</p>
-                </div>
-                <div class="bento-card">
-                    <h4>食べて痩せる食事指導</h4>
-                    <p>厳しい制限は卒業。専用アプリとトレーナーが毎日の習慣をサポートし、挫折させません。</p>
-                </div>
-                <div class="bento-card" style="grid-column: span 1;">
-                    <h4>完全個室の映える空間</h4>
-                    <p>ピンクのラックと人工芝が特徴的な隠れ家。人目を気にせず、自分磨きに没頭できます。</p>
-                </div>
-                <div class="bento-card">
-                    <h4>手ぶらでOK</h4>
-                    <p>仕事帰りや買い物ついでに。ウェア・タオル完備で、日常にフィットネスを溶け込ませます。</p>
-                </div>
-            </div>
+    <div class="bento-container">
+        <div class="card" style="grid-column: span 2;">
+            <h3>たまフィットの「正直な」約束</h3>
+            <p>糖質ゼロや水抜きによる一時的な数値の変化ではなく、解剖学に基づいたトレーニングと、ストレスのない食事管理を提供します。</p>
+            <p>「運動が続けられること」を前提に、あなたの体力に合わせて段階的に強度を調整します。</p>
         </div>
-    </section>
 
-    <section class="price-section">
-        <div class="container">
-            <h2>料金プラン</h2>
-            <div class="admission-free">入会金 0円</div>
-            <div class="price-table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>コース</th>
-                            <th>60分コース</th>
-                            <th>30分コース</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>単発（通常）</td><td class="price-val">9,900円</td><td class="price-val">5,500円</td></tr>
-                        <tr><td>月2回コース</td><td class="price-val">8,800円</td><td class="price-val">4,950円</td></tr>
-                        <tr><td>週1回 (月4回)</td><td class="price-val">7,700円</td><td class="price-val">4,400円</td></tr>
-                        <tr><td>週2回 (月8回)</td><td class="price-val">6,600円</td><td class="price-val">3,850円</td></tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="card card-pink">
+            <h3>入会金・事務手数料 0円</h3>
+            <table class="price-table">
+                <tr><td>週2回（月8回）</td><td class="price-highlight">¥6,600〜/回</td></tr>
+                <tr><td>週1回（月4回）</td><td class="price-highlight">¥7,700〜/回</td></tr>
+                <tr><td>月2回</td><td class="price-highlight">¥8,800〜/回</td></tr>
+            </table>
+            <p style="font-size: 0.8rem; margin-top: 15px;">※安心のチケット制。勝手に引き落とされる心配はありません。</p>
         </div>
-    </section>
 
-    <section id="access" style="padding: 80px 0;">
-        <div class="container">
-            <h2 style="text-align: center; margin-bottom: 40px;">店舗・アクセス</h2>
-            <div class="access-card">
-                <div class="access-info">
-                    <p><strong>所在地:</strong> 〒760-0078 香川県高松市今里町393-1 前川ビル1F</p>
-                    <p class="parking-highlight">★店舗前に専用駐車場 2台完備</p>
-                    <p><strong>営業時間:</strong> 10:00 - 22:00（予約制）</p>
-                    <p><strong>予約:</strong> 公式LINE（@072WKBWC）より受付</p>
-                    <a href="https://line.me/R/ti/p/@072WKBWC" class="btn" style="display: block; background: #06C755; color: #fff; text-align: center; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: 900; margin-top: 20px;">LINEで無料体験を申し込む</a>
-                </div>
-                <div class="map-area">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3294.613385626214!2d134.0531!3d34.3263!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553eb0d1f88888d%3A0x0!2zMzTCsDE5JzM0LjciTiAxMzTCsDAzJzExLjIiRQ!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" style="width:100%; height:100%; border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
+        <div class="card">
+            <h3>今里町の隠れ家</h3>
+            <p>〒760-0078<br>高松市今里町393-1 前川ビル1F</p>
+            <p><strong>駐車場2台完備。</strong><br>大きめの車でも停めやすいスペースを確保しています。</p>
         </div>
-    </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 たまフィット | 人生を変える 寄り添いの場所</p>
-            <p>お問い合わせ: tamafit.takamatsu@gmail.com</p>
+        <div class="card" style="text-align: center;">
+            <img src="tama-chan.png" alt="たまちゃん" style="width: 100px;">
+            <h4>相談だけでもOK！</h4>
+            <p>公式LINEからお気軽にご連絡ください。無理な営業は一切いたしません。</p>
         </div>
-    </footer>
+    </div>
+
+    <div class="sticky-footer">
+        <a href="#" class="btn-line">LINE相談</a>
+        <a href="#" class="btn-reserve">無料体験を予約する</a>
+    </div>
 
 </body>
 </html>
