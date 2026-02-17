@@ -4,273 +4,198 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>たまフィット | 高松市今里町のパーソナルジム</title>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff1a7d;       /* たまピンク */
-            --bg-body: #ffffff;
-            --bg-card: #ffffff;
-            --text-main: #222222;
-            --text-sub: #555555;
+            /* 60-30-10ルールに基づく配色 [cite: 79, 81] */
+            --primary: #ff1a7d;       /* Neon Pulse: アクセント10% */
+            --bg-base: #121212;       /* Obsidian: ベース60% */
+            --bg-surface: #1e1e1e;    /* サブカラー30% */
+            --text-main: #ffffff;
+            --text-body: #e0e0e0;     /* 目に優しい白 [cite: 83] */
             --accent: #ffb400;
-            --radius: 20px;
+            --radius: 24px;
             --font-main: 'M PLUS Rounded 1c', sans-serif;
-            --max-width: 1100px;
         }
 
         body {
             font-family: var(--font-main);
-            background-color: var(--bg-body);
-            color: var(--text-main);
+            background-color: var(--bg-base);
+            color: var(--text-body);
             margin: 0; padding: 0;
-            line-height: 1.6;
+            line-height: 1.9; /* 高級感を出す広い行間 [cite: 88] */
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
-        
-        .ib { display: inline-block; }
 
-        h1, h2, h3 { margin: 0; font-weight: 900; line-height: 1.3; }
-        p { margin: 0 0 1.2em; }
-        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
-        img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); display: block; }
-        
-        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+        /* 文節で適切に改行させる最新技術 [cite: 90] */
+        h1, h2, h3 { word-break: auto-phrase; text-wrap: balance; color: var(--text-main); }
 
-        /* --- ボタン --- */
-        .btn {
-            display: block;
-            width: 100%;
-            max-width: 340px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, var(--primary), #ff5e9e);
-            color: #fff;
-            padding: 20px 0;
-            border-radius: 50px;
-            font-weight: 900;
-            font-size: 18px;
-            letter-spacing: 0.05em;
-            box-shadow: 0 10px 25px rgba(255, 26, 125, 0.4);
-            text-align: center;
-        }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 26, 125, 0.5); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-        /* --- ヘッダー --- */
-        .header {
+        /* --- スティッキーフッター（追従ボタン） [cite: 41] --- */
+        .sticky-cta {
             position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: 12px 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .header-inner { display: flex; justify-content: center; align-items: center; }
-        .logo { font-size: 20px; font-weight: 900; color: var(--primary); letter-spacing: 0.05em; }
-
-        /* --- ヒーローセクション --- */
-        .hero {
-            position: relative;
+            bottom: 0; left: 0; width: 100%;
             display: flex;
-            flex-direction: column; 
-            padding-top: 60px;
+            z-index: 2000;
+            padding: 10px;
+            gap: 10px;
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
         }
-
-        .hero-img-area {
-            width: 100%;
-            height: 45vh;
-            background-image: url('hero.jpg');
-            background-size: cover;
-            background-position: center bottom;
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        .cta-line {
+            flex: 1;
+            background: #06C755;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 14px;
+            text-decoration: none;
         }
+        .cta-web {
+            flex: 2;
+            background: var(--primary);
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(255, 26, 125, 0.4);
+            animation: pulse 2s infinite; /* 注意を惹くアニメーション [cite: 42] */
+        }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.8; } 100% { opacity: 1; } }
 
-        .hero-text-area {
-            margin-top: -60px;
-            padding: 0 15px 40px;
+        /* --- ヒーローセクション（Deep Glass実装） [cite: 67, 72] --- */
+        .hero {
+            height: 100svh; /* 100svhで没入型 [cite: 72] */
+            display: flex;
+            align-items: flex-end;
+            background: url('hero.jpg') no-repeat center center / cover;
             position: relative;
-            z-index: 2;
+        }
+        /* ファントム・グラデーション [cite: 75] */
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(18,18,18,0.2) 0%, rgba(18,18,18,0.95) 90%);
         }
 
-        .hero-card {
-            background: #fff;
-            padding: 30px 10px;
-            border-radius: 20px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.15);
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            padding: 0 24px 120px; /* 下部にフッター分の余白 */
             text-align: center;
         }
-        
-        .hero-slogan {
-            display: block;
-            color: var(--text-sub);
-            font-size: 14px;
-            font-weight: 800;
-            margin-bottom: 5px;
-            letter-spacing: 0.1em;
+        .hero-slogan { font-size: 14px; font-weight: 800; color: var(--primary); letter-spacing: 0.2em; display: block; margin-bottom: 10px; }
+        .hero-title { 
+            font-size: 15vw; 
+            margin: 0; 
+            line-height: 1; 
+            white-space: nowrap;
+            text-shadow: 0 0 20px rgba(255, 26, 125, 0.5); /* ピンクのグロー [cite: 84] */
         }
-        
-        .hero-title {
-            color: var(--primary);
-            line-height: 1;
-            margin-bottom: 10px;
-            letter-spacing: -0.02em;
-            white-space: nowrap; 
-            font-size: 15vw; /* スマホでいっぱいいっぱい */
+        .hero-copy { font-size: 18px; font-weight: 800; margin-top: 20px; }
+
+        /* --- ベントーグリッド（特徴） [cite: 60] --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: 16px;
+            margin-top: 40px;
         }
-        
-        .hero-copy {
-            font-size: 17px;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 25px;
-            line-height: 1.4;
+        .bento-card {
+            background: var(--bg-surface);
+            padding: 32px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
-        /* --- セクション共通 --- */
-        section { padding: 60px 0; }
-        .sec-title { text-align: center; margin-bottom: 40px; }
-        .sec-title h2 { font-size: 28px; color: var(--primary); margin-bottom: 8px; position: relative; display: inline-block; }
-        .sec-title h2::after { content: ""; display: block; width: 40px; height: 4px; background: var(--accent); margin: 8px auto 0; border-radius: 2px; }
-        .sec-title span { font-size: 12px; color: var(--accent); font-weight: 800; letter-spacing: 0.15em; display: block; margin-bottom: 5px; }
+        .bento-card h4 { color: var(--primary); margin: 0 0 10px; font-size: 20px; }
 
-        /* --- About --- */
-        .about-row { display: flex; flex-direction: column; gap: 25px; margin-bottom: 50px; }
-        .about-img-box { height: 280px; width: 100%; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .about-text h3 { font-size: 22px; color: var(--primary); margin-bottom: 15px; }
+        /* --- 料金表（心理的フレーミング） [cite: 36] --- */
+        .price-section { background: #fff; color: var(--bg-base); padding: 80px 0; border-radius: 40px 40px 0 0; }
+        .price-section h2 { color: var(--primary); text-align: center; }
+        .admission-free { 
+            display: block; width: fit-content; margin: 0 auto 30px;
+            background: var(--primary); color: #fff; padding: 12px 40px; border-radius: 50px; font-weight: 900; 
+        }
+        .price-table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { padding: 20px; border: 1px solid #eee; text-align: center; }
+        th { background: #f9f9f9; color: var(--primary); }
+        .price-val { font-family: 'Oswald', sans-serif; font-size: 28px; font-weight: 700; color: var(--bg-base); }
 
-        /* --- Service/Facility --- */
-        .feature-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; gap: 15px; }
-        .feature-item { background: #fff5f8; padding: 20px; border-radius: 15px; border-left: 5px solid var(--primary); }
-        .feature-item h4 { color: var(--primary); margin: 0 0 8px; font-size: 18px; }
-        .feature-item p { margin: 0; font-size: 14px; color: var(--text-sub); }
+        /* --- アクセス（高松市特化）  --- */
+        .access-card { background: var(--bg-surface); border-radius: var(--radius); overflow: hidden; }
+        .access-info { padding: 40px 24px; }
+        .parking-highlight { color: var(--accent); font-weight: 900; }
 
-        /* --- 料金表（テーブル） --- */
-        .price-intro { text-align: center; margin-bottom: 30px; }
-        .admission-free { display: inline-block; background: var(--primary); color: #fff; padding: 10px 30px; border-radius: 50px; font-weight: 900; font-size: 20px; margin-bottom: 15px; }
-        
-        .price-table-container { overflow-x: auto; margin-bottom: 20px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
-        table { width: 100%; border-collapse: collapse; min-width: 500px; background: #fff; }
-        th, td { border: 1px solid #eee; padding: 15px 10px; text-align: center; }
-        th { background: #f9f9f9; color: var(--primary); font-weight: 900; font-size: 14px; }
-        .row-label { font-weight: 800; background: #fffcfd; width: 120px; font-size: 13px; }
-        .price-val { font-size: 18px; font-weight: 900; color: var(--text-main); }
-        .price-val span { font-size: 11px; margin-left: 2px; }
+        footer { padding: 60px 0 120px; text-align: center; font-size: 12px; color: #666; }
 
-        /* --- Access --- */
-        .access-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .access-info-body { padding: 30px 20px; }
-        .info-row { display: flex; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #eee; align-items: flex-start; }
-        .info-label { width: 90px; font-weight: 800; color: var(--primary); flex-shrink: 0; font-size: 14px; }
-        .info-text { font-size: 14px; line-height: 1.5; }
-        .map-area { height: 300px; background: #eee; }
-        .map-area iframe { width: 100%; height: 100%; border: 0; }
-
-        .footer { background: var(--primary); color: #fff; padding: 40px 0; text-align: center; font-size: 13px; }
-        .footer p { margin-bottom: 5px; }
-
-        /* --- PCレイアウト --- */
         @media (min-width: 768px) {
-            section { padding: 100px 0; }
-            .hero-img-area { height: 100vh; position: absolute; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: 0.8; }
-            .hero-text-area { height: 100vh; display: flex; align-items: center; justify-content: flex-start; max-width: 1100px; margin: 0 auto; padding: 0 50px; }
-            .hero-card { text-align: left; padding: 60px; max-width: 600px; }
-            .hero-title { font-size: 90px; }
-            .hero-slogan { font-size: 18px; }
-            .hero-copy { font-size: 22px; }
-            .btn { margin: 0; }
-
-            .about-row { flex-direction: row; align-items: center; gap: 60px; }
-            .about-row:nth-child(even) { flex-direction: row-reverse; }
-            .about-img-box { flex: 1; height: 400px; }
-            .about-text { flex: 1; }
-
-            .feature-list { grid-template-columns: 1fr 1fr; }
-            th, td { padding: 20px; }
-            .price-val { font-size: 24px; }
-
+            .hero-title { font-size: 100px; }
+            .hero-content { text-align: left; padding-left: 10%; }
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
             .access-card { display: flex; }
-            .access-info-body { flex: 1; padding: 50px; }
-            .map-area { flex: 1.2; height: auto; }
+            .access-info { flex: 1; }
+            .map-area { flex: 1; min-height: 400px; }
+            .sticky-cta { display: none; } /* PCでは追従不要 */
         }
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <div class="container header-inner">
-            <div class="logo">たまフィット</div>
-        </div>
-    </header>
-
-    <div class="hero">
-        <div class="hero-img-area"></div>
-        <div class="hero-text-area">
-            <div class="hero-card">
-                <span class="hero-slogan">人生を変える 寄り添いの場所</span>
-                <h1 class="hero-title">たまフィット</h1>
-                <p class="hero-copy">
-                    高松市今里町のパーソナルジム<br>
-                    もう、一人で悩ませない
-                </p>
-                <a href="https://line.me/R/ti/p/@072WKBWC" class="btn">今すぐ無料で体験する</a>
-            </div>
-        </div>
+    <div class="sticky-cta">
+        <a href="https://line.me/R/ti/p/@072WKBWC" class="cta-line">LINEで相談</a>
+        <a href="https://line.me/R/ti/p/@072WKBWC" class="cta-web">無料体験を予約する</a>
     </div>
 
-    <section id="about">
+    <header style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <div class="logo" style="font-weight: 900; color: var(--primary); font-size: 24px;">たまフィット</div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-slogan">人生を変える 寄り添いの場所</span>
+            <h1 class="hero-title">たまフィット</h1>
+            <p class="hero-copy">高松市今里町の「リバウンド防止」特化型ジム。<br>3ヶ月後、自信を持って「着たい服」を着こなすあなたへ。</p>
+        </div>
+    </section>
+
+    <section id="features">
         <div class="container">
-            <div class="sec-title">
-                <span>CONCEPT</span>
-                <h2>無理なく、続く、変わる。</h2>
-            </div>
-            <div class="about-row">
-                <div class="about-img-box"><img src="about1.jpg" alt="たまフィット内装"></div>
-                <div class="about-text">
-                    <h3>「頑張っているのに、変わらない」<br>その悩み、あなたのせいではありません。</h3>
-                    <p>「ジムに通っても続かない」「糖質制限をしてリバウンドした」。<br>多くの方が直面するその壁は、決してあなたの意志が弱いからではありません。正しい方法と、続けられる環境がなかっただけです。</p>
+            <h2 style="text-align: center; margin-bottom: 40px;">たまフィットが選ばれる理由</h2>
+            <div class="bento-grid">
+                <div class="bento-card">
+                    <h4>解剖学×オーダーメイド</h4>
+                    <p>骨格や筋肉量を分析し、あなただけに効くメニューを作成。だから最短距離で結果が出ます。</p>
+                </div>
+                <div class="bento-card">
+                    <h4>食べて痩せる食事指導</h4>
+                    <p>厳しい制限は卒業。専用アプリとトレーナーが毎日の習慣をサポートし、挫折させません。</p>
+                </div>
+                <div class="bento-card" style="grid-column: span 1;">
+                    <h4>完全個室の映える空間</h4>
+                    <p>ピンクのラックと人工芝が特徴的な隠れ家。人目を気にせず、自分磨きに没頭できます。</p>
+                </div>
+                <div class="bento-card">
+                    <h4>手ぶらでOK</h4>
+                    <p>仕事帰りや買い物ついでに。ウェア・タオル完備で、日常にフィットネスを溶け込ませます。</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="features" style="background: #fffcfd;">
+    <section class="price-section">
         <div class="container">
-            <div class="sec-title">
-                <span>FEATURES</span>
-                <h2>たまフィットのこだわり</h2>
-            </div>
-            <div class="feature-list">
-                <div class="feature-item">
-                    <h4>理想を叶えるメニュー</h4>
-                    <p>ボディメイク、ダイエット、食事指導、リバウンド防止。あなたの目標に合わせた最適なプランを提案します。</p>
-                </div>
-                <div class="feature-item">
-                    <h4>こだわりのプライベート空間</h4>
-                    <p>ピンク色のマルチラックやダンベルが特徴的。清潔感のある人工芝の上で、人目を気にせず集中できます。</p>
-                </div>
-                <div class="feature-item">
-                    <h4>「伴走者」としての食事指導</h4>
-                    <p>専用アプリでPFCバランスを管理。AIとトレーナーが毎日の習慣をサポートし、挫折させません。</p>
-                </div>
-                <div class="feature-item">
-                    <h4>初回60分 無料体験</h4>
-                    <p>公式LINEを追加し、メニューの「無料体験」から予約可能。まずはあなたの悩みをお聞かせください。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="price">
-        <div class="container">
-            <div class="sec-title">
-                <span>PRICE</span>
-                <h2>料金プラン</h2>
-            </div>
-            <div class="price-intro">
-                <div class="admission-free">入会金 0円</div>
-                <p>※料金はすべて税込・1回あたりの単価です</p>
-            </div>
-            
+            <h2>料金プラン</h2>
+            <div class="admission-free">入会金 0円</div>
             <div class="price-table-container">
                 <table>
                     <thead>
@@ -281,70 +206,38 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="row-label">単発（通常）</td>
-                            <td class="price-val">9,900<span>円</span></td>
-                            <td class="price-val">5,500<span>円</span></td>
-                        </tr>
-                        <tr>
-                            <td class="row-label">月2回コース</td>
-                            <td class="price-val">8,800<span>円</span></td>
-                            <td class="price-val">4,950<span>円</span></td>
-                        </tr>
-                        <tr>
-                            <td class="row-label">週1回 (月4回)</td>
-                            <td class="price-val">7,700<span>円</span></td>
-                            <td class="price-val">4,400<span>円</span></td>
-                        </tr>
-                        <tr>
-                            <td class="row-label">週2回 (月8回)</td>
-                            <td class="price-val">6,600<span>円</span></td>
-                            <td class="price-val">3,850<span>円</span></td>
-                        </tr>
+                        <tr><td>単発（通常）</td><td class="price-val">9,900円</td><td class="price-val">5,500円</td></tr>
+                        <tr><td>月2回コース</td><td class="price-val">8,800円</td><td class="price-val">4,950円</td></tr>
+                        <tr><td>週1回 (月4回)</td><td class="price-val">7,700円</td><td class="price-val">4,400円</td></tr>
+                        <tr><td>週2回 (月8回)</td><td class="price-val">6,600円</td><td class="price-val">3,850円</td></tr>
                     </tbody>
                 </table>
             </div>
-            <p style="text-align: center; font-size: 13px; color: var(--text-sub);">※継続して通われるほど、1回あたりの料金がお得になります。</p>
         </div>
     </section>
 
-    <section id="access">
+    <section id="access" style="padding: 80px 0;">
         <div class="container">
-            <div class="sec-title">
-                <span>ACCESS</span>
-                <h2>店舗・アクセス情報</h2>
-            </div>
+            <h2 style="text-align: center; margin-bottom: 40px;">店舗・アクセス</h2>
             <div class="access-card">
-                <div class="access-info-body">
-                    <div class="info-row">
-                        <div class="info-label">所在地</div>
-                        <div class="info-text">〒760-0078<br>香川県高松市今里町393-1 前川ビル1F</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">駐車場</div>
-                        <div class="info-text">店舗前に2台分あり</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">営業時間</div>
-                        <div class="info-text">10:00 - 22:00（予約制）</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">予約方法</div>
-                        <div class="info-text">公式LINE（@072WKBWC）より受付</div>
-                    </div>
-                    <a href="https://line.me/R/ti/p/@072WKBWC" class="btn" style="background: #06C755; margin-top: 20px;">LINEで予約・相談する</a>
+                <div class="access-info">
+                    <p><strong>所在地:</strong> 〒760-0078 香川県高松市今里町393-1 前川ビル1F</p>
+                    <p class="parking-highlight">★店舗前に専用駐車場 2台完備</p>
+                    <p><strong>営業時間:</strong> 10:00 - 22:00（予約制）</p>
+                    <p><strong>予約:</strong> 公式LINE（@072WKBWC）より受付</p>
+                    <a href="https://line.me/R/ti/p/@072WKBWC" class="btn" style="display: block; background: #06C755; color: #fff; text-align: center; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: 900; margin-top: 20px;">LINEで無料体験を申し込む</a>
                 </div>
                 <div class="map-area">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3294.613385626214!2d134.0531!3d34.3263!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553eb0d1f88888d%3A0x0!2zMzTCsDE5JzM0LjciTiAxMzTCsDAzJzExLjIiRQ!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3294.613385626214!2d134.0531!3d34.3263!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553eb0d1f88888d%3A0x0!2zMzTCsDE5JzM0LjciTiAxMzTCsDAzJzExLjIiRQ!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" style="width:100%; height:100%; border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="footer">
+    <footer>
         <div class="container">
             <p>© 2026 たまフィット | 人生を変える 寄り添いの場所</p>
-            <p style="font-size: 11px; opacity: 0.8;">お問い合わせ: tamafit.takamatsu@gmail.com</p>
+            <p>お問い合わせ: tamafit.takamatsu@gmail.com</p>
         </div>
     </footer>
 
