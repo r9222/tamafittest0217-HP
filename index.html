@@ -4,263 +4,221 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>たまフィット | 高松市今里町のパーソナルジム</title>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ピンク×白の洗練された配色ルール */
-            --primary: #ff1a7d;       /* アクセント：ビビッドピンク */
-            --bg-base: #ffffff;       /* ベース：ホワイト (70%以上) */
-            --bg-soft: #fff5f8;       /* サブ：淡いピンク */
-            --text-main: #333333;     /* 本文：濃いグレーで読みやすく */
-            --text-sub: #666666;      
-            --accent: #ffb400;
-            --radius: 24px;
-            --font-main: 'M PLUS Rounded 1c', sans-serif;
+            /* 黄金比配色 [cite: 55, 83] */
+            --primary: #ff1a7d;       /* ビビッドピンク：アクセント [cite: 57] */
+            --primary-light: #fff0f6; /* 超薄いピンク：背景用 */
+            --bg-base: #ffffff;       /* ホワイト：ベース60% [cite: 23] */
+            --text-main: #2d2d2d;     /* 濃いグレーで高級感を出す */
+            --text-sub: #666666;
+            --accent-gold: #d4af37;   /* 高級感を添えるゴールド [cite: 23] */
+            --radius: 20px;
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: 'Noto Sans JP', sans-serif;
             background-color: var(--bg-base);
             color: var(--text-main);
             margin: 0; padding: 0;
-            line-height: 1.9;
+            line-height: 1.8; /* ゆとりある行間 [cite: 64] */
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
         }
 
-        h1, h2, h3 { word-break: auto-phrase; text-wrap: balance; }
+        /* 文字の美しさを制御 [cite: 66, 86] */
+        h1, h2, h3 { word-break: auto-phrase; text-wrap: balance; letter-spacing: 0.05em; }
 
         .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-        /* --- スティッキーフッター（追従ボタン） --- */
-        .sticky-cta {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            display: flex;
-            z-index: 2000;
-            padding: 10px;
-            gap: 10px;
+        /* --- スティッキーフッター（親指操作領域） [cite: 17, 18, 53] --- */
+        .sticky-footer {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            display: flex; gap: 8px; padding: 12px;
             background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            box-sizing: border-box;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px); z-index: 2000; box-sizing: border-box;
         }
-        .cta-line {
-            flex: 1;
-            background: #06C755;
-            color: #fff;
-            text-align: center;
-            padding: 15px 0;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 14px;
-            text-decoration: none;
+        .footer-btn { 
+            flex: 1; text-align: center; padding: 14px 0; border-radius: 50px; 
+            font-weight: 900; font-size: 14px; text-decoration: none; 
         }
-        .cta-web {
-            flex: 2;
-            background: var(--primary);
-            color: #fff;
-            text-align: center;
-            padding: 15px 0;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 14px;
-            text-decoration: none;
-            box-shadow: 0 10px 20px rgba(255, 26, 125, 0.3);
+        .btn-line { background: #06C755; color: #fff; }
+        .btn-web { 
+            background: var(--primary); color: #fff; 
+            box-shadow: 0 8px 20px rgba(255, 26, 125, 0.3);
+            animation: bounce 2s infinite; /* 注意を惹く [cite: 137] */
         }
+        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.98); } }
 
-        /* --- ヒーローセクション（明るい没入型） --- */
+        /* --- ヒーローセクション（斜めライン/スラッシュデザイン）  --- */
         .hero {
-            height: 90svh;
-            display: flex;
-            align-items: center;
+            height: 90svh; position: relative; overflow: hidden;
+            display: flex; align-items: center; background: #fdf2f4;
+        }
+        .hero-img {
+            position: absolute; top: 0; right: 0; width: 55%; height: 100%;
             background: url('hero.jpg') no-repeat center center / cover;
-            position: relative;
+            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); /* 斜め切り [cite: 131] */
         }
-        /* 白ベースのグラデーション */
-        .hero::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: linear-gradient(to right, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+        .hero-content { position: relative; z-index: 10; width: 50%; padding-left: 5%; }
+        
+        .hero-badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            padding: 4px 12px; border-radius: 4px; font-weight: 900; font-size: 13px;
+            margin-bottom: 15px;
+        }
+        .hero-title { font-size: clamp(40px, 8vw, 80px); line-height: 1.1; margin: 0; color: var(--primary); }
+        .hero-title span { color: var(--text-main); font-size: 0.5em; display: block; }
+        .hero-copy { font-size: 18px; font-weight: 800; margin: 20px 0; }
+
+        /* --- 実績バッジ（社会的証明） [cite: 9, 100] --- */
+        .trust-badges { display: flex; gap: 10px; margin-top: 20px; }
+        .trust-badge { 
+            width: 80px; height: 80px; border: 2px solid var(--accent-gold); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 900; text-align: center; color: var(--accent-gold);
+            background: #fff; line-height: 1.2;
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            padding: 0 24px;
-        }
-        .hero-slogan { font-size: 14px; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; display: block; margin-bottom: 5px; }
-        .hero-title { 
-            font-size: 14vw; 
-            margin: 0; 
-            line-height: 1.1; 
-            color: var(--primary);
-            font-weight: 900;
-        }
-        .hero-copy { font-size: 18px; font-weight: 800; margin-top: 15px; color: var(--text-main); }
-
-        /* --- セクションタイトル --- */
-        section { padding: 80px 0; }
-        .sec-title { text-align: center; margin-bottom: 50px; }
-        .sec-title h2 { font-size: 32px; color: var(--primary); margin-bottom: 10px; }
-        .sec-title span { font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: 0.2em; }
-
-        /* --- ベントーグリッド（特徴） --- */
+        /* --- 特徴（ベントーグリッド）  --- */
+        .section-padding { padding: 100px 0; }
         .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
         }
-        .bento-card {
-            background: var(--bg-soft);
-            padding: 40px;
-            border-radius: var(--radius);
-            transition: transform 0.3s;
+        .bento-item { 
+            background: #fff; padding: 30px; border-radius: var(--radius);
+            box-shadow: var(--shadow); border: 1px solid var(--primary-light);
         }
-        .bento-card:hover { transform: translateY(-5px); }
-        .bento-card h4 { color: var(--primary); margin: 0 0 15px; font-size: 22px; }
+        .bento-item h3 { color: var(--primary); font-size: 20px; margin-top: 0; }
+        .bento-item.main { grid-column: span 2; background: var(--primary-light); }
 
-        /* --- 料金表 --- */
-        .price-section { background: var(--bg-soft); padding: 100px 0; }
+        /* --- 料金表（心理的フレーミング） [cite: 12] --- */
         .price-card {
-            background: #fff;
-            padding: 40px 20px;
-            border-radius: var(--radius);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            background: #fff; border: 2px solid var(--primary-light);
+            border-radius: var(--radius); padding: 40px; text-align: center;
+            position: relative; transition: 0.3s;
         }
-        .admission-free { 
-            display: block; width: fit-content; margin: 0 auto 30px;
-            background: var(--primary); color: #fff; padding: 10px 40px; border-radius: 50px; font-weight: 900; font-size: 22px;
+        .price-card.recommend { border-color: var(--primary); transform: scale(1.05); }
+        .price-card.recommend::before {
+            content: '人気No.1'; position: absolute; top: -15px; left: 50%;
+            transform: translateX(-50%); background: var(--primary); color: #fff;
+            padding: 4px 20px; border-radius: 50px; font-weight: 900; font-size: 12px;
         }
-        .price-table-container { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 500px; background: #fff; }
-        th, td { padding: 20px; border: 1px solid #f0f0f0; text-align: center; }
-        th { background: #fffcfd; color: var(--primary); font-weight: 900; }
-        .price-val { font-family: 'Oswald', sans-serif; font-size: 32px; font-weight: 700; color: var(--primary); }
+        .price-big { font-family: 'Oswald', sans-serif; font-size: 48px; color: var(--primary); font-weight: 700; }
+        .price-sub { font-size: 14px; color: var(--text-sub); }
 
-        /* --- アクセス --- */
-        .access-card { display: flex; flex-direction: column; background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.05); }
-        .access-info { padding: 40px; }
-        .parking-highlight { color: var(--primary); font-weight: 900; font-size: 16px; margin: 15px 0; }
-        .map-area { height: 350px; background: #eee; }
-        .map-area iframe { width: 100%; height: 100%; border: 0; }
+        /* --- アクセス（地域特化）  --- */
+        .access-info { background: #fcfcfc; border-radius: var(--radius); padding: 40px; display: flex; gap: 40px; }
+        .parking-box { background: var(--primary-light); padding: 15px; border-radius: 10px; border-left: 5px solid var(--primary); }
 
-        footer { padding: 60px 0 120px; text-align: center; background: #fff; color: var(--text-sub); border-top: 1px solid #f0f0f0; }
-
-        @media (min-width: 768px) {
-            .hero-title { font-size: 90px; }
-            .hero-content { padding-left: 5%; }
-            .hero::before { background: linear-gradient(to right, rgba(255,255,255,0.95) 20%, rgba(255,255,255,0) 80%); }
-            .bento-grid { grid-template-columns: repeat(2, 1fr); }
-            .access-card { flex-direction: row; }
-            .access-info { flex: 1; }
-            .map-area { flex: 1; }
-            .sticky-cta { display: none; }
+        @media (max-width: 768px) {
+            .hero { align-items: flex-end; height: 85svh; }
+            .hero-img { width: 100%; height: 60%; top: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
+            .hero-content { width: 100%; padding: 30px 24px 60px; background: #fff; border-radius: 30px 30px 0 0; }
+            .hero-title { font-size: 50px; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-item.main { grid-column: span 1; }
+            .price-card { margin-bottom: 20px; }
+            .access-info { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <div class="sticky-cta">
-        <a href="https://line.me/R/ti/p/@072WKBWC" class="cta-line">LINEで相談</a>
-        <a href="https://line.me/R/ti/p/@072WKBWC" class="cta-web">無料体験を予約する</a>
+    <div class="sticky-footer">
+        <a href="https://line.me/R/ti/p/@072WKBWC" class="footer-btn btn-line">LINE相談</a>
+        <a href="https://line.me/R/ti/p/@072WKBWC" class="footer-btn btn-web">無料体験を予約する</a>
     </div>
 
-    <header style="position: absolute; top: 20px; left: 20px; z-index: 1000;">
-        <div class="logo" style="font-weight: 900; color: var(--primary); font-size: 22px; letter-spacing: 0.05em;">たまフィット</div>
+    <header style="position: absolute; top: 20px; left: 5%; z-index: 100;">
+        <div style="font-weight: 900; color: var(--primary); font-size: 24px;">たまフィット</div>
     </header>
 
     <section class="hero">
+        <div class="hero-img"></div>
         <div class="hero-content">
-            <span class="hero-slogan">人生を変える 寄り添いの場所</span>
-            <h1 class="hero-title">たまフィット</h1>
-            <p class="hero-copy">高松市今里町のパーソナルジム。<br>3ヶ月後、自信を持って「着たい服」を着こなすあなたへ。</p>
-            <a href="https://line.me/R/ti/p/@072WKBWC" class="btn" style="display: none;">PC用ボタン</a>
+            <span class="hero-badge">高松市今里町・完全個室</span>
+            <h1 class="hero-title"><span>「着たい服」を、着こなす。</span>たまフィット</h1>
+            <p class="hero-copy">正直、3ヶ月で素人は変わりません。<br>だからこそ、一生モノの「正しい知識」をここで。</p>
+            <div class="trust-badges">
+                <div class="trust-badge">解剖学<br>指導</div>
+                <div class="trust-badge">PFC<br>管理</div>
+                <div class="trust-badge">リバウンド<br>防止</div>
+            </div>
         </div>
     </section>
 
-    <section id="features">
+    <section class="section-padding">
         <div class="container">
-            <div class="sec-title">
-                <span>FEATURES</span>
-                <h2>たまフィットのこだわり</h2>
-            </div>
+            <h2 style="text-align: center; color: var(--primary);">たまフィットが選ばれる理由</h2>
             <div class="bento-grid">
-                <div class="bento-card">
-                    <h4>理想を叶えるメニュー</h4>
-                    <p>ボディメイク、ダイエット、食事指導、リバウンド防止。あなたの目標に合わせた最適なプランを提案します。</p>
+                <div class="bento-item main">
+                    <h3>解剖学×完全オーダーメイド</h3>
+                    <p>あなたの骨格、筋肉量を分析し、最も効率的なメニューを作成。運動が苦手な方こそ、最短距離で結果が出るロジックを体感してください。</p>
                 </div>
-                <div class="bento-card">
-                    <h4>こだわりのプライベート空間</h4>
-                    <p>ピンク色のマルチラックやダンベルが特徴的。清潔感のある人工芝の上で、人目を気にせず集中できます。</p>
+                <div class="bento-item">
+                    <h3>食べて痩せる食事指導</h3>
+                    <p>無理な糖質制限は禁止。外食も楽しみながら、理想のPFCバランスを身につける。一生続く「美習慣」をサポートします。</p>
                 </div>
-                <div class="bento-card">
-                    <h4>「伴走者」としての食事指導</h4>
-                    <p>専用アプリでPFCバランスを管理。AIとトレーナーが毎日の習慣をサポートし、挫折させません。</p>
+                <div class="bento-item">
+                    <h3>完全個室の隠れ家</h3>
+                    <p>高松市今里町の静かなエリア。人目を気にせず、自分自身と向き合える特別な空間をご用意しています。</p>
                 </div>
-                <div class="bento-card">
-                    <h4>初回60分 無料体験</h4>
-                    <p>公式LINEを追加し、メニューの「無料体験」から予約可能。まずはあなたの悩みをお聞かせください。</p>
+                <div class="bento-item main">
+                    <h3>手ぶらでOK、隙間時間で</h3>
+                    <p>ウェア、タオル完備。仕事帰りや買い物のついでに、日常のルーティンにフィットネスを。あなたのライフスタイルを尊重します。</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="price-section" id="price">
+    <section class="section-padding" style="background: var(--primary-light);">
         <div class="container">
-            <div class="sec-title">
-                <span>PRICE</span>
-                <h2>料金プラン</h2>
-            </div>
-            <div class="price-card">
-                <div class="admission-free">入会金 0円</div>
-                <div class="price-table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>コース</th>
-                                <th>60分コース</th>
-                                <th>30分コース</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>単発（通常料金）</td><td class="price-val">9,900<span>円</span></td><td class="price-val">5,500<span>円</span></td></tr>
-                            <tr><td>月2回コース</td><td class="price-val">8,800<span>円</span></td><td class="price-val">4,950<span>円</span></td></tr>
-                            <tr><td>週1回 (月4回)</td><td class="price-val">7,700<span>円</span></td><td class="price-val">4,400<span>円</span></td></tr>
-                            <tr><td>週2回 (月8回)</td><td class="price-val">6,600<span>円</span></td><td class="price-val">3,850<span>円</span></td></tr>
-                        </tbody>
-                    </table>
+            <h2 style="text-align: center;">料金プラン</h2>
+            <p style="text-align: center; font-weight: 900; color: var(--primary);">入会金 0円 キャンペーン実施中</p>
+            <div class="bento-grid" style="margin-top: 40px;">
+                <div class="price-card">
+                    <h3>まずは体験</h3>
+                    <div class="price-big">3,300<span style="font-size:16px;">円</span></div>
+                    <p>カウンセリング＋<br>体験トレーニング60分</p>
                 </div>
-                <p style="text-align: center; margin-top: 20px; font-size: 13px; color: var(--text-sub);">※継続して通われるほど、1回あたりの料金がお得になります。</p>
+                <div class="price-card recommend">
+                    <h3>週1回コース</h3>
+                    <div class="price-big">7,700<span style="font-size:16px;">円/回</span></div>
+                    <p class="price-sub">月額 30,800円</p>
+                    <p>迷ったらこれ！<br>一番人気の継続プラン</p>
+                </div>
+                <div class="price-card">
+                    <h3>都度払い</h3>
+                    <div class="price-big">9,900<span style="font-size:16px;">円/回</span></div>
+                    <p>自分のペースで<br>必要な時だけ通いたい方</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="access">
+    <section class="section-padding">
         <div class="container">
-            <div class="sec-title">
-                <span>ACCESS</span>
-                <h2>店舗・アクセス</h2>
-            </div>
-            <div class="access-card">
-                <div class="access-info">
+            <h2 style="text-align: center;">店舗アクセス</h2>
+            <div class="access-info">
+                <div style="flex: 1;">
                     <p><strong>所在地:</strong> 〒760-0078 香川県高松市今里町393-1 前川ビル1F</p>
-                    <p class="parking-highlight">★店舗前に専用駐車場 2台完備</p>
+                    <div class="parking-box">
+                        <strong>★店舗前に専用駐車場 2台完備</strong><br>
+                        広めのスペースですので、大きな車や運転が不安な方も安心してお越しください。
+                    </div>
                     <p><strong>営業時間:</strong> 10:00 - 22:00（予約制）</p>
-                    <p><strong>予約:</strong> 公式LINE（@072WKBWC）より受付</p>
-                    <p><strong>連絡先:</strong> tamafit.takamatsu@gmail.com</p>
-                    <a href="https://line.me/R/ti/p/@072WKBWC" style="display: block; background: #06C755; color: #fff; text-align: center; padding: 18px; border-radius: 50px; text-decoration: none; font-weight: 900; margin-top: 25px; box-shadow: 0 10px 20px rgba(6,199,85,0.2);">LINEで無料体験を予約する</a>
+                    <a href="https://line.me/R/ti/p/@072WKBWC" style="display: block; background: #06C755; color: #fff; text-align: center; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: 900; margin-top: 20px;">Googleマップを開く</a>
                 </div>
-                <div class="map-area">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3294.613385626214!2d134.0531!3d34.3263!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553eb0d1f88888d%3A0x0!2zMzTCsDE5JzM0LjciTiAxMzTCsDAzJzExLjIiRQ!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy"></iframe>
+                <div style="flex: 1.2; height: 350px; border-radius: var(--radius); overflow: hidden;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3294.613385626214!2d134.0531!3d34.3263!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553eb0d1f88888d%3A0x0!2zMzTCsDE5JzM0LjciTiAxMzTCsDAzJzExLjIiRQ!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" style="width:100%; height:100%; border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container">
+    <footer class="footer">
+        <div class="container" style="text-align: center; padding-bottom: 120px; color: #999; font-size: 12px;">
             <p>© 2026 たまフィット | 人生を変える 寄り添いの場所</p>
         </div>
     </footer>
