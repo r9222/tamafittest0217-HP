@@ -3,224 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>たまフィット | 高松市今里町のパーソナルジム</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* 黄金比配色 [cite: 55, 83] */
-            --primary: #ff1a7d;       /* ビビッドピンク：アクセント [cite: 57] */
-            --primary-light: #fff0f6; /* 超薄いピンク：背景用 */
-            --bg-base: #ffffff;       /* ホワイト：ベース60% [cite: 23] */
-            --text-main: #2d2d2d;     /* 濃いグレーで高級感を出す */
-            --text-sub: #666666;
-            --accent-gold: #d4af37;   /* 高級感を添えるゴールド [cite: 23] */
-            --radius: 20px;
-        }
-
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            margin: 0; padding: 0;
-            line-height: 1.8; /* ゆとりある行間 [cite: 64] */
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* 文字の美しさを制御 [cite: 66, 86] */
-        h1, h2, h3 { word-break: auto-phrase; text-wrap: balance; letter-spacing: 0.05em; }
-
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-        /* --- スティッキーフッター（親指操作領域） [cite: 17, 18, 53] --- */
-        .sticky-footer {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            display: flex; gap: 8px; padding: 12px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px); z-index: 2000; box-sizing: border-box;
-        }
-        .footer-btn { 
-            flex: 1; text-align: center; padding: 14px 0; border-radius: 50px; 
-            font-weight: 900; font-size: 14px; text-decoration: none; 
-        }
-        .btn-line { background: #06C755; color: #fff; }
-        .btn-web { 
-            background: var(--primary); color: #fff; 
-            box-shadow: 0 8px 20px rgba(255, 26, 125, 0.3);
-            animation: bounce 2s infinite; /* 注意を惹く [cite: 137] */
-        }
-        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.98); } }
-
-        /* --- ヒーローセクション（斜めライン/スラッシュデザイン）  --- */
-        .hero {
-            height: 90svh; position: relative; overflow: hidden;
-            display: flex; align-items: center; background: #fdf2f4;
-        }
-        .hero-img {
-            position: absolute; top: 0; right: 0; width: 55%; height: 100%;
-            background: url('hero.jpg') no-repeat center center / cover;
-            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); /* 斜め切り [cite: 131] */
-        }
-        .hero-content { position: relative; z-index: 10; width: 50%; padding-left: 5%; }
-        
-        .hero-badge {
-            display: inline-block; background: var(--primary); color: #fff;
-            padding: 4px 12px; border-radius: 4px; font-weight: 900; font-size: 13px;
-            margin-bottom: 15px;
-        }
-        .hero-title { font-size: clamp(40px, 8vw, 80px); line-height: 1.1; margin: 0; color: var(--primary); }
-        .hero-title span { color: var(--text-main); font-size: 0.5em; display: block; }
-        .hero-copy { font-size: 18px; font-weight: 800; margin: 20px 0; }
-
-        /* --- 実績バッジ（社会的証明） [cite: 9, 100] --- */
-        .trust-badges { display: flex; gap: 10px; margin-top: 20px; }
-        .trust-badge { 
-            width: 80px; height: 80px; border: 2px solid var(--accent-gold); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 900; text-align: center; color: var(--accent-gold);
-            background: #fff; line-height: 1.2;
-        }
-
-        /* --- 特徴（ベントーグリッド）  --- */
-        .section-padding { padding: 100px 0; }
-        .bento-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-        }
-        .bento-item { 
-            background: #fff; padding: 30px; border-radius: var(--radius);
-            box-shadow: var(--shadow); border: 1px solid var(--primary-light);
-        }
-        .bento-item h3 { color: var(--primary); font-size: 20px; margin-top: 0; }
-        .bento-item.main { grid-column: span 2; background: var(--primary-light); }
-
-        /* --- 料金表（心理的フレーミング） [cite: 12] --- */
-        .price-card {
-            background: #fff; border: 2px solid var(--primary-light);
-            border-radius: var(--radius); padding: 40px; text-align: center;
-            position: relative; transition: 0.3s;
-        }
-        .price-card.recommend { border-color: var(--primary); transform: scale(1.05); }
-        .price-card.recommend::before {
-            content: '人気No.1'; position: absolute; top: -15px; left: 50%;
-            transform: translateX(-50%); background: var(--primary); color: #fff;
-            padding: 4px 20px; border-radius: 50px; font-weight: 900; font-size: 12px;
-        }
-        .price-big { font-family: 'Oswald', sans-serif; font-size: 48px; color: var(--primary); font-weight: 700; }
-        .price-sub { font-size: 14px; color: var(--text-sub); }
-
-        /* --- アクセス（地域特化）  --- */
-        .access-info { background: #fcfcfc; border-radius: var(--radius); padding: 40px; display: flex; gap: 40px; }
-        .parking-box { background: var(--primary-light); padding: 15px; border-radius: 10px; border-left: 5px solid var(--primary); }
-
-        @media (max-width: 768px) {
-            .hero { align-items: flex-end; height: 85svh; }
-            .hero-img { width: 100%; height: 60%; top: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
-            .hero-content { width: 100%; padding: 30px 24px 60px; background: #fff; border-radius: 30px 30px 0 0; }
-            .hero-title { font-size: 50px; }
-            .bento-grid { grid-template-columns: 1fr; }
-            .bento-item.main { grid-column: span 1; }
-            .price-card { margin-bottom: 20px; }
-            .access-info { flex-direction: column; }
-        }
-    </style>
+    <title>たまフィット | 高松市今里町の美容パーソナルジム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="sticky-footer">
-        <a href="https://line.me/R/ti/p/@072WKBWC" class="footer-btn btn-line">LINE相談</a>
-        <a href="https://line.me/R/ti/p/@072WKBWC" class="footer-btn btn-web">無料体験を予約する</a>
-    </div>
+    <nav class="sticky-cta">
+        <a href="https://line.me/..." class="btn-line">
+            <span class="small">質問OK</span><br>LINE相談
+        </a>
+        <a href="#contact" class="btn-primary pulse">
+            <span class="small">手ぶらでOK</span><br>無料体験を予約する
+        </a>
+    </nav>
 
-    <header style="position: absolute; top: 20px; left: 5%; z-index: 100;">
-        <div style="font-weight: 900; color: var(--primary); font-size: 24px;">たまフィット</div>
+    <header class="header">
+        <div class="container header-inner">
+            <div class="logo">たまフィット</div>
+            <div class="header-parking">店舗前駐車場 2台完備</div>
+        </div>
     </header>
 
-    <section class="hero">
-        <div class="hero-img"></div>
-        <div class="hero-content">
-            <span class="hero-badge">高松市今里町・完全個室</span>
-            <h1 class="hero-title"><span>「着たい服」を、着こなす。</span>たまフィット</h1>
-            <p class="hero-copy">正直、3ヶ月で素人は変わりません。<br>だからこそ、一生モノの「正しい知識」をここで。</p>
-            <div class="trust-badges">
-                <div class="trust-badge">解剖学<br>指導</div>
-                <div class="trust-badge">PFC<br>管理</div>
-                <div class="trust-badge">リバウンド<br>防止</div>
+    <main>
+        <section class="hero">
+            <div class="hero-bg">
+                <img src="hero-woman.jpg" alt="高松市のパーソナルジムでトレーニングする女性" fetchpriority="high">
             </div>
-        </div>
-    </section>
-
-    <section class="section-padding">
-        <div class="container">
-            <h2 style="text-align: center; color: var(--primary);">たまフィットが選ばれる理由</h2>
-            <div class="bento-grid">
-                <div class="bento-item main">
-                    <h3>解剖学×完全オーダーメイド</h3>
-                    <p>あなたの骨格、筋肉量を分析し、最も効率的なメニューを作成。運動が苦手な方こそ、最短距離で結果が出るロジックを体感してください。</p>
-                </div>
-                <div class="bento-item">
-                    <h3>食べて痩せる食事指導</h3>
-                    <p>無理な糖質制限は禁止。外食も楽しみながら、理想のPFCバランスを身につける。一生続く「美習慣」をサポートします。</p>
-                </div>
-                <div class="bento-item">
-                    <h3>完全個室の隠れ家</h3>
-                    <p>高松市今里町の静かなエリア。人目を気にせず、自分自身と向き合える特別な空間をご用意しています。</p>
-                </div>
-                <div class="bento-item main">
-                    <h3>手ぶらでOK、隙間時間で</h3>
-                    <p>ウェア、タオル完備。仕事帰りや買い物のついでに、日常のルーティンにフィットネスを。あなたのライフスタイルを尊重します。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding" style="background: var(--primary-light);">
-        <div class="container">
-            <h2 style="text-align: center;">料金プラン</h2>
-            <p style="text-align: center; font-weight: 900; color: var(--primary);">入会金 0円 キャンペーン実施中</p>
-            <div class="bento-grid" style="margin-top: 40px;">
-                <div class="price-card">
-                    <h3>まずは体験</h3>
-                    <div class="price-big">3,300<span style="font-size:16px;">円</span></div>
-                    <p>カウンセリング＋<br>体験トレーニング60分</p>
-                </div>
-                <div class="price-card recommend">
-                    <h3>週1回コース</h3>
-                    <div class="price-big">7,700<span style="font-size:16px;">円/回</span></div>
-                    <p class="price-sub">月額 30,800円</p>
-                    <p>迷ったらこれ！<br>一番人気の継続プラン</p>
-                </div>
-                <div class="price-card">
-                    <h3>都度払い</h3>
-                    <div class="price-big">9,900<span style="font-size:16px;">円/回</span></div>
-                    <p>自分のペースで<br>必要な時だけ通いたい方</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding">
-        <div class="container">
-            <h2 style="text-align: center;">店舗アクセス</h2>
-            <div class="access-info">
-                <div style="flex: 1;">
-                    <p><strong>所在地:</strong> 〒760-0078 香川県高松市今里町393-1 前川ビル1F</p>
-                    <div class="parking-box">
-                        <strong>★店舗前に専用駐車場 2台完備</strong><br>
-                        広めのスペースですので、大きな車や運転が不安な方も安心してお越しください。
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <span class="hero-badge">高松市今里町・完全個室</span>
+                    <h1 class="hero-title">
+                        うどんもカフェも<br>楽しみたい。<br>
+                        だから、高松の女性は<br>
+                        <span class="text-pink">「食べて痩せる」。</span>
+                    </h1>
+                    <p class="hero-desc">
+                        「正直、3ヶ月で素人は変わりません」<br>
+                        だからこそ、一生モノの知識を。<br>
+                        厳しい制限なしで、理想のシルエットへ。
+                    </p>
+                    <div class="hero-tags">
+                        <span>#駐車場完備</span>
+                        <span>#ウェア無料</span>
+                        <span>#子連れOK</span>
                     </div>
-                    <p><strong>営業時間:</strong> 10:00 - 22:00（予約制）</p>
-                    <a href="https://line.me/R/ti/p/@072WKBWC" style="display: block; background: #06C755; color: #fff; text-align: center; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: 900; margin-top: 20px;">Googleマップを開く</a>
-                </div>
-                <div style="flex: 1.2; height: 350px; border-radius: var(--radius); overflow: hidden;">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3294.613385626214!2d134.0531!3d34.3263!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553eb0d1f88888d%3A0x0!2zMzTCsDE5JzM0LjciTiAxMzTCsDAzJzExLjIiRQ!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" style="width:100%; height:100%; border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="sec-header">
+                    <span class="sec-sub">REASON</span>
+                    <h2 class="sec-title">たまフィットが選ばれる理由</h2>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-item main-feature">
+                        <h3>解剖学 × オーダーメイド</h3>
+                        <p>あなたの骨格、筋肉量を分析し、最も効率的なメニューを作成。運動が苦手な方こそ、最短距離で結果が出るロジックを体感してください。</p>
+                        <div class="deco-circle"></div>
+                    </div>
+                    <div class="bento-item sub-feature">
+                        <h3>食べて痩せる</h3>
+                        <p>無理な糖質制限は禁止。香川の食文化を楽しみながら、PFC管理で賢く痩せる。</p>
+                    </div>
+                    <div class="bento-item sub-feature">
+                        <h3>完全個室の隠れ家</h3>
+                        <p>誰にも会わずに、こっそり痩せる。入店から退店までプライバシーを徹底。</p>
+                    </div>
+                    <div class="bento-item sub-feature parking-card">
+                        <h3>駐車場完備</h3>
+                        <p>店舗前に広めの専用スペース。<br>ハイルーフ車も駐車ラクラク。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding bg-gray">
+            <div class="container trust-wrapper">
+                <div class="trust-img">
+                    <img src="instruction-scene.jpg" alt="トレーナーが笑顔で指導している風景" loading="lazy">
+                </div>
+                <div class="trust-text">
+                    <span class="sec-sub">TRUST</span>
+                    <h2 class="sec-title">運動音痴でも大丈夫。<br>マンツーマンだから、<br>あなたのペースで。</h2>
+                    <p>
+                        腕組みをした怖い指導はいたしません。
+                        解剖学を熟知したプロが、その日の体調に合わせて
+                        「エステ感覚」の心地よい刺激を提供します。
+                    </p>
+                    <ul class="check-list">
+                        <li>運動未経験の方が8割です</li>
+                        <li>30日間全額返金保証あり</li>
+                        <li>無理な勧誘は一切ありません</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="price" class="section-padding">
+            <div class="container">
+                <div class="sec-header center">
+                    <span class="sec-sub">PRICE</span>
+                    <h2 class="sec-title">料金プラン</h2>
+                    <p class="campaign-text">入会金 0円 キャンペーン実施中</p>
+                </div>
+                
+                <div class="price-grid">
+                    <div class="price-card">
+                        <h3>まずは体験</h3>
+                        <div class="price-num">3,300<span class="yen">円</span></div>
+                        <p>カウンセリング＋<br>体験トレーニング60分</p>
+                    </div>
+                    <div class="price-card recommend">
+                        <div class="badge">人気No.1</div>
+                        <h3>週1回コース</h3>
+                        <div class="price-num text-pink">7,700<span class="yen">円/回</span></div>
+                        <p class="sub-price">月額 30,800円</p>
+                        <p>迷ったらこれ！<br>一番人気の継続プラン</p>
+                    </div>
+                    <div class="price-card">
+                        <h3>都度払い</h3>
+                        <div class="price-num">9,900<span class="yen">円/回</span></div>
+                        <p>自分のペースで<br>必要な時だけ通いたい方</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="access" class="section-padding bg-gray">
+            <div class="container">
+                <div class="access-box">
+                    <div class="access-detail">
+                        <h2 class="sec-title">Access</h2>
+                        <p class="address">〒760-0078<br>香川県高松市今里町393-1 前川ビル1F</p>
+                        <dl class="access-list">
+                            <dt>営業時間</dt><dd>10:00 - 22:00（不定休）</dd>
+                            <dt>駐車場</dt><dd>店舗前に2台（無料・予約不要）</dd>
+                        </dl>
+                        <a href="#" class="btn-map">Googleマップで開く</a>
+                    </div>
+                    <div class="access-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3295.3456789!2d134.0!3d34.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDE4JzAwLjAiTiAxMzTCsDAwJzAwLjAiRQ!5e0!3m2!1sja!2sjp!4v1600000000000!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer class="footer">
-        <div class="container" style="text-align: center; padding-bottom: 120px; color: #999; font-size: 12px;">
-            <p>© 2026 たまフィット | 人生を変える 寄り添いの場所</p>
-        </div>
+        <p>© 2026 TamaFit. All Rights Reserved.</p>
     </footer>
 
 </body>

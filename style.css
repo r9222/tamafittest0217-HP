@@ -1,0 +1,297 @@
+/* --- 変数定義：白×ピンク黄金比 --- */
+:root {
+    --primary: #ff1a7d;       /* ビビッドピンク（アクセント） */
+    --primary-pale: #fff0f6;  /* 薄いピンク（背景） */
+    --text-main: #333333;     /* 濃いグレー（文字） */
+    --text-sub: #666666;      /* 薄いグレー（補足） */
+    --bg-white: #ffffff;
+    --bg-gray: #f9f9f9;
+    --accent-gold: #d4af37;
+    --font-jp: 'Noto Sans JP', sans-serif;
+    --font-en: 'Montserrat', sans-serif;
+    --radius: 24px;
+    /* 物理演算のような弾む動き */
+    --ease-bounce: linear(0, 0.009, 0.035 2.1%, 0.141 4.4%, 0.723 12.9%, 0.938 16.7%, 1.017, 1.077, 1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%, 1.129 32.8%, 1.051 39.6%, 1.017 43.1%, 0.991, 0.977 51%, 0.974 53.8%, 0.975 57.1%, 0.997 69.8%, 1.003 76.9%, 1.004 83.8%, 1);
+}
+
+/* --- 基本設定 --- */
+body {
+    font-family: var(--font-jp);
+    color: var(--text-main);
+    background: var(--bg-white);
+    margin: 0;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0;
+    text-wrap: balance; /* 文字のバランス調整 */
+    letter-spacing: 0.05em;
+}
+
+img { width: 100%; height: auto; display: block; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.section-padding { padding: 80px 0; }
+.bg-gray { background: var(--bg-gray); }
+.text-pink { color: var(--primary); }
+.center { text-align: center; }
+
+/* --- ヒーローセクション（斜め切りデザイン） --- */
+.hero {
+    position: relative;
+    height: 90vh; /* スマホのアドレスバー考慮で少し短く */
+    min-height: 600px;
+    background: var(--primary-pale);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0; right: 0;
+    width: 60%; /* PCでは右半分 */
+    height: 100%;
+    /* 左下を斜めに切り取る */
+    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+    z-index: 1;
+}
+
+.hero-bg img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.hero-content {
+    width: 45%; /* テキストエリアの幅 */
+}
+
+.hero-badge {
+    display: inline-block;
+    background: var(--primary);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+}
+
+.hero-title {
+    font-size: clamp(32px, 4vw, 56px); /* 画面幅に応じて可変 */
+    margin-bottom: 24px;
+    text-shadow: 2px 2px 0 #fff; /* 文字を見やすく */
+}
+
+.hero-desc {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: var(--text-sub);
+    font-weight: 500;
+    background: rgba(255,255,255,0.8); /* 読みやすさ確保 */
+    padding: 10px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.hero-tags span {
+    display: inline-block;
+    margin-right: 10px;
+    color: var(--text-sub);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* --- ベントーグリッド（特長） --- */
+.sec-header { margin-bottom: 50px; }
+.sec-sub { 
+    display: block; font-family: var(--font-en); 
+    color: var(--primary); font-weight: 900; letter-spacing: 0.1em;
+}
+.sec-title { font-size: 32px; }
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 20px;
+}
+
+.bento-item {
+    background: #fff;
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    transition: transform 0.3s;
+}
+.bento-item:hover { transform: translateY(-5px); }
+
+.main-feature {
+    grid-column: span 2; /* 2列分使う */
+    grid-row: span 2;    /* 2行分使う */
+    background: var(--primary-pale);
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.main-feature h3 { font-size: 24px; color: var(--primary); margin-bottom: 15px; }
+
+.sub-feature h3 { font-size: 18px; margin-bottom: 10px; border-left: 4px solid var(--primary); padding-left: 10px; }
+.sub-feature p { font-size: 14px; color: var(--text-sub); }
+
+.parking-card { background: #333; color: #fff; }
+.parking-card h3 { border-color: var(--accent-gold); }
+.parking-card p { color: #ccc; }
+
+/* --- 信頼・指導風景 --- */
+.trust-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+.trust-img { flex: 1; border-radius: var(--radius); overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+.trust-text { flex: 1; }
+.check-list { list-style: none; padding: 0; margin-top: 20px; }
+.check-list li {
+    padding-left: 25px; margin-bottom: 10px; position: relative; font-weight: 700;
+}
+.check-list li::before {
+    content: '✔'; color: var(--primary); position: absolute; left: 0;
+}
+
+/* --- 料金プラン --- */
+.price-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: flex-end;
+}
+.price-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: var(--radius);
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+}
+.price-card.recommend {
+    border: 3px solid var(--primary);
+    transform: scale(1.05);
+    z-index: 2;
+    box-shadow: 0 20px 40px rgba(255, 26, 125, 0.15);
+}
+.badge {
+    position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+    background: var(--primary); color: #fff; padding: 5px 20px;
+    border-radius: 50px; font-weight: 700; font-size: 12px;
+}
+.price-num {
+    font-family: var(--font-en);
+    font-size: 40px; font-weight: 900; margin: 15px 0;
+}
+.price-num .yen { font-size: 14px; font-weight: 700; }
+.sub-price { color: var(--text-sub); font-size: 13px; margin-bottom: 10px; }
+
+/* --- アクセス --- */
+.access-box {
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    display: flex;
+}
+.access-detail { flex: 1; padding: 40px; }
+.access-map { flex: 1.2; min-height: 300px; }
+.access-map iframe { width: 100%; height: 100%; }
+.access-list dt { float: left; font-weight: 700; width: 80px; color: var(--primary); }
+.access-list dd { margin-left: 80px; margin-bottom: 10px; }
+.btn-map {
+    display: inline-block; background: #eee; color: #333;
+    padding: 10px 20px; border-radius: 5px; text-decoration: none;
+    font-weight: 700; margin-top: 20px; font-size: 14px;
+}
+
+/* --- スティッキーフッター --- */
+.sticky-cta {
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #eee;
+    padding: 10px;
+    display: flex; gap: 10px;
+    z-index: 999;
+    box-sizing: border-box;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+}
+.footer-btn {
+    text-decoration: none; text-align: center; border-radius: 12px;
+    display: flex; flex-direction: column; justify-content: center;
+}
+.small { font-size: 10px; font-weight: normal; opacity: 0.9; }
+.btn-line {
+    flex: 1; background: #06C755; color: #fff; font-weight: 700; font-size: 14px;
+}
+.btn-primary {
+    flex: 2; background: var(--primary); color: #fff; font-weight: 700; font-size: 16px;
+    /* 弾むアニメーション */
+    transition: transform 0.6s var(--ease-bounce);
+}
+.btn-primary:active { transform: scale(0.95); }
+.pulse { animation: pulse 2s infinite; }
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 26, 125, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 26, 125, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 26, 125, 0); }
+}
+
+/* --- フッター --- */
+.footer {
+    text-align: center; padding: 40px 0 120px; /* スティッキーフッター分空ける */
+    font-size: 12px; color: #999;
+}
+
+/* --- スマホ対応（レスポンシブ） --- */
+@media (max-width: 768px) {
+    /* ヒーロー：縦並びにして画像をしっかり見せる */
+    .hero {
+        height: auto;
+        flex-direction: column;
+        padding-top: 60px; /* ヘッダー分 */
+    }
+    .hero-bg {
+        position: relative; width: 100%; height: 350px;
+        clip-path: none; /* 斜め切り解除 */
+        border-radius: 0 0 30px 30px; /* 下だけ丸く */
+    }
+    .hero-content {
+        width: 100%;
+        padding: 30px 0;
+        text-align: center;
+    }
+    .hero-badge { margin: 0 auto 15px; }
+    .hero-desc { text-align: left; margin: 0 20px 20px; }
+    
+    /* グリッドを1列に */
+    .bento-grid, .price-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .main-feature { grid-column: span 1; grid-row: span 1; }
+    
+    /* 信頼エリアを縦に */
+    .trust-wrapper, .access-box { flex-direction: column; }
+    .access-map { width: 100%; height: 250px; }
+    
+    /* 料金カード */
+    .price-card.recommend { transform: scale(1); border-width: 2px; }
+}
