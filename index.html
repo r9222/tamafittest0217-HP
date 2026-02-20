@@ -23,7 +23,7 @@
             --accent-yellow: #ffc107; 
             --yellow-grad: linear-gradient(135deg, #ffc107, #ffdb6d);
 
-            /* カード用の超極薄パステルカラー */
+            /* カード用のパステルカラー */
             --bg-pale-pink: #fff2f7;
             --bg-pale-mint: #f0fdfb;
             --bg-pale-purple: #fbf7ff;
@@ -45,7 +45,7 @@
             color: var(--text-main);
             margin: 0; padding: 0;
             line-height: 1.8;
-            overflow-x: hidden; 
+            overflow-x: clip; 
             -webkit-font-smoothing: antialiased;
             background-color: #fff0f5; 
             position: relative;
@@ -146,7 +146,7 @@
         #access .sec-header::after { background: var(--mint-grad); }
 
         /* =======================================================
-           NEW! 選ばれる理由（ジグザグレイアウト）
+           選ばれる理由（ジグザグレイアウト）正方形画像対応
            ======================================================= */
         .reason-list { display: flex; flex-direction: column; gap: 40px; }
         
@@ -160,10 +160,8 @@
         }
         .reason-row:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); background: #fff; }
         
-        /* 偶数行は左右を入れ替える（ジグザグ） */
         .reason-row:nth-child(even) { flex-direction: row-reverse; }
 
-        /* 各理由のカラーリング */
         .reason-mint { border-color: rgba(0, 184, 169, 0.2); background: var(--bg-pale-mint); }
         .reason-mint .reason-icon { color: var(--accent-mint); background: rgba(0, 184, 169, 0.1); }
         .reason-mint h3 { color: var(--accent-mint); }
@@ -176,13 +174,24 @@
         .reason-purple .reason-icon { color: var(--accent-purple); background: rgba(156, 81, 255, 0.1); }
         .reason-purple h3 { color: var(--accent-purple); }
 
-        .reason-text { flex: 1; }
+        .reason-text { flex: 1.2; } /* テキストエリアを少し広めに */
         .reason-icon { font-size: 32px; display: inline-block; padding: 12px; border-radius: 16px; margin-bottom: 15px; }
         .reason-text h3 { font-size: 24px; margin-bottom: 15px; }
         .reason-text p { font-size: 16px; color: var(--text-sub); }
 
-        .reason-img-box { flex: 1; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); aspect-ratio: 4/3; }
-        .reason-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        /* 画像枠を完全な正方形（1:1）に固定 */
+        .reason-img-box { 
+            flex: 1; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: var(--shadow-card); 
+            aspect-ratio: 1 / 1; 
+        }
+        /* 画像が正方形枠の中央で綺麗に切り抜かれるように設定 */
+        .reason-img-box img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; object-position: center; 
+        }
 
         /* --- トレーナー紹介 --- */
         .trainer-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
@@ -193,8 +202,21 @@
         .trainer-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); border-color: rgba(156, 81, 255, 0.4); background: #fff;}
         .card-obayashi { background: var(--bg-pale-purple); }
         .card-tamai { background: var(--bg-pale-pink); }
-        .trainer-img-box { width: 100%; height: auto; aspect-ratio: 3 / 4; overflow: hidden; background: rgba(255,255,255,0.5); display: flex; align-items: flex-end; justify-content: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .trainer-img-box img { width: 100%; height: 100%; object-fit: contain; object-position: bottom center; }
+        
+        /* トレーナー画像枠も完全な正方形（1:1）に固定 */
+        .trainer-img-box { 
+            width: 100%; height: auto; 
+            aspect-ratio: 1 / 1; 
+            overflow: hidden; background: rgba(255,255,255,0.5); 
+            display: flex; align-items: flex-end; justify-content: center; 
+            border-bottom: 1px solid rgba(0,0,0,0.05); 
+        }
+        /* 顔が切れないように、画像の上部(top center)を基準にカバーさせる */
+        .trainer-img-box img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; object-position: top center; 
+        }
+        
         .trainer-info { padding: 35px 30px; text-align: center; flex-grow: 1;}
         .trainer-name { font-size: 24px; color: var(--text-main); margin-bottom: 15px; }
         .trainer-tag { display: inline-block; font-weight: 700; font-size: 13px; padding: 6px 16px; border-radius: 50px; margin-bottom: 20px; }
@@ -202,7 +224,19 @@
         .tag-tamai { color: var(--primary); background: #fff; border: 1px solid rgba(255, 26, 125, 0.2); }
         .trainer-msg { font-size: 15px; color: var(--text-sub); text-align: left; margin: 0; }
 
-        /* --- 料金プラン --- */
+        /* --- 料金プラン・アクセス上部の画像バナー --- */
+        .bento-img {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 30px;
+        }
+        /* バナーに正方形画像を入れても、中央の一番いい部分を自動で切り抜く設定 */
+        .bento-img img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; object-position: center; 
+        }
+
         .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .price-card {
             background: var(--bg-pale-yellow); border-radius: var(--radius); padding: 50px 30px; 
@@ -221,14 +255,13 @@
         .price-sub { font-size: 14px; color: var(--text-sub); font-weight: 700; margin-bottom: 20px; }
         .price-card p { font-size: 15px; color: var(--text-sub); margin: 0; }
 
-        /* --- アクセス --- */
         #access { margin-bottom: 120px; }
         .access-info { display: flex; gap: 50px; background: var(--bg-pale-mint); padding: 50px; border-radius: var(--radius); border: 2px solid rgba(0, 184, 169, 0.15);}
         .parking-box { background: #fff; padding: 20px; border-radius: 12px; border-left: 5px solid var(--accent-mint); margin: 25px 0; box-shadow: var(--shadow-card); }
         .parking-box strong { color: var(--accent-mint); font-size: 16px; display: flex; align-items: center; margin-bottom: 5px;}
 
         /* =======================================================
-           スマホ・タブレット調整（PC版を崩さないよう厳格に分離）
+           スマホ・タブレット調整（正方形画像対応）
            ======================================================= */
         @media (max-width: 768px) {
             .header { padding: 12px 0; }
@@ -237,6 +270,7 @@
             .nav-links a { font-size: 11px; background: rgba(255,255,255,0.5); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05); }
             
             .hero { display: block; height: auto; min-height: 100svh; padding-top: 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; } 
+            /* スマホFVで画像がしっかり見えるように高さを確保 */
             .hero-img { width: 100%; height: 60vh; top: 0; right: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
             .hero-content { width: 100%; margin-top: 50vh; padding: 40px 24px 80px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top: 1px solid rgba(255,255,255,0.8); }
             .hero-title { font-size: 34px; } 
@@ -248,20 +282,21 @@
             
             .section-block { margin: 0 auto 40px auto; width: calc(100% - 30px); padding: 40px 20px; border-radius: 30px; }
 
-            /* ★ジグザグレイアウトのスマホ縦積み化★ */
+            /* ジグザグレイアウトのスマホ縦積み化 */
             .reason-row, .reason-row:nth-child(even) { 
-                flex-direction: column; /* 強制的に縦に並べる */
+                flex-direction: column; 
                 gap: 20px; 
                 padding: 30px 20px; 
             }
-            /* スマホでは画像が上、テキストが下になるように順序変更 */
-            .reason-img-box { order: -1; width: 100%; aspect-ratio: 16/9;}
+            /* スマホでも画像は正方形をキープ */
+            .reason-img-box { order: -1; width: 100%; aspect-ratio: 1 / 1; }
             .reason-text { text-align: center; }
 
             /* その他のグリッドを1列に */
             .trainer-grid, .price-grid { grid-template-columns: 1fr; gap: 20px; }
             
-            .banner-img { height: 180px !important; margin-bottom: 20px !important; }
+            /* スマホの横長バナー画像の高さ調整 */
+            .banner-img { height: 200px !important; margin-bottom: 20px !important; }
             
             .price-card { margin-bottom: 20px; padding: 40px 20px; }
             .price-card.recommend { transform: scale(1); }
@@ -390,6 +425,10 @@
                     <p style="font-weight: 900; color: var(--accent-yellow); margin-top: 15px; font-size: 18px;"><i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中</p>
                 </div>
                 
+                <div class="bento-img banner-img" style="height: 250px; width: 100%;">
+                    <img src="gym-room4.jpg" alt="たまフィットのトレーニング風景" loading="lazy">
+                </div>
+
                 <div class="price-grid">
                     <div class="price-card">
                         <h3>まずは体験</h3>
@@ -420,8 +459,8 @@
                 <div class="access-info">
                     <div style="flex: 1; display: flex; flex-direction: column;">
                         
-                        <div style="margin-bottom: 30px; height: 180px; border-radius: 16px; overflow:hidden; box-shadow: var(--shadow-card);">
-                            <img src="gym-room4.jpg" alt="店舗外観・内観" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
+                        <div class="bento-img banner-img" style="height: 180px; border-radius: 16px;">
+                            <img src="gym-room5.jpg" alt="店舗外観・内観" loading="lazy">
                         </div>
 
                         <p style="font-size: 16px; margin-bottom: 20px;">
@@ -457,7 +496,3 @@
 
 </body>
 </html>
-
-</body>
-</html>
-
