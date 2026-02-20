@@ -172,7 +172,7 @@
         }
         .ticket-btn:hover { transform: translateY(-5px); }
 
-        /* --- 選ばれる理由（ジグザグレイアウト） --- */
+        /* --- 選ばれる理由 --- */
         .reason-list { display: flex; flex-direction: column; gap: 50px; }
         .reason-row { display: flex; align-items: center; gap: 60px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); padding: 60px; border-radius: var(--radius); box-shadow: var(--shadow-card); border: 2px solid transparent; transition: transform 0.3s, box-shadow 0.3s; }
         .reason-row:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); background: #fff; }
@@ -192,7 +192,6 @@
         .reason-icon { font-size: 36px; display: inline-block; padding: 15px; border-radius: 16px; margin-bottom: 20px; }
         .reason-text h3 { font-size: 28px; margin-bottom: 20px; line-height: 1.4; }
         .reason-text p { font-size: 17px; color: var(--text-sub); line-height: 1.9; }
-
         .reason-img-box { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-card); aspect-ratio: 1 / 1; }
         .reason-img-box img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 
@@ -212,46 +211,38 @@
         .trainer-msg { font-size: 15px; color: var(--text-sub); text-align: left; margin: 0; }
 
         /* =======================================================
-           横スクロール ギャラリー（改良版）
+           横スクロール ギャラリー（PCドラッグ対応）
            ======================================================= */
-        .gallery-wrapper { width: 100%; overflow: hidden; padding-bottom: 20px; }
-        
-        /* 視覚的アピールのスワイプ案内テキスト */
-        .gallery-hint {
-            text-align: center; font-weight: 700; color: var(--primary);
-            font-size: 14px; margin-bottom: 15px;
-            animation: pulse-text 2s infinite;
-        }
+        .gallery-wrapper { width: 100%; overflow: hidden; padding-bottom: 20px; margin-left: -20px; width: calc(100% + 40px); }
+        .gallery-hint { text-align: center; font-weight: 700; color: var(--primary); font-size: 14px; margin-bottom: 15px; animation: pulse-text 2s infinite; }
         @keyframes pulse-text { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; transform: translateX(5px); } }
 
         .gallery-scroll { 
             display: flex; flex-wrap: nowrap; gap: 20px; 
             overflow-x: auto; scroll-snap-type: x mandatory; 
             -webkit-overflow-scrolling: touch; 
-            padding-bottom: 20px; /* スクロールバー用の余白 */
+            padding: 0 40px 20px;
+            /* ▼ PC用：マウスカーソルを手のひらマークに ▼ */
+            cursor: grab;
         }
-        
-        /* ▼ PC用：オシャレなスクロールバーを表示して横スクロールを促す ▼ */
+        /* ドラッグ中はカーソルを握ったマークに変更 */
+        .gallery-scroll.active {
+            cursor: grabbing;
+        }
+
         .gallery-scroll::-webkit-scrollbar { height: 10px; }
         .gallery-scroll::-webkit-scrollbar-track { background: rgba(0, 184, 169, 0.05); border-radius: 10px; }
         .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(0, 184, 169, 0.3); border-radius: 10px; }
         .gallery-scroll::-webkit-scrollbar-thumb:hover { background: rgba(0, 184, 169, 0.6); }
 
-        .gallery-item { 
-            flex: 0 0 auto; width: 60%; max-width: 450px; 
-            scroll-snap-align: center; border-radius: var(--radius); 
-            overflow: hidden; box-shadow: var(--shadow-card); background: #fff; 
-            border: 1px solid rgba(0, 184, 169, 0.15); transition: transform 0.3s; 
-        }
+        .gallery-item { flex: 0 0 auto; width: 60%; max-width: 450px; scroll-snap-align: center; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid rgba(0, 184, 169, 0.15); transition: transform 0.3s; }
         .gallery-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); }
-        .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-bottom: 1px solid #f0f0f0;}
+        
+        /* ギャラリー内の画像はドラッグ時に邪魔にならないよう設定 */
+        .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-bottom: 1px solid #f0f0f0; pointer-events: none;}
         .gallery-caption { padding: 20px; text-align: center; font-weight: 700; font-size: 16px; color: var(--text-main); }
 
-        /* --- 料金プラン --- */
-        .bento-img { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); }
-        .bento-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-        .banner-square { width: 100%; max-width: 500px; height: auto; aspect-ratio: 1 / 1; margin: 0 auto 50px auto; }
-        
+        /* --- 料金プラン（画像削除でスッキリ） --- */
         .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .price-card { background: var(--bg-pale-yellow); border-radius: var(--radius); padding: 50px 30px; text-align: center; position: relative; transition: 0.3s; box-shadow: var(--shadow-card); border: 2px solid rgba(255, 193, 7, 0.2); }
         .price-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); background: #fff;}
@@ -263,40 +254,20 @@
         .price-sub { font-size: 14px; color: var(--text-sub); font-weight: 700; margin-bottom: 20px; }
         .price-card p { font-size: 15px; color: var(--text-sub); margin: 0; }
 
-        /* =======================================================
-           予約ステップ ＆ カレンダー（Googleカレンダー埋め込み）
-           ======================================================= */
+        /* --- 予約ステップ ＆ カレンダー --- */
         .step-wrap { display: flex; gap: 20px; justify-content: center; align-items: stretch; margin-bottom: 60px; }
         .step-box { flex: 1; background: #fff; padding: 40px 20px; border-radius: 20px; text-align: center; box-shadow: var(--shadow-card); position: relative; border: 1px solid rgba(255,26,125,0.1);}
         .step-num { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--primary-grad); color: #fff; width: 36px; height: 36px; line-height: 36px; border-radius: 50%; font-weight: 900; font-size: 18px;}
         .step-box i { font-size: 40px; color: var(--primary); margin-bottom: 15px; }
         .step-box h3 { font-size: 18px; }
 
-        /* Googleカレンダー枠 */
-        .gcal-container {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow-card);
-            background: #fff;
-            border: 1px solid #eee;
-            /* iframeの比率を保つためのハック */
-            position: relative;
-            padding-bottom: 60%; /* PCでの高さ目安 */
-            height: 0;
-        }
-        .gcal-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+        .gcal-container { width: 100%; max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid #eee; position: relative; padding-bottom: 60%; height: 0; }
+        .gcal-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
         /* --- アクセス --- */
         #access { margin-bottom: 120px; }
+        .bento-img { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); }
+        .bento-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
         .access-banner { width: 100%; height: auto; aspect-ratio: 1 / 1; margin-bottom: 30px; }
         .access-info { display: flex; gap: 50px; background: var(--bg-pale-mint); padding: 50px; border-radius: var(--radius); border: 2px solid rgba(0, 184, 169, 0.15);}
         .parking-box { background: #fff; padding: 20px; border-radius: 12px; border-left: 5px solid var(--accent-mint); margin: 25px 0; box-shadow: var(--shadow-card); }
@@ -344,17 +315,13 @@
 
             .trainer-grid, .price-grid { grid-template-columns: 1fr; gap: 20px; }
             
-            /* スマホ版ギャラリー調整 */
             .gallery-hint { font-size: 12px; }
             .gallery-item { width: 85%; scroll-snap-align: start; }
-            /* スマホのスクロールバーは標準機能に任せる（非表示） */
             .gallery-scroll::-webkit-scrollbar { display: none; }
 
             .step-wrap { flex-direction: column; gap: 30px; }
-            /* スマホ版カレンダー高さ */
             .gcal-container { padding-bottom: 100%; } 
 
-            .banner-square { max-width: 100%; margin-bottom: 30px; }
             .access-banner { margin-bottom: 20px; }
             .price-card { margin-bottom: 20px; padding: 40px 20px; }
             .price-card.recommend { transform: scale(1); }
@@ -500,7 +467,7 @@
             <div class="gallery-wrapper">
                 <div class="gallery-hint"><i class="material-icons-round" style="font-size:16px;">swipe</i> 横にスワイプしてご覧ください</div>
                 
-                <div class="gallery-scroll">
+                <div class="gallery-scroll" id="drag-slider">
                     <div class="gallery-item">
                         <img src="gallery1.jpg" alt="笑顔のカウンセリング" loading="lazy">
                         <div class="gallery-caption">丁寧なカウンセリングからスタート</div>
@@ -527,10 +494,6 @@
                     <span class="sec-sub">PRICE</span>
                     <h2 class="sec-title">料金プラン</h2>
                     <p class="sec-desc" style="color: var(--accent-yellow); font-size: 1.2em;"><i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中</p>
-                </div>
-                
-                <div class="bento-img banner-square">
-                    <img src="gym-room4.jpg" alt="たまフィットのトレーニング風景" loading="lazy">
                 </div>
 
                 <div class="price-grid">
@@ -645,5 +608,42 @@
         </div>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('drag-slider');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('active');
+                // ドラッグ中はピタッと止まる機能を一時的にオフにして滑らかに動かす
+                slider.style.scrollSnapType = 'none'; 
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+                slider.classList.remove('active');
+                slider.style.scrollSnapType = 'x mandatory';
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+                slider.classList.remove('active');
+                slider.style.scrollSnapType = 'x mandatory';
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2; // スクロール速度（数字が大きいほど速く動く）
+                slider.scrollLeft = scrollLeft - walk;
+            });
+        });
+    </script>
 </body>
 </html>
