@@ -73,7 +73,7 @@
         .header {
             position: fixed; top: 0; left: 0; width: 100%;
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px);
-            z-index: 3000; box-shadow: 0 4px 20px rgba(255, 26, 125, 0.05);
+            z-index: 4000; box-shadow: 0 4px 20px rgba(255, 26, 125, 0.05);
             padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.6);
         }
         .header-container { 
@@ -81,9 +81,8 @@
             display: flex; justify-content: space-between; align-items: center; 
         }
         
-        /* ロゴ画像と文字の組み合わせ */
         .logo { 
-            display: flex; align-items: center; text-decoration: none; flex-shrink: 0; 
+            display: flex; align-items: center; text-decoration: none; flex-shrink: 0; z-index: 4001;
         }
         .logo-img { 
             height: 48px; width: auto; margin-right: 12px; object-fit: contain; 
@@ -91,6 +90,16 @@
         .logo-text { 
             font-weight: 900; color: var(--text-main); font-size: 28px; letter-spacing: 0.05em; 
         }
+
+        /* ▼ ハンバーガーボタン（PCでは非表示） ▼ */
+        .hamburger-btn {
+            display: none; background: transparent; border: none; cursor: pointer; 
+            padding: 5px; z-index: 4001; color: var(--text-main);
+        }
+        .hamburger-btn .material-icons-round { font-size: 32px; margin: 0; }
+
+        /* ▼ メニューの黒背景（PCでは非表示） ▼ */
+        .menu-overlay { display: none; }
 
         /* メニューリンク */
         .nav-links { 
@@ -290,36 +299,86 @@
         .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
         /* =======================================================
-           ▼ スマホ・タブレット調整（ヘッダー横一列 完璧版） ▼
+           ▼ スマホ・タブレット調整（ハンバーガーメニュー実装版） ▼
            ======================================================= */
         @media (max-width: 768px) {
-            .header { padding: 10px 0; }
+            .header { padding: 12px 0; }
             
-            /* スマホで絶対に横一列に並べるための設定 */
+            /* ヘッダーは常に横一列（ロゴ 左、ボタン 右） */
             .header-container { 
                 flex-direction: row; 
                 justify-content: space-between; 
-                padding: 0 10px; /* 画面端ギリギリまで使う */
-                gap: 5px;
+                padding: 0 20px;
             }
             
-            /* ロゴ画像のサイズ調整 */
+            /* スマホ時のロゴ調整 */
             .logo { width: auto; justify-content: flex-start; }
-            .logo-img { height: 26px; margin-right: 5px; max-width: none; }
-            .logo-text { font-size: 16px; letter-spacing: 0; }
+            .logo-img { height: 32px; margin-right: 8px; }
+            .logo-text { font-size: 20px; letter-spacing: 0; }
 
-            /* 各ボタン（メニュー）の極限調整 */
-            .nav-links { width: auto; justify-content: flex-end; gap: 4px; }
-            .nav-links a.nav-item { 
-                font-size: 11px; 
-                background: rgba(255,255,255,0.8); 
-                padding: 5px 6px; 
-                border-radius: 6px; 
-                border: 1px solid rgba(0,0,0,0.05); 
-                white-space: nowrap; /* テキストの改行を絶対に防ぐ */
+            /* ハンバーガーボタンを表示 */
+            .hamburger-btn { display: block; }
+
+            /* ▼ スライドインするモバイルメニュー ▼ */
+            .nav-links { 
+                position: fixed;
+                top: 0;
+                right: -100%; /* 初期状態は画面外に隠す */
+                width: 70%; /* 画面幅の70%のメニュー */
+                max-width: 300px;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: stretch;
+                padding-top: 80px; /* 閉じるボタンのスペースを空ける */
+                gap: 0;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+                transition: right 0.3s ease-in-out; /* なめらかにスライド */
+                z-index: 3900;
             }
-            .header-btn { display: none; } 
+            
+            /* メニュー展開時のクラス */
+            .nav-links.active { right: 0; }
 
+            /* モバイルメニュー内のリンクデザイン */
+            .nav-links a.nav-item { 
+                font-size: 16px; 
+                padding: 20px 30px; 
+                border-bottom: 1px solid rgba(0,0,0,0.05); 
+                background: transparent;
+                border-radius: 0;
+                width: 100%;
+                text-align: left;
+            }
+            
+            /* メニュー内の体験予約ボタン */
+            .header-btn { 
+                display: block; 
+                margin: 30px auto; 
+                width: 80%; 
+                text-align: center; 
+                padding: 15px; 
+                font-size: 16px;
+            } 
+
+            /* ▼ メニューを開いたときの黒い半透明の背景（タップで閉じる用） ▼ */
+            .menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0; left: 0; width: 100%; height: 100vh;
+                background: rgba(0,0,0,0.4);
+                z-index: 3500;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+            .menu-overlay.active {
+                display: block;
+                opacity: 1;
+            }
+
+            /* 以下は今までのレイアウト調整 */
             .hero { display: block; height: auto; min-height: 100svh; padding-top: 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; } 
             .hero-img { width: 100%; height: 60vh; top: 0; right: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
             .hero-content { width: 100%; margin-top: 50vh; padding: 40px 24px 80px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top: 1px solid rgba(255,255,255,0.8); }
@@ -373,15 +432,22 @@
                 <img src="logo.png" alt="" class="logo-img">
                 <span class="logo-text">たまフィット</span>
             </a>
-            <nav class="nav-links">
+            
+            <button class="hamburger-btn" id="hamburger-btn" aria-label="メニューを開く">
+                <i class="material-icons-round" id="hamburger-icon">menu</i>
+            </button>
+
+            <nav class="nav-links" id="nav-links">
                 <a href="#reason" class="nav-item">理由</a>
                 <a href="#trainer" class="nav-item">トレーナー</a>
                 <a href="#price" class="nav-item">料金</a>
                 <a href="#access" class="nav-item">店舗</a>
-                <a href="https://line.me/R/ti/p/@072WKBWC" class="header-btn">体験予約</a>
+                <a href="https://line.me/R/ti/p/@072WKBWC" class="header-btn">体験予約はこちら</a>
             </nav>
         </div>
     </header>
+
+    <div class="menu-overlay" id="menu-overlay"></div>
 
     <div class="sticky-footer">
         <a href="https://line.me/R/ti/p/@072WKBWC" class="footer-btn btn-line">
@@ -642,7 +708,43 @@
     </footer>
 
     <script>
+        // ▼ ハンバーガーメニューの開閉プログラム ▼
         document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const navLinks = document.getElementById('nav-links');
+            const menuOverlay = document.getElementById('menu-overlay');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            // メニューを開く/閉じる関数
+            function toggleMenu() {
+                navLinks.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                
+                // アイコンを「三」と「✕」で切り替え
+                if (navLinks.classList.contains('active')) {
+                    hamburgerIcon.textContent = 'close';
+                } else {
+                    hamburgerIcon.textContent = 'menu';
+                }
+            }
+
+            // 3本線ボタンを押した時
+            hamburgerBtn.addEventListener('click', toggleMenu);
+
+            // メニューの黒い背景を押した時（閉じる）
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            // メニュー内のリンク（理由、料金など）を押した時もメニューを閉じる
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    if (navLinks.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // ▼ ギャラリーのドラッグ用プログラム ▼
             const slider = document.getElementById('drag-slider');
             let isDown = false;
             let startX;
