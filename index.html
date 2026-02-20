@@ -210,9 +210,7 @@
         .tag-tamai { color: var(--primary); background: #fff; border: 1px solid rgba(255, 26, 125, 0.2); }
         .trainer-msg { font-size: 15px; color: var(--text-sub); text-align: left; margin: 0; }
 
-        /* =======================================================
-           横スクロール ギャラリー（バグ完全修正版）
-           ======================================================= */
+        /* --- 横スクロール ギャラリー --- */
         .gallery-wrapper { width: 100%; overflow: hidden; padding-bottom: 20px; margin-left: -20px; width: calc(100% + 40px); }
         .gallery-hint { text-align: center; font-weight: 700; color: var(--primary); font-size: 14px; margin-bottom: 15px; animation: pulse-text 2s infinite; }
         @keyframes pulse-text { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; transform: translateX(5px); } }
@@ -223,13 +221,10 @@
             -webkit-overflow-scrolling: touch; 
             padding: 0 40px 20px;
             cursor: grab;
-            
-            /* ▼ バグ修正1：ドラッグ中のテキスト選択（紫のハイライト等）を禁止 ▼ */
             user-select: none;
             -webkit-user-select: none;
         }
         .gallery-scroll.active { cursor: grabbing; }
-
         .gallery-scroll::-webkit-scrollbar { height: 10px; }
         .gallery-scroll::-webkit-scrollbar-track { background: rgba(0, 184, 169, 0.05); border-radius: 10px; }
         .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(0, 184, 169, 0.3); border-radius: 10px; }
@@ -238,20 +233,32 @@
         .gallery-item { flex: 0 0 auto; width: 60%; max-width: 450px; scroll-snap-align: center; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid rgba(0, 184, 169, 0.15); transition: transform 0.3s; }
         .gallery-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); }
         
-        /* ▼ バグ修正2：画像自体のデフォルトドラッグ操作（ゴースト）を禁止 ▼ */
-        .gallery-item img { 
-            width: 100%; aspect-ratio: 4/3; object-fit: cover; 
-            border-bottom: 1px solid #f0f0f0; 
-            pointer-events: none; /* 画像をつまめなくする */
-        }
+        .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-bottom: 1px solid #f0f0f0; pointer-events: none;}
         .gallery-caption { padding: 20px; text-align: center; font-weight: 700; font-size: 16px; color: var(--text-main); }
 
-        /* --- 料金プラン（画像削除でスッキリ） --- */
+        /* --- 料金プラン --- */
         .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .price-card { background: var(--bg-pale-yellow); border-radius: var(--radius); padding: 50px 30px; text-align: center; position: relative; transition: 0.3s; box-shadow: var(--shadow-card); border: 2px solid rgba(255, 193, 7, 0.2); }
         .price-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); background: #fff;}
         .price-card.recommend { background: linear-gradient(135deg, #fffcf5 0%, #fff4ce 100%); transform: scale(1.05); z-index: 2; box-shadow: 0 20px 40px rgba(255, 193, 7, 0.2); border-color: transparent; }
-        .price-card.recommend::before { content: '人気No.1'; position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--yellow-grad); color: #2d3436; padding: 6px 24px; border-radius: 50px; font-weight: 900; font-size: 13px; }
+        
+        /* ▼ 人気No.1バッジが絶対にズレないように強力に固定 ▼ */
+        .price-card.recommend::before { 
+            content: '人気No.1'; 
+            position: absolute; 
+            top: -18px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: var(--yellow-grad); 
+            color: #2d3436; 
+            padding: 6px 24px; 
+            border-radius: 50px; 
+            font-weight: 900; 
+            font-size: 13px; 
+            white-space: nowrap; 
+            z-index: 10;
+        }
+        
         .price-card h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-main); }
         .price-big { font-family: 'Oswald', sans-serif; font-size: 52px; color: var(--text-main); font-weight: 700; line-height: 1; margin-bottom: 10px; }
         .price-card.recommend .price-big { color: var(--accent-yellow); }
@@ -265,8 +272,20 @@
         .step-box i { font-size: 40px; color: var(--primary); margin-bottom: 15px; }
         .step-box h3 { font-size: 18px; }
 
-        .gcal-container { width: 100%; max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid #eee; position: relative; padding-bottom: 60%; height: 0; }
-        .gcal-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        /* ▼ 修正：カレンダーの縦幅を大幅に広げ、枠内スクロールを許可 ▼ */
+        .gcal-container { 
+            width: 100%; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: var(--shadow-card); 
+            background: #fff; 
+            border: 1px solid #eee; 
+            height: 800px; /* PCでの高さを大幅に拡張 */
+            -webkit-overflow-scrolling: touch; /* スマホでの滑らかなスクロール */
+        }
+        .gcal-container iframe { width: 100%; height: 100%; border: 0; }
 
         /* --- アクセス --- */
         #access { margin-bottom: 120px; }
@@ -324,7 +343,9 @@
             .gallery-scroll::-webkit-scrollbar { display: none; }
 
             .step-wrap { flex-direction: column; gap: 30px; }
-            .gcal-container { padding-bottom: 100%; } 
+            
+            /* ▼ 修正：スマホでもカレンダーの高さをしっかり確保 ▼ */
+            .gcal-container { height: 700px; padding-bottom: 0; } 
 
             .access-banner { margin-bottom: 20px; }
             .price-card { margin-bottom: 20px; padding: 40px 20px; }
@@ -556,9 +577,11 @@
                     </h3>
                     
                     <div class="gcal-container">
-                        <iframe src="https://calendar.app.google/3zUEEDt9yvUxy7ab7" style="border:solid 1px #777" width="800" height="1400" frameborder="0" scrolling="no"></iframe>
+                        <iframe src="https://calendar.app.google/3zUEEDt9yvUxy7ab7" width="100%" height="100%" frameborder="0" style="border:0;" scrolling="yes"></iframe>
+                    </div>
                     
                     <p style="font-size: 14px; color: var(--text-sub); margin-top: 20px; font-weight: 700;">
+                        ※カレンダー枠の中で上下にスクロールできます。<br>
                         ※カレンダーに表示されていない時間帯もご案内可能な場合があります。<br>まずはLINEでお気軽にお問い合わせください！
                     </p>
                 </div>
@@ -626,7 +649,6 @@
                 scrollLeft = slider.scrollLeft;
             });
 
-            // 枠外に出たときの処理
             slider.addEventListener('mouseleave', () => {
                 if (!isDown) return;
                 isDown = false;
@@ -634,7 +656,6 @@
                 slider.style.scrollSnapType = 'x mandatory';
             });
 
-            // 画面のどこで指（マウス）を離しても確実にストップさせる処理
             document.addEventListener('mouseup', () => {
                 if (!isDown) return;
                 isDown = false;
@@ -644,13 +665,12 @@
 
             slider.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
-                e.preventDefault(); // ここで文字のハイライト選択を防止
+                e.preventDefault(); 
                 const x = e.pageX - slider.offsetLeft;
                 const walk = (x - startX) * 2; 
                 slider.scrollLeft = scrollLeft - walk;
             });
             
-            // 画像のゴーストドラッグを禁止する処理
             const images = slider.querySelectorAll('img');
             images.forEach(img => {
                 img.addEventListener('dragstart', (e) => e.preventDefault());
@@ -659,5 +679,3 @@
     </script>
 </body>
 </html>
-
-
