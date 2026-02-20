@@ -7,335 +7,521 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <style>
         :root {
-            /* 白×ピンクの黄金比配色 */
-            --primary: #ff1a7d;       /* ビビッドピンク */
-            --primary-light: #fff0f6; /* 超薄いピンク */
-            --bg-base: #ffffff;       /* ホワイト */
-            --text-main: #2d2d2d;     /* 濃いグレー */
-            --text-sub: #666666;
-            --accent-gold: #d4af37;   /* ゴールド */
-            --radius: 20px;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            /* カラフルなアクセントカラー */
+            --primary: #ff1a7d;       
+            --primary-grad: linear-gradient(135deg, #ff1a7d, #ff8c7a);
+            --accent-mint: #00b8a9;   
+            --mint-grad: linear-gradient(135deg, #00b8a9, #5ce0d8);
+            --accent-purple: #9c51ff; 
+            --purple-grad: linear-gradient(135deg, #9c51ff, #d48cff);
+            --accent-yellow: #ffc107; 
+            --yellow-grad: linear-gradient(135deg, #ffc107, #ffdb6d);
+
+            /* カード用の超極薄パステルカラー（白の代わり） */
+            --bg-pale-pink: #fff2f7;
+            --bg-pale-mint: #f0fdfb;
+            --bg-pale-purple: #fbf7ff;
+            --bg-pale-yellow: #fffdf5;
+
+            --text-main: #2d3436;     
+            --text-sub: #555e61;
+            
+            --radius: 24px;
+            --shadow-block: 0 15px 40px rgba(255, 26, 125, 0.08); /* 影もほんのりピンクに */
+            --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.04);
+            --shadow-floating: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+        }
+
+        /* スムーススクロール */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px; 
         }
 
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background-color: var(--bg-base);
             color: var(--text-main);
             margin: 0; padding: 0;
             line-height: 1.8;
+            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            
+            /* ▼ 画面全体のオーロラ背景（ここが白っぽさを完全に消します） ▼ */
+            background-color: #fff0f5; /* ベースを薄いピンクに */
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(0, 184, 169, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 90% 20%, rgba(255, 26, 125, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(156, 81, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 90%, rgba(255, 193, 7, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+            background-attachment: fixed; /* スクロールしても背景がついてくる */
         }
 
         h1, h2, h3 { 
-            word-break: auto-phrase; 
-            text-wrap: balance; 
-            letter-spacing: 0.05em; 
-            font-weight: 700;
-            margin: 0;
+            word-break: auto-phrase; text-wrap: balance; letter-spacing: 0.05em; font-weight: 900; margin: 0;
         }
-
         img { width: 100%; height: auto; display: block; }
-        
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-        .section-padding { padding: 100px 0; }
-        .center { text-align: center; }
+        .material-icons-round { vertical-align: middle; margin-right: 5px; }
 
-        /* --- スティッキーフッター（親指操作領域） --- */
+        /* --- 追従型固定ヘッダー --- */
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.85); /* 半透明で背景を透かす */
+            backdrop-filter: blur(15px);
+            z-index: 3000;
+            box-shadow: 0 4px 20px rgba(255, 26, 125, 0.05);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo {
+            font-weight: 900; color: var(--text-main); font-size: 24px; letter-spacing: 0.05em; 
+            display: flex; align-items: center; text-decoration: none;
+        }
+        
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-sub); font-weight: 700; font-size: 14px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* --- スティッキーフッター --- */
         .sticky-footer {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            display: flex; gap: 8px; padding: 12px;
+            display: flex; gap: 10px; padding: 12px;
             background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px); z-index: 2000; box-sizing: border-box;
-            border-top: 1px solid #eee;
+            backdrop-filter: blur(15px); z-index: 2000; box-sizing: border-box;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
         }
         .footer-btn { 
-            flex: 1; text-align: center; padding: 14px 0; border-radius: 50px; 
-            font-weight: 900; font-size: 14px; text-decoration: none; 
-            display: flex; flex-direction: column; justify-content: center; line-height: 1.2;
+            flex: 1; text-align: center; padding: 12px 0; border-radius: 12px; 
+            font-weight: 900; font-size: 15px; text-decoration: none; 
+            display: flex; flex-direction: column; justify-content: center; line-height: 1.3;
         }
-        .footer-btn span { font-size: 10px; font-weight: normal; opacity: 0.9; display: block; margin-bottom: 2px;}
-        .btn-line { background: #06C755; color: #fff; }
+        .footer-btn span { font-size: 11px; font-weight: normal; opacity: 0.95; margin-bottom: 2px;}
+        .btn-line { background: #06C755; color: #fff; box-shadow: 0 8px 20px rgba(6,199,85,0.2); }
         .btn-web { 
-            background: var(--primary); color: #fff; 
-            box-shadow: 0 8px 20px rgba(255, 26, 125, 0.3);
-            animation: bounce 2s infinite; 
+            background: var(--primary-grad); color: #fff; 
+            box-shadow: 0 10px 25px rgba(255, 26, 125, 0.3);
+            animation: pulse 2s infinite; 
         }
-        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.98); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 26, 125, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 26, 125, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 26, 125, 0); } }
 
-        /* --- ヒーローセクション（斜めライン） --- */
+        /* --- ヒーローセクション --- */
         .hero {
-            height: 90svh; position: relative; overflow: hidden;
-            display: flex; align-items: center; background: #fdf2f4;
+            height: 100svh; position: relative; overflow: hidden;
+            display: flex; align-items: center;
+            /* 背景は透明にして、bodyのオーロラカラーを見せる */
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            padding-top: 70px;
+            margin-bottom: 50px; 
+            border-radius: 0 0 40px 40px; 
+            box-shadow: var(--shadow-block);
+            border-bottom: 1px solid rgba(255,255,255,0.6);
         }
         .hero-img {
             position: absolute; top: 0; right: 0; width: 55%; height: 100%;
             background: url('hero.jpg') no-repeat center center / cover;
             clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 1;
         }
-        .hero-content { position: relative; z-index: 10; width: 50%; padding-left: 5%; }
+        .hero-content { position: relative; z-index: 10; width: 50%; padding-left: 8%; }
         
         .hero-badge {
-            display: inline-block; background: var(--primary); color: #fff;
-            padding: 4px 12px; border-radius: 4px; font-weight: 900; font-size: 13px;
-            margin-bottom: 15px;
+            display: inline-block; background: var(--primary-grad); color: #fff;
+            padding: 6px 16px; border-radius: 50px; font-weight: 900; font-size: 13px;
+            margin-bottom: 20px; box-shadow: 0 5px 15px rgba(255, 26, 125, 0.3);
         }
-        .hero-title { font-size: clamp(40px, 8vw, 80px); line-height: 1.1; margin: 0; color: var(--primary); }
-        .hero-title span { color: var(--text-main); font-size: 0.5em; display: block; }
-        .hero-copy { font-size: 18px; font-weight: 800; margin: 20px 0; }
+        .hero-title { font-size: clamp(40px, 8vw, 80px); line-height: 1.1; margin: 0; color: var(--text-main); }
+        .hero-title span { 
+            background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: block; margin-top: 5px; font-size: 1.1em;
+        }
+        .hero-copy { font-size: 18px; font-weight: 700; margin: 25px 0; color: var(--text-sub); }
 
-        /* --- 実績バッジ --- */
-        .trust-badges { display: flex; gap: 10px; margin-top: 20px; }
+        .trust-badges { display: flex; gap: 15px; margin-top: 30px; }
         .trust-badge { 
-            width: 80px; height: 80px; border: 2px solid var(--accent-gold); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 900; text-align: center; color: var(--accent-gold);
-            background: #fff; line-height: 1.2;
+            width: 85px; height: 85px; border-radius: 20px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 900; text-align: center; color: var(--text-main);
+            background: rgba(255, 255, 255, 0.85); line-height: 1.3; box-shadow: var(--shadow-card);
+            border: 2px solid transparent; background-image: linear-gradient(#fff, #fff), var(--mint-grad); background-origin: border-box; background-clip: padding-box, border-box;
+            backdrop-filter: blur(5px);
         }
+        .trust-badge .material-icons-round { font-size: 26px; margin-bottom: 5px; color: var(--accent-mint); margin-right: 0;}
 
-        /* --- 特徴（ベントーグリッド） --- */
-        .bento-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        /* =======================================================
+           巨大ブロック（ガラスのように透けて、背景色が混ざる）
+           ======================================================= */
+        .section-block {
+            max-width: 1140px; 
+            margin: 0 auto 60px auto; 
+            border-radius: 40px; 
+            padding: 80px 40px; 
+            
+            /* グラスモーフィズム（すりガラス効果） */
+            background: rgba(255, 255, 255, 0.65); 
+            backdrop-filter: blur(25px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-block); 
+            position: relative;
         }
+        
+        .section-block .container { max-width: 1000px; margin: 0 auto; padding: 0; position: relative; z-index: 2;}
+
+        /* セクション見出しとカラー下線 */
+        .sec-header { margin-bottom: 60px; text-align: center; position: relative; padding-bottom: 20px;}
+        .sec-sub { 
+            font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.2em;
+            display: block; margin-bottom: 10px;
+        }
+        .sec-title { font-size: 32px; color: var(--text-main); }
+        .sec-header::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 50px; height: 5px; border-radius: 3px;
+        }
+        
+        #reason .sec-sub { background: var(--mint-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #reason .sec-header::after { background: var(--mint-grad); }
+        
+        #trainer .sec-sub { background: var(--purple-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #trainer .sec-header::after { background: var(--purple-grad); }
+        
+        #price .sec-sub { background: var(--yellow-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #price .sec-header::after { background: var(--yellow-grad); }
+        
+        #access .sec-sub { background: var(--mint-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #access .sec-header::after { background: var(--mint-grad); }
+
+        /* =======================================================
+           各カードの中身も白ではなく「超極薄のパステルカラー」に
+           ======================================================= */
+        .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .bento-item { 
-            background: #fff; padding: 30px; border-radius: var(--radius);
-            box-shadow: var(--shadow); border: 1px solid var(--primary-light);
-            transition: transform 0.3s;
+            padding: 40px 30px; border-radius: var(--radius);
+            box-shadow: var(--shadow-card); transition: all 0.3s;
+            position: relative; overflow: hidden; border: 2px solid transparent; 
         }
-        .bento-item:hover { transform: translateY(-5px); }
-        .bento-item h3 { color: var(--primary); font-size: 20px; margin-top: 0; margin-bottom: 10px; }
-        .bento-item.main { grid-column: span 2; background: var(--primary-light); border: none; }
+        .bento-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); }
+        
+        /* 1. ミント（解剖学） */
+        .item-mint { background: var(--bg-pale-mint); border-color: rgba(0, 184, 169, 0.2); }
+        .item-mint:hover { border-color: rgba(0, 184, 169, 0.5); }
+        .item-mint .bento-icon { color: var(--accent-mint); background: rgba(0, 184, 169, 0.1); }
+        .item-mint h3 { color: var(--accent-mint); }
+        
+        /* 2. イエロー（食事） */
+        .item-yellow { background: var(--bg-pale-yellow); border-color: rgba(255, 193, 7, 0.2); }
+        .item-yellow:hover { border-color: rgba(255, 193, 7, 0.5); }
+        .item-yellow .bento-icon { color: var(--accent-yellow); background: rgba(255, 193, 7, 0.1); }
+        .item-yellow h3 { color: var(--accent-yellow); }
+        
+        /* 3. パープル（個室） */
+        .item-purple { background: var(--bg-pale-purple); border-color: rgba(156, 81, 255, 0.2); }
+        .item-purple:hover { border-color: rgba(156, 81, 255, 0.5); }
+        .item-purple .bento-icon { color: var(--accent-purple); background: rgba(156, 81, 255, 0.1); }
+        .item-purple h3 { color: var(--accent-purple); }
+        
+        /* 4. ピンク（手ぶら） */
+        .item-pink { background: var(--bg-pale-pink); border-color: rgba(255, 26, 125, 0.2); }
+        .item-pink:hover { border-color: rgba(255, 26, 125, 0.5); }
+        .item-pink .bento-icon { color: var(--primary); background: rgba(255, 26, 125, 0.1); }
+        .item-pink h3 { color: var(--primary); }
 
-        /* --- トレーナー紹介（修正済みCSS） --- */
-        .trainer-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-            margin-top: 40px;
-        }
+        .bento-icon { font-size: 36px; margin-bottom: 15px; display: inline-block; padding: 12px; border-radius: 16px; }
+        .bento-item h3 { font-size: 22px; margin-bottom: 15px; }
+        .bento-item p { color: var(--text-sub); font-size: 15px; margin: 0; }
+        .bento-item.main { grid-column: span 2; }
+
+        /* --- トレーナー紹介（パステル紫＆ピンク） --- */
+        .trainer-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
         .trainer-card {
-            background: #fff;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 1px solid #eee;
-            transition: transform 0.3s;
-            display: flex; flex-direction: column;
+            border-radius: var(--radius); border: 2px solid rgba(156, 81, 255, 0.1);
+            overflow: hidden; box-shadow: var(--shadow-card);
+            transition: transform 0.3s; display: flex; flex-direction: column;
         }
-        .trainer-card:hover { transform: translateY(-5px); }
+        .trainer-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); border-color: rgba(156, 81, 255, 0.4); }
+        
+        .card-obayashi { background: var(--bg-pale-purple); }
+        .card-tamai { background: var(--bg-pale-pink); }
         
         .trainer-img-box {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 3 / 4; /* 写真を綺麗な縦長比率に固定 */
-            overflow: hidden; 
-            background: #ffffff;
-            display: flex;
-            align-items: flex-end; /* 画像を下揃え */
-            justify-content: center;
+            width: 100%; height: auto; aspect-ratio: 3 / 4;
+            overflow: hidden; background: rgba(255,255,255,0.5);
+            display: flex; align-items: flex-end; justify-content: center;
         }
-        .trainer-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* 全体を綺麗に収める */
-            object-position: bottom center;
-        }
+        .trainer-img-box img { width: 100%; height: 100%; object-fit: contain; object-position: bottom center; }
         
-        .trainer-info { padding: 30px; text-align: center; flex-grow: 1; }
-        .trainer-name { font-size: 24px; color: var(--text-main); margin-bottom: 10px; }
+        .trainer-info { padding: 35px 30px; text-align: center; flex-grow: 1;}
+        .trainer-name { font-size: 24px; color: var(--text-main); margin-bottom: 15px; }
         .trainer-tag {
-            display: inline-block; background: var(--primary-light); color: var(--primary);
-            font-weight: 700; font-size: 13px; padding: 6px 12px;
-            border-radius: 4px; margin-bottom: 20px;
+            display: inline-block; font-weight: 700; font-size: 13px; padding: 6px 16px;
+            border-radius: 50px; margin-bottom: 20px;
         }
-        .trainer-msg { font-size: 15px; color: var(--text-sub); text-align: left; }
+        .tag-obayashi { color: var(--accent-purple); background: #fff; border: 1px solid rgba(156, 81, 255, 0.2); }
+        .tag-tamai { color: var(--primary); background: #fff; border: 1px solid rgba(255, 26, 125, 0.2); }
+        .trainer-msg { font-size: 15px; color: var(--text-sub); text-align: left; margin: 0; }
 
-        /* --- 料金表 --- */
+        /* --- 料金表（パステルイエロー） --- */
         .price-card {
-            background: #fff; border: 2px solid var(--primary-light);
-            border-radius: var(--radius); padding: 40px; text-align: center;
-            position: relative; transition: 0.3s;
+            background: var(--bg-pale-yellow); border-radius: var(--radius); padding: 50px 30px; 
+            text-align: center; position: relative; transition: 0.3s;
+            box-shadow: var(--shadow-card); border: 2px solid rgba(255, 193, 7, 0.2);
         }
-        .price-card.recommend { border-color: var(--primary); transform: scale(1.05); z-index: 2; background: #fff; }
+        .price-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); }
+        .price-card.recommend { 
+            background: linear-gradient(135deg, #fffcf5 0%, #fff4ce 100%); 
+            transform: scale(1.05); z-index: 2; 
+            box-shadow: 0 20px 40px rgba(255, 193, 7, 0.2); border-color: transparent;
+        }
         .price-card.recommend::before {
-            content: '人気No.1'; position: absolute; top: -15px; left: 50%;
-            transform: translateX(-50%); background: var(--primary); color: #fff;
-            padding: 4px 20px; border-radius: 50px; font-weight: 900; font-size: 12px;
+            content: '人気No.1'; position: absolute; top: -18px; left: 50%;
+            transform: translateX(-50%); background: var(--yellow-grad); color: #2d3436;
+            padding: 6px 24px; border-radius: 50px; font-weight: 900; font-size: 13px;
         }
-        .price-big { font-family: 'Oswald', sans-serif; font-size: 48px; color: var(--primary); font-weight: 700; }
-        .price-sub { font-size: 14px; color: var(--text-sub); }
+        .price-card h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-main); }
+        .price-big { font-family: 'Oswald', sans-serif; font-size: 52px; color: var(--text-main); font-weight: 700; line-height: 1; margin-bottom: 10px; }
+        .price-card.recommend .price-big { color: var(--accent-yellow); }
+        .price-sub { font-size: 14px; color: var(--text-sub); font-weight: 700; margin-bottom: 20px; }
+        .price-card p { font-size: 15px; color: var(--text-sub); margin: 0; }
 
-        /* --- アクセス --- */
-        .access-info { background: #fcfcfc; border-radius: var(--radius); padding: 40px; display: flex; gap: 40px; }
-        .parking-box { background: var(--primary-light); padding: 15px; border-radius: 10px; border-left: 5px solid var(--primary); margin: 15px 0; }
+        /* --- アクセス（パステルミント） --- */
+        #access { margin-bottom: 120px; }
+        .access-info { display: flex; gap: 50px; background: var(--bg-pale-mint); padding: 50px; border-radius: var(--radius); border: 2px solid rgba(0, 184, 169, 0.15);}
+        .parking-box { 
+            background: #fff; padding: 20px; border-radius: 12px; 
+            border-left: 5px solid var(--accent-mint); margin: 25px 0; box-shadow: var(--shadow-card);
+        }
+        .parking-box strong { color: var(--accent-mint); font-size: 16px; display: flex; align-items: center; margin-bottom: 5px;}
 
         /* --- スマホ調整 --- */
         @media (max-width: 768px) {
-            .section-padding { padding: 60px 0; }
-            .hero { align-items: flex-end; height: 85svh; }
-            .hero-img { width: 100%; height: 50%; top: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
-            .hero-content { width: 100%; padding: 30px 24px 60px; background: #fff; border-radius: 30px 30px 0 0; }
-            .hero-title { font-size: 42px; }
+            .nav-links { display: none; }
+            .header { padding: 12px 0; }
+            .logo { font-size: 20px; }
             
-            .bento-grid, .trainer-grid { grid-template-columns: 1fr; }
+            .hero { align-items: flex-end; height: 85svh; padding-top: 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; } 
+            .hero-img { width: 100%; height: 50%; top: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
+            .hero-content { 
+                width: 100%; padding: 40px 24px 60px; 
+                background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 30px 30px 0 0; 
+                box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top: 1px solid rgba(255,255,255,0.8);
+            }
+            .hero-title { font-size: 42px; }
+            .trust-badges { justify-content: center; }
+            
+            .section-block {
+                margin: 0 15px 40px 15px; 
+                padding: 50px 20px;
+                border-radius: 30px; 
+            }
+
+            .bento-grid, .trainer-grid { grid-template-columns: 1fr; gap: 20px; }
             .bento-item.main { grid-column: span 1; }
             
-            /* スマホでの写真調整 */
-            .trainer-img-box { aspect-ratio: 3 / 4; }
+            .price-card { margin-bottom: 25px; padding: 40px 20px; }
+            .price-card.recommend { transform: scale(1); }
             
-            .price-card { margin-bottom: 20px; }
-            .price-card.recommend { transform: scale(1); border-width: 3px; }
-            
-            .access-info { flex-direction: column; }
+            .access-info { flex-direction: column; padding: 30px 20px; gap: 30px;}
         }
     </style>
 </head>
 <body>
 
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <span style="color: var(--primary); margin-right: 5px;">●</span>たまフィット
+            </a>
+            <nav class="nav-links">
+                <a href="#reason">選ばれる理由</a>
+                <a href="#trainer">トレーナー紹介</a>
+                <a href="#price">料金プラン</a>
+                <a href="#access">アクセス</a>
+            </nav>
+        </div>
+    </header>
+
     <div class="sticky-footer">
         <a href="https://line.me/R/ti/p/@072WKBWC" class="footer-btn btn-line">
-            <span>質問OK</span>LINE相談
+            <span><i class="material-icons-round" style="font-size:14px;">chat</i> 質問・相談OK</span>LINE相談
         </a>
         <a href="https://line.me/R/ti/p/@072WKBWC" class="footer-btn btn-web">
-            <span>手ぶらでOK</span>無料体験を予約する
+            <span><i class="material-icons-round" style="font-size:14px;">calendar_today</i> 簡単30秒</span>無料体験を予約
         </a>
     </div>
 
-    <header style="position: absolute; top: 20px; left: 5%; z-index: 100;">
-        <div style="font-weight: 900; color: var(--primary); font-size: 24px;">たまフィット</div>
-    </header>
-
-    <section class="hero">
-        <div class="hero-img"></div>
-        <div class="hero-content">
-            <span class="hero-badge">高松市今里町・完全個室</span>
-            <h1 class="hero-title"><span>「着たい服」を、着こなす。</span>たまフィット</h1>
-            <p class="hero-copy">正直、3ヶ月で素人は変わりません。<br>だからこそ、一生モノの「正しい知識」をここで。</p>
-            <div class="trust-badges">
-                <div class="trust-badge">解剖学<br>指導</div>
-                <div class="trust-badge">PFC<br>管理</div>
-                <div class="trust-badge">リバウンド<br>防止</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding">
-        <div class="container">
-            <h2 class="center" style="color: var(--primary); margin-bottom: 40px;">たまフィットが選ばれる理由</h2>
-            <div class="bento-grid">
-                <div class="bento-item main">
-                    <h3>解剖学×完全オーダーメイド</h3>
-                    <p>あなたの骨格、筋肉量を分析し、最も効率的なメニューを作成。運動が苦手な方こそ、最短距離で結果が出るロジックを体感してください。</p>
-                </div>
-                <div class="bento-item">
-                    <h3>食べて痩せる食事指導</h3>
-                    <p>無理な糖質制限は禁止。外食も楽しみながら、理想のPFCバランスを身につける。一生続く「美習慣」をサポートします。</p>
-                </div>
-                <div class="bento-item">
-                    <h3>完全個室の隠れ家</h3>
-                    <p>高松市今里町の静かなエリア。人目を気にせず、自分自身と向き合える特別な空間をご用意しています。</p>
-                </div>
-                <div class="bento-item main">
-                    <h3>手ぶらでOK、隙間時間で</h3>
-                    <p>ウェア、タオル完備。仕事帰りや買い物のついでに、日常のルーティンにフィットネスを。あなたのライフスタイルを尊重します。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding" style="background: #f9f9f9;">
-        <div class="container">
-            <div class="center" style="margin-bottom: 40px;">
-                <span style="font-family:'Oswald', sans-serif; color:var(--primary); font-weight:700;">TRAINER</span>
-                <h2 style="font-size: 32px;">私たちがサポートします</h2>
-                <p style="color:var(--text-sub); margin-top:10px;">経験豊富なトレーナーが、あなたの「変わりたい」に寄り添います。</p>
-            </div>
-
-            <div class="trainer-grid">
-                <div class="trainer-card">
-                    <div class="trainer-img-box">
-                        <img src="trainer-obayashi.jpg" alt="大林トレーナー" loading="lazy">
+    <main>
+        <section class="hero">
+            <div class="hero-img"></div>
+            <div class="hero-content">
+                <span class="hero-badge">高松市今里町・完全個室</span>
+                <h1 class="hero-title">「着たい服」を、<br>着こなす。<span>たまフィット</span></h1>
+                <p class="hero-copy">正直、3ヶ月で素人は変わりません。<br>だからこそ、一生モノの「正しい知識」をここで。</p>
+                
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <i class="material-icons-round">accessibility_new</i>
+                        <div>解剖学<br>指導</div>
                     </div>
-                    <div class="trainer-info">
-                        <h3 class="trainer-name">大林トレーナー</h3>
-                        <span class="trainer-tag">運動初心者・中高年の方歓迎</span>
-                        <p class="trainer-msg">
-                            不安な方にこそ、寄り添ってご案内します！
-                            体力や年齢、柔軟性を考慮し、段階的にメニューを調整。
-                            「楽しく続けられる」セッションを何より大切にしています。
+                    <div class="trust-badge">
+                        <i class="material-icons-round">restaurant_menu</i>
+                        <div>PFC<br>管理</div>
+                    </div>
+                    <div class="trust-badge">
+                        <i class="material-icons-round">favorite</i>
+                        <div>リバウンド<br>防止</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reason" class="section-block">
+            <div class="container">
+                <div class="sec-header">
+                    <span class="sec-sub">REASON</span>
+                    <h2 class="sec-title">たまフィットが選ばれる理由</h2>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-item main item-mint">
+                        <i class="material-icons-round bento-icon">science</i>
+                        <h3>解剖学×完全オーダーメイド</h3>
+                        <p>あなたの骨格、筋肉量を分析し、最も効率的なメニューを作成。運動が苦手な方こそ、最短距離で結果が出るロジックを体感してください。</p>
+                    </div>
+                    <div class="bento-item item-yellow">
+                        <i class="material-icons-round bento-icon">lunch_dining</i>
+                        <h3>食べて痩せる食事指導</h3>
+                        <p>無理な糖質制限は禁止。外食も楽しみながら、理想のPFCバランスを身につける。一生続く「美習慣」をサポートします。</p>
+                    </div>
+                    <div class="bento-item item-purple">
+                        <i class="material-icons-round bento-icon">vpn_key</i>
+                        <h3>完全個室の隠れ家</h3>
+                        <p>高松市今里町の静かなエリア。人目を気にせず、自分自身と向き合える特別な空間をご用意しています。</p>
+                    </div>
+                    <div class="bento-item main item-pink">
+                        <i class="material-icons-round bento-icon">checkroom</i>
+                        <h3>手ぶらでOK、隙間時間で</h3>
+                        <p>ウェア、タオル完備。仕事帰りや買い物のついでに、日常のルーティンにフィットネスを。あなたのライフスタイルを尊重します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trainer" class="section-block">
+            <div class="container">
+                <div class="sec-header">
+                    <span class="sec-sub">TRAINER</span>
+                    <h2 class="sec-title">私たちがサポートします</h2>
+                    <p style="color:var(--text-sub); margin-top:15px; font-weight: 700;">経験豊富なトレーナーが、あなたの「変わりたい」に寄り添います。</p>
+                </div>
+
+                <div class="trainer-grid">
+                    <div class="trainer-card card-obayashi">
+                        <div class="trainer-img-box">
+                            <img src="trainer-obayashi.jpg" alt="大林トレーナー" loading="lazy">
+                        </div>
+                        <div class="trainer-info">
+                            <h3 class="trainer-name">大林トレーナー</h3>
+                            <span class="trainer-tag tag-obayashi">運動初心者・中高年の方歓迎</span>
+                            <p class="trainer-msg">
+                                不安な方にこそ、寄り添ってご案内します！
+                                体力や年齢、柔軟性を考慮し、段階的にメニューを調整。
+                                「楽しく続けられる」セッションを何より大切にしています。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="trainer-card card-tamai">
+                        <div class="trainer-img-box">
+                            <img src="trainer-tamai.jpg" alt="玉井トレーナー" loading="lazy">
+                        </div>
+                        <div class="trainer-info">
+                            <h3 class="trainer-name">玉井トレーナー</h3>
+                            <span class="trainer-tag tag-tamai">ボディメイク・大会指導可能</span>
+                            <p class="trainer-msg">
+                                初心者の方のダイエットから、コンテスト向けの本格指導まで。
+                                ボディメイクのプロとして、美しいボディライン作りを
+                                様々なご希望に応じて全力でサポートいたします！
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="price" class="section-block">
+            <div class="container">
+                <div class="sec-header">
+                    <span class="sec-sub">PRICE</span>
+                    <h2 class="sec-title">料金プラン</h2>
+                    <p style="font-weight: 900; color: var(--accent-yellow); margin-top: 15px; font-size: 18px;">
+                        <i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中
+                    </p>
+                </div>
+                
+                <div class="bento-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="price-card">
+                        <h3>まずは体験</h3>
+                        <div class="price-big">3,300<span style="font-size:16px;">円</span></div>
+                        <p>カウンセリング＋<br>体験トレーニング60分</p>
+                    </div>
+                    <div class="price-card recommend">
+                        <h3>週1回コース</h3>
+                        <div class="price-big">7,700<span style="font-size:16px;">円/回</span></div>
+                        <div class="price-sub">月額 30,800円</div>
+                        <p>迷ったらこれ！<br>一番人気の継続プラン</p>
+                    </div>
+                    <div class="price-card">
+                        <h3>都度払い</h3>
+                        <div class="price-big">9,900<span style="font-size:16px;">円/回</span></div>
+                        <p>自分のペースで<br>必要な時だけ通いたい方</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="access" class="section-block">
+            <div class="container">
+                <div class="sec-header">
+                    <span class="sec-sub">ACCESS</span>
+                    <h2 class="sec-title">店舗・アクセス</h2>
+                </div>
+                <div class="access-info">
+                    <div style="flex: 1;">
+                        <p style="font-size: 16px; margin-bottom: 20px;">
+                            <i class="material-icons-round" style="color:var(--accent-mint);">location_on</i>
+                            <strong>所在地:</strong><br>〒760-0078<br>香川県高松市今里町393-1 前川ビル1F
                         </p>
-                    </div>
-                </div>
-
-                <div class="trainer-card">
-                    <div class="trainer-img-box">
-                        <img src="trainer-tamai.jpg" alt="玉井トレーナー" loading="lazy">
-                    </div>
-                    <div class="trainer-info">
-                        <h3 class="trainer-name">玉井トレーナー</h3>
-                        <span class="trainer-tag">ボディメイク・大会指導可能</span>
-                        <p class="trainer-msg">
-                            初心者の方のダイエットから、コンテスト向けの本格指導まで。
-                            ボディメイクのプロとして、美しいボディライン作りを
-                            様々なご希望に応じて全力でサポートいたします！
+                        <div class="parking-box">
+                            <strong><i class="material-icons-round">directions_car</i> 店舗前に専用駐車場 2台完備</strong>
+                            広めのスペースですので、大きな車や運転が不安な方も安心してお越しください。
+                        </div>
+                        <p style="font-size: 16px;">
+                            <i class="material-icons-round" style="color:var(--accent-mint);">access_time</i>
+                            <strong>営業時間:</strong> 10:00 - 22:00（予約制）
                         </p>
+                        <a href="https://line.me/R/ti/p/@072WKBWC" style="display: block; background: #06C755; color: #fff; text-align: center; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 900; margin-top: 30px; box-shadow: 0 5px 15px rgba(6,199,85,0.3);">
+                            <i class="material-icons-round">map</i> Googleマップアプリで開く
+                        </a>
+                    </div>
+                    <div style="flex: 1.2; height: 350px; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card);">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3295.6387342376!2d134.0596!3d34.3185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDE5JzA2LjYiTiAxMzTCsDAzJzM0LjYiRQ!5e0!3m2!1sja!2sjp!4v1600000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <section class="section-padding" style="background: var(--primary-light);">
+    <footer style="text-align: center; padding: 0 0 120px 0;">
         <div class="container">
-            <h2 class="center" style="margin-bottom: 10px;">料金プラン</h2>
-            <p class="center" style="font-weight: 900; color: var(--primary); margin-bottom: 40px;">入会金 0円 キャンペーン実施中</p>
-            
-            <div class="bento-grid">
-                <div class="price-card">
-                    <h3>まずは体験</h3>
-                    <div class="price-big">3,300<span style="font-size:16px;">円</span></div>
-                    <p>カウンセリング＋<br>体験トレーニング60分</p>
-                </div>
-                <div class="price-card recommend">
-                    <h3>週1回コース</h3>
-                    <div class="price-big">7,700<span style="font-size:16px;">円/回</span></div>
-                    <p class="price-sub">月額 30,800円</p>
-                    <p>迷ったらこれ！<br>一番人気の継続プラン</p>
-                </div>
-                <div class="price-card">
-                    <h3>都度払い</h3>
-                    <div class="price-big">9,900<span style="font-size:16px;">円/回</span></div>
-                    <p>自分のペースで<br>必要な時だけ通いたい方</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding">
-        <div class="container">
-            <h2 class="center" style="margin-bottom: 40px;">店舗アクセス</h2>
-            <div class="access-info">
-                <div style="flex: 1;">
-                    <p><strong>所在地:</strong> 〒760-0078 香川県高松市今里町393-1 前川ビル1F</p>
-                    <div class="parking-box">
-                        <strong>★店舗前に専用駐車場 2台完備</strong><br>
-                        広めのスペースですので、大きな車や運転が不安な方も安心してお越しください。
-                    </div>
-                    <p><strong>営業時間:</strong> 10:00 - 22:00（予約制）</p>
-                    <a href="https://line.me/R/ti/p/@072WKBWC" style="display: block; background: #06C755; color: #fff; text-align: center; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: 900; margin-top: 20px;">Googleマップを開く</a>
-                </div>
-                <div style="flex: 1.2; height: 350px; border-radius: var(--radius); overflow: hidden;">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3294.613385626214!2d134.0531!3d34.3263!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553eb0d1f88888d%3A0x0!2zMzTCsDE5JzM0LjciTiAxMzTCsDAzJzExLjIiRQ!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" style="width:100%; height:100%; border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container" style="text-align: center; padding-bottom: 120px; color: #999; font-size: 12px;">
-            <p>© 2026 たまフィット | 人生を変える 寄り添いの場所</p>
+            <div style="font-weight: 900; color: var(--text-main); font-size: 20px; margin-bottom: 10px;">たまフィット</div>
+            <p style="color: #999; font-size: 12px; font-weight: 700;">© 2026 TamaFit | 人生を変える 寄り添いの場所</p>
         </div>
     </footer>
 
