@@ -79,11 +79,7 @@
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-sub); font-weight: 700; font-size: 14px; transition: color 0.3s; }
         .nav-links a:hover { color: var(--primary); }
-        
-        /* ▼ NEW! ヘッダー予約ボタン（PC用） ▼ */
-        .header-btn {
-            background: var(--primary-grad); color: #fff; padding: 10px 24px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 4px 15px rgba(255, 26, 125, 0.3); transition: transform 0.3s;
-        }
+        .header-btn { background: var(--primary-grad); color: #fff; padding: 10px 24px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 4px 15px rgba(255, 26, 125, 0.3); transition: transform 0.3s; }
         .header-btn:hover { transform: scale(1.05); color: #fff; }
 
         /* --- スティッキーフッター --- */
@@ -115,7 +111,6 @@
         }
         .hero-content { position: relative; z-index: 10; width: 60%; padding-left: 5%; }
         
-        /* ▼ NEW! FVの限定オファーバッジ ▼ */
         .offer-badge {
             display: inline-block; background: #fff; color: var(--primary); padding: 10px 24px; border-radius: 50px; font-weight: 900; font-size: 16px; border: 2px solid var(--primary); margin-bottom: 20px; box-shadow: 0 10px 25px rgba(255, 26, 125, 0.2); animation: float 3s ease-in-out infinite; line-height: 1.4;
         }
@@ -149,7 +144,6 @@
         .sec-desc { font-size: 18px; color: var(--text-sub); margin-top: 20px; font-weight: 700; }
         .sec-header::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 6px; border-radius: 3px; }
         
-        /* セクションごとのテーマカラー指定 */
         #trial .sec-sub { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         #trial .sec-header::after { background: var(--primary-grad); }
         #reason .sec-sub { background: var(--mint-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -165,9 +159,7 @@
         #access .sec-sub { background: var(--mint-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         #access .sec-header::after { background: var(--mint-grad); }
 
-        /* =======================================================
-           NEW! 体験オファーチケット
-           ======================================================= */
+        /* --- 体験オファーチケット --- */
         .ticket-box {
             background: linear-gradient(135deg, #ffffff 0%, var(--bg-pale-pink) 100%);
             border: 3px dashed var(--primary);
@@ -220,12 +212,37 @@
         .trainer-msg { font-size: 15px; color: var(--text-sub); text-align: left; margin: 0; }
 
         /* =======================================================
-           NEW! 横スライド ギャラリー
+           横スクロール ギャラリー（改良版）
            ======================================================= */
-        .gallery-wrapper { width: 100%; overflow: hidden; padding: 20px 0; margin-left: -20px; /* 枠からはみ出してスクロール感を出す */ width: calc(100% + 40px); }
-        .gallery-scroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 0 40px 20px; }
-        .gallery-scroll::-webkit-scrollbar { display: none; }
-        .gallery-item { flex: 0 0 60%; max-width: 450px; scroll-snap-align: center; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid rgba(0, 184, 169, 0.15); transition: transform 0.3s; }
+        .gallery-wrapper { width: 100%; overflow: hidden; padding-bottom: 20px; }
+        
+        /* 視覚的アピールのスワイプ案内テキスト */
+        .gallery-hint {
+            text-align: center; font-weight: 700; color: var(--primary);
+            font-size: 14px; margin-bottom: 15px;
+            animation: pulse-text 2s infinite;
+        }
+        @keyframes pulse-text { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; transform: translateX(5px); } }
+
+        .gallery-scroll { 
+            display: flex; flex-wrap: nowrap; gap: 20px; 
+            overflow-x: auto; scroll-snap-type: x mandatory; 
+            -webkit-overflow-scrolling: touch; 
+            padding-bottom: 20px; /* スクロールバー用の余白 */
+        }
+        
+        /* ▼ PC用：オシャレなスクロールバーを表示して横スクロールを促す ▼ */
+        .gallery-scroll::-webkit-scrollbar { height: 10px; }
+        .gallery-scroll::-webkit-scrollbar-track { background: rgba(0, 184, 169, 0.05); border-radius: 10px; }
+        .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(0, 184, 169, 0.3); border-radius: 10px; }
+        .gallery-scroll::-webkit-scrollbar-thumb:hover { background: rgba(0, 184, 169, 0.6); }
+
+        .gallery-item { 
+            flex: 0 0 auto; width: 60%; max-width: 450px; 
+            scroll-snap-align: center; border-radius: var(--radius); 
+            overflow: hidden; box-shadow: var(--shadow-card); background: #fff; 
+            border: 1px solid rgba(0, 184, 169, 0.15); transition: transform 0.3s; 
+        }
         .gallery-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); }
         .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-bottom: 1px solid #f0f0f0;}
         .gallery-caption { padding: 20px; text-align: center; font-weight: 700; font-size: 16px; color: var(--text-main); }
@@ -233,7 +250,7 @@
         /* --- 料金プラン --- */
         .bento-img { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); }
         .bento-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-        .banner-img-large { height: 400px; width: 100%; margin-bottom: 50px; }
+        .banner-square { width: 100%; max-width: 500px; height: auto; aspect-ratio: 1 / 1; margin: 0 auto 50px auto; }
         
         .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .price-card { background: var(--bg-pale-yellow); border-radius: var(--radius); padding: 50px 30px; text-align: center; position: relative; transition: 0.3s; box-shadow: var(--shadow-card); border: 2px solid rgba(255, 193, 7, 0.2); }
@@ -247,7 +264,7 @@
         .price-card p { font-size: 15px; color: var(--text-sub); margin: 0; }
 
         /* =======================================================
-           NEW! 予約ステップ ＆ カレンダー
+           予約ステップ ＆ カレンダー（Googleカレンダー埋め込み）
            ======================================================= */
         .step-wrap { display: flex; gap: 20px; justify-content: center; align-items: stretch; margin-bottom: 60px; }
         .step-box { flex: 1; background: #fff; padding: 40px 20px; border-radius: 20px; text-align: center; box-shadow: var(--shadow-card); position: relative; border: 1px solid rgba(255,26,125,0.1);}
@@ -255,17 +272,32 @@
         .step-box i { font-size: 40px; color: var(--primary); margin-bottom: 15px; }
         .step-box h3 { font-size: 18px; }
 
-        .cal-wrapper { background: #fff; border-radius: 20px; padding: 30px; box-shadow: var(--shadow-card); max-width: 700px; margin: 0 auto; text-align: center;}
-        .calendar-table { width: 100%; border-collapse: collapse; }
-        .calendar-table th, .calendar-table td { padding: 15px; text-align: center; border: 1px solid #eee; font-size: 18px;}
-        .calendar-table th { background: var(--bg-pale-pink); color: var(--primary); font-weight: 700; }
-        .cal-o { color: #06C755; font-weight: 900; font-size: 24px; } /* マル */
-        .cal-t { color: var(--accent-yellow); font-weight: 900; font-size: 24px; } /* サンカク */
-        .cal-x { color: #ccc; font-weight: 900; font-size: 20px; } /* バツ */
+        /* Googleカレンダー枠 */
+        .gcal-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            background: #fff;
+            border: 1px solid #eee;
+            /* iframeの比率を保つためのハック */
+            position: relative;
+            padding-bottom: 60%; /* PCでの高さ目安 */
+            height: 0;
+        }
+        .gcal-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
         /* --- アクセス --- */
         #access { margin-bottom: 120px; }
-        .banner-img-small { height: 300px; width: 100%; margin-bottom: 40px; }
+        .access-banner { width: 100%; height: auto; aspect-ratio: 1 / 1; margin-bottom: 30px; }
         .access-info { display: flex; gap: 50px; background: var(--bg-pale-mint); padding: 50px; border-radius: var(--radius); border: 2px solid rgba(0, 184, 169, 0.15);}
         .parking-box { background: #fff; padding: 20px; border-radius: 12px; border-left: 5px solid var(--accent-mint); margin: 25px 0; box-shadow: var(--shadow-card); }
         .parking-box strong { color: var(--accent-mint); font-size: 16px; display: flex; align-items: center; margin-bottom: 5px;}
@@ -280,7 +312,7 @@
             .logo { font-size: 18px; }
             .nav-links { gap: 8px; }
             .nav-links a { font-size: 11px; background: rgba(255,255,255,0.5); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05); }
-            .header-btn { display: none; } /* スマホでは下部固定ボタンがあるため非表示 */
+            .header-btn { display: none; } 
 
             .hero { display: block; height: auto; min-height: 100svh; padding-top: 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; } 
             .hero-img { width: 100%; height: 60vh; top: 0; right: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
@@ -300,7 +332,6 @@
             .sec-desc { font-size: 15px; margin-top: 15px; }
             .sec-header::after { width: 50px; height: 5px; }
 
-            /* 体験チケット調整 */
             .ticket-box { padding: 30px 20px; }
             .ticket-price { font-size: 48px; }
             .ticket-btn { font-size: 16px; padding: 15px 30px; width: 100%; display: block;}
@@ -313,18 +344,18 @@
 
             .trainer-grid, .price-grid { grid-template-columns: 1fr; gap: 20px; }
             
-            /* ギャラリー調整 */
-            .gallery-wrapper { padding: 10px 0; margin-left: -20px; width: calc(100% + 40px); }
-            .gallery-scroll { padding: 0 20px 20px; }
-            .gallery-item { flex: 0 0 85%; scroll-snap-align: start; }
+            /* スマホ版ギャラリー調整 */
+            .gallery-hint { font-size: 12px; }
+            .gallery-item { width: 85%; scroll-snap-align: start; }
+            /* スマホのスクロールバーは標準機能に任せる（非表示） */
+            .gallery-scroll::-webkit-scrollbar { display: none; }
 
-            /* 予約ステップ調整 */
             .step-wrap { flex-direction: column; gap: 30px; }
-            .cal-wrapper { padding: 20px 10px; }
-            .calendar-table th, .calendar-table td { padding: 10px; font-size: 15px;}
+            /* スマホ版カレンダー高さ */
+            .gcal-container { padding-bottom: 100%; } 
 
-            .banner-img-large { height: 250px; margin-bottom: 30px; }
-            .banner-img-small { height: 200px; margin-bottom: 25px; }
+            .banner-square { max-width: 100%; margin-bottom: 30px; }
+            .access-banner { margin-bottom: 20px; }
             .price-card { margin-bottom: 20px; padding: 40px 20px; }
             .price-card.recommend { transform: scale(1); }
             .access-info { flex-direction: column; padding: 30px 20px; gap: 30px;}
@@ -363,15 +394,12 @@
             <div class="hero-img"></div>
             <div class="hero-content">
                 <div class="offer-badge">＼ 毎月5名様限定！ ／<br>入会金 0円 キャンペーン実施中</div>
-
                 <h1 class="hero-title">
                     <span style="display: inline-block;">「着たい服」を、</span><br>
                     <span style="display: inline-block;">着こなす。</span>
                     <span class="title-brand">たまフィット</span>
                 </h1>
-                
                 <p class="hero-copy">正直、3ヶ月で素人は変わりません。<br>だからこそ、<span style="display: inline-block;">一生モノの「正しい知識」をここで。</span></p>
-                
                 <div class="trust-badges">
                     <div class="trust-badge"><i class="material-icons-round">accessibility_new</i><div>解剖学<br>指導</div></div>
                     <div class="trust-badge"><i class="material-icons-round">restaurant_menu</i><div>PFC<br>管理</div></div>
@@ -387,7 +415,6 @@
                     <h2 class="sec-title">まずは初回体験へ！</h2>
                     <p class="sec-desc">ジム選びで失敗しないために、まずは手ぶらで遊びに来てください。</p>
                 </div>
-                
                 <div class="ticket-box">
                     <h3 style="font-size: 22px; margin-bottom: 10px;">カウンセリング ＋ 体験トレーニング (60分)</h3>
                     <p style="color: var(--text-sub); margin: 0;">手ぶらOK / 無料ウェア・タオル貸出</p>
@@ -404,7 +431,6 @@
                     <span class="sec-sub">REASON</span>
                     <h2 class="sec-title">たまフィットが選ばれる3つの理由</h2>
                 </div>
-                
                 <div class="reason-list">
                     <div class="reason-row reason-mint">
                         <div class="reason-text">
@@ -470,7 +496,10 @@
                     <p class="sec-desc">楽しく、無理なく、綺麗な空間で。あなたのペースに合わせます。</p>
                 </div>
             </div>
+            
             <div class="gallery-wrapper">
+                <div class="gallery-hint"><i class="material-icons-round" style="font-size:16px;">swipe</i> 横にスワイプしてご覧ください</div>
+                
                 <div class="gallery-scroll">
                     <div class="gallery-item">
                         <img src="gallery1.jpg" alt="笑顔のカウンセリング" loading="lazy">
@@ -500,7 +529,7 @@
                     <p class="sec-desc" style="color: var(--accent-yellow); font-size: 1.2em;"><i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中</p>
                 </div>
                 
-                <div class="bento-img banner-img-large">
+                <div class="bento-img banner-square">
                     <img src="gym-room4.jpg" alt="たまフィットのトレーニング風景" loading="lazy">
                 </div>
 
@@ -542,9 +571,9 @@
                     </div>
                     <div class="step-box">
                         <div class="step-num">2</div>
-                        <i class="material-icons-round">send</i>
-                        <h3>希望日時を送信</h3>
-                        <p style="font-size:14px; color:var(--text-sub); margin-top:10px;">トーク画面から、体験希望の<br>日時をお送りください。</p>
+                        <i class="material-icons-round">event_available</i>
+                        <h3>カレンダーで空き確認</h3>
+                        <p style="font-size:14px; color:var(--text-sub); margin-top:10px;">下のカレンダーで空きを確認し<br>希望日時をLINEで送信。</p>
                     </div>
                     <div class="step-box">
                         <div class="step-num">3</div>
@@ -554,31 +583,18 @@
                     </div>
                 </div>
 
-                <div class="cal-wrapper">
-                    <h3 style="margin-bottom: 20px; color: var(--text-main); font-size: 22px;"><i class="material-icons-round" style="color:var(--primary);">event_available</i> 現在の予約枠の空き状況</h3>
-                    <table class="calendar-table">
-                        <tr>
-                            <th>時間帯</th>
-                            <th>平日</th>
-                            <th>土日祝</th>
-                        </tr>
-                        <tr>
-                            <td>10:00 - 13:00</td>
-                            <td class="cal-o">〇</td>
-                            <td class="cal-t">△</td>
-                        </tr>
-                        <tr>
-                            <td>13:00 - 18:00</td>
-                            <td class="cal-o">〇</td>
-                            <td class="cal-o">〇</td>
-                        </tr>
-                        <tr>
-                            <td>18:00 - 22:00</td>
-                            <td class="cal-t">△</td>
-                            <td class="cal-x">✕</td>
-                        </tr>
-                    </table>
-                    <p style="font-size: 13px; color: var(--text-sub); margin-top: 15px;">※〇：空きあり / △：残りわずか / ✕：キャンセル待ち<br>（変動する場合がございますので、まずはLINEでお問い合わせください）</p>
+                <div style="text-align: center;">
+                    <h3 style="margin-bottom: 20px; color: var(--text-main); font-size: 22px;">
+                        <i class="material-icons-round" style="color:var(--primary);">event_available</i> 最新の空き状況
+                    </h3>
+                    
+                    <div class="gcal-container">
+                        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=Asia%2FTokyo&bgcolor=%23ffffff&showTitle=0&showPrint=0&showCalendars=0&showTz=0&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%230B8043" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+                    </div>
+                    
+                    <p style="font-size: 14px; color: var(--text-sub); margin-top: 20px; font-weight: 700;">
+                        ※カレンダーに表示されていない時間帯もご案内可能な場合があります。<br>まずはLINEでお気軽にお問い合わせください！
+                    </p>
                 </div>
             </div>
         </section>
@@ -592,7 +608,7 @@
                 <div class="access-info">
                     <div style="flex: 1; display: flex; flex-direction: column;">
                         
-                        <div class="bento-img banner-img-small">
+                        <div class="bento-img access-banner">
                             <img src="gym-room5.jpg" alt="店舗外観・内観" loading="lazy">
                         </div>
 
@@ -631,7 +647,3 @@
 
 </body>
 </html>
-
-</body>
-</html>
-
