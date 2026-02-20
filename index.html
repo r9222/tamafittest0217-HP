@@ -10,9 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <style>
         /* === 横はみ出し防止のための初期化 === */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { box-sizing: border-box; }
 
         :root {
             /* カラフルなアクセントカラー */
@@ -40,10 +38,7 @@
             --shadow-floating: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
         }
 
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 80px; /* ヘッダー分の余白 */
-        }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
         body {
             font-family: 'Noto Sans JP', sans-serif;
@@ -58,10 +53,7 @@
 
         /* 画面全体のオーロラ背景 */
         body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1;
+            content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
             background-image: 
                 radial-gradient(circle at 10% 10%, rgba(0, 184, 169, 0.25) 0%, transparent 40%),
                 radial-gradient(circle at 90% 20%, rgba(255, 26, 125, 0.2) 0%, transparent 40%),
@@ -71,98 +63,61 @@
             pointer-events: none;
         }
 
-        h1, h2, h3 { 
-            word-break: auto-phrase; text-wrap: balance; letter-spacing: 0.05em; font-weight: 900; margin: 0;
-        }
+        h1, h2, h3 { word-break: auto-phrase; text-wrap: balance; letter-spacing: 0.05em; font-weight: 900; margin: 0; }
         img { width: 100%; height: auto; display: block; }
         .material-icons-round { vertical-align: middle; margin-right: 5px; }
 
         /* --- 追従型固定ヘッダー --- */
         .header {
             position: fixed; top: 0; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(15px);
-            z-index: 3000;
-            box-shadow: 0 4px 20px rgba(255, 26, 125, 0.05);
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px);
+            z-index: 3000; box-shadow: 0 4px 20px rgba(255, 26, 125, 0.05);
+            padding: 15px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.6);
         }
         .header-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
-        
-        .logo {
-            font-weight: 900; color: var(--text-main); font-size: 24px; letter-spacing: 0.05em; 
-            display: flex; align-items: center; text-decoration: none;
-        }
-        
+        .logo { font-weight: 900; color: var(--text-main); font-size: 24px; letter-spacing: 0.05em; display: flex; align-items: center; text-decoration: none; }
         .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a {
-            text-decoration: none; color: var(--text-sub); font-weight: 700; font-size: 14px;
-            transition: color 0.3s;
-        }
+        .nav-links a { text-decoration: none; color: var(--text-sub); font-weight: 700; font-size: 14px; transition: color 0.3s; }
         .nav-links a:hover { color: var(--primary); }
 
         /* --- スティッキーフッター --- */
         .sticky-footer {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            display: flex; gap: 10px; padding: 12px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(15px); z-index: 2000;
+            position: fixed; bottom: 0; left: 0; width: 100%; display: flex; gap: 10px; padding: 12px;
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); z-index: 2000;
             border-top: 1px solid rgba(255, 255, 255, 0.5);
         }
         .footer-btn { 
-            flex: 1; text-align: center; padding: 12px 0; border-radius: 12px; 
-            font-weight: 900; font-size: 15px; text-decoration: none; 
+            flex: 1; text-align: center; padding: 12px 0; border-radius: 12px; font-weight: 900; font-size: 15px; text-decoration: none; 
             display: flex; flex-direction: column; justify-content: center; line-height: 1.3;
         }
         .footer-btn span { font-size: 11px; font-weight: normal; opacity: 0.95; margin-bottom: 2px;}
         .btn-line { background: #06C755; color: #fff; box-shadow: 0 8px 20px rgba(6,199,85,0.2); }
-        .btn-web { 
-            background: var(--primary-grad); color: #fff; 
-            box-shadow: 0 10px 25px rgba(255, 26, 125, 0.3);
-            animation: pulse 2s infinite; 
-        }
+        .btn-web { background: var(--primary-grad); color: #fff; box-shadow: 0 10px 25px rgba(255, 26, 125, 0.3); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 26, 125, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 26, 125, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 26, 125, 0); } }
 
-        /* --- ヒーローセクション（PC版） --- */
+        /* --- ヒーローセクション --- */
         .hero {
-            height: 100svh; position: relative; overflow: hidden;
-            display: flex; align-items: center;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            padding-top: 70px;
-            margin-bottom: 50px; 
-            border-radius: 0 0 40px 40px; 
-            box-shadow: var(--shadow-block);
-            border-bottom: 1px solid rgba(255,255,255,0.6);
+            height: 100svh; position: relative; overflow: hidden; display: flex; align-items: center;
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px);
+            padding-top: 70px; margin-bottom: 50px; border-radius: 0 0 40px 40px; 
+            box-shadow: var(--shadow-block); border-bottom: 1px solid rgba(255,255,255,0.6);
         }
         .hero-img {
             position: absolute; top: 0; right: 0; width: 55%; height: 100%;
             background: url('hero.jpg') no-repeat center center / cover;
-            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
-            z-index: 1;
+            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); z-index: 1;
         }
         .hero-content { position: relative; z-index: 10; width: 50%; padding-left: 8%; }
-        
-        .hero-badge {
-            display: inline-block; background: var(--primary-grad); color: #fff;
-            padding: 6px 16px; border-radius: 50px; font-weight: 900; font-size: 13px;
-            margin-bottom: 20px; box-shadow: 0 5px 15px rgba(255, 26, 125, 0.3);
-        }
+        .hero-badge { display: inline-block; background: var(--primary-grad); color: #fff; padding: 6px 16px; border-radius: 50px; font-weight: 900; font-size: 13px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(255, 26, 125, 0.3); }
         .hero-title { font-size: clamp(40px, 8vw, 80px); line-height: 1.1; margin: 0; color: var(--text-main); }
-        .hero-title span { 
-            background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            display: block; margin-top: 5px; font-size: 1.1em;
-        }
+        .hero-title span { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-top: 5px; font-size: 1.1em; }
         .hero-copy { font-size: 18px; font-weight: 700; margin: 25px 0; color: var(--text-sub); }
 
         .trust-badges { display: flex; gap: 15px; margin-top: 30px; }
         .trust-badge { 
-            width: 85px; height: 85px; border-radius: 20px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-size: 12px; font-weight: 900; text-align: center; color: var(--text-main);
-            background: rgba(255, 255, 255, 0.85); line-height: 1.3; box-shadow: var(--shadow-card);
-            border: 2px solid transparent; background-image: linear-gradient(#fff, #fff), var(--mint-grad); background-origin: border-box; background-clip: padding-box, border-box;
-            backdrop-filter: blur(5px);
+            width: 85px; height: 85px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 900; text-align: center; color: var(--text-main); background: rgba(255, 255, 255, 0.85); line-height: 1.3; box-shadow: var(--shadow-card);
+            border: 2px solid transparent; background-image: linear-gradient(#fff, #fff), var(--mint-grad); background-origin: border-box; background-clip: padding-box, border-box; backdrop-filter: blur(5px);
         }
         .trust-badge .material-icons-round { font-size: 26px; margin-bottom: 5px; color: var(--accent-mint); margin-right: 0;}
 
@@ -170,30 +125,16 @@
            巨大ブロック
            ======================================================= */
         .section-block {
-            width: 100%;
-            max-width: 1140px; 
-            margin: 0 auto 60px auto; 
-            border-radius: 40px; 
-            padding: 80px 40px; 
-            background: rgba(255, 255, 255, 0.65); 
-            backdrop-filter: blur(25px) saturate(120%);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: var(--shadow-block); 
-            position: relative;
+            width: 100%; max-width: 1140px; margin: 0 auto 60px auto; border-radius: 40px; padding: 80px 40px; 
+            background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(25px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: var(--shadow-block); position: relative;
         }
-        
         .section-block .container { max-width: 1000px; margin: 0 auto; padding: 0; position: relative; z-index: 2;}
 
-        .sec-header { margin-bottom: 60px; text-align: center; position: relative; padding-bottom: 20px;}
-        .sec-sub { 
-            font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.2em;
-            display: block; margin-bottom: 10px;
-        }
+        .sec-header { margin-bottom: 50px; text-align: center; position: relative; padding-bottom: 20px;}
+        .sec-sub { font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.2em; display: block; margin-bottom: 10px; }
         .sec-title { font-size: 32px; color: var(--text-main); }
-        .sec-header::after {
-            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 50px; height: 5px; border-radius: 3px;
-        }
+        .sec-header::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 50px; height: 5px; border-radius: 3px; }
         
         #reason .sec-sub { background: var(--mint-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         #reason .sec-header::after { background: var(--mint-grad); }
@@ -204,16 +145,32 @@
         #access .sec-sub { background: var(--mint-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         #access .sec-header::after { background: var(--mint-grad); }
 
-        /* --- 特徴（ベントーグリッド） --- */
-        .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        /* =======================================================
+           特徴（Bento Grid）＋ 画像カード追加
+           ======================================================= */
+        /* PCでは4列にして画像を組み込む */
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        
         .bento-item { 
-            background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
             padding: 40px 30px; border-radius: var(--radius);
             box-shadow: var(--shadow-card); transition: all 0.3s;
             position: relative; overflow: hidden; border: 2px solid transparent; 
         }
         .bento-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); background: #fff;}
+        
+        /* 画像専用のカードスタイル */
+        .bento-img {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            min-height: 250px; /* 画像が潰れないように */
+        }
+        .bento-img img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+        }
+        .bento-img:hover img { transform: scale(1.05); }
         
         .item-mint { border-color: rgba(0, 184, 169, 0.2); background: var(--bg-pale-mint); }
         .item-yellow { border-color: rgba(255, 193, 7, 0.2); background: var(--bg-pale-yellow); }
@@ -237,54 +194,37 @@
 
         .bento-item h3 { font-size: 22px; margin-bottom: 15px; }
         .bento-item p { color: var(--text-sub); font-size: 15px; margin: 0; }
-        .bento-item.main { grid-column: span 2; }
+        .bento-item.main { grid-column: span 2; } /* 文字カードは2列分使う */
 
         /* --- トレーナー紹介 --- */
         .trainer-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
         .trainer-card {
             border-radius: var(--radius); border: 2px solid rgba(156, 81, 255, 0.1);
-            overflow: hidden; box-shadow: var(--shadow-card);
-            transition: transform 0.3s; display: flex; flex-direction: column;
+            overflow: hidden; box-shadow: var(--shadow-card); transition: transform 0.3s; display: flex; flex-direction: column;
         }
         .trainer-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); border-color: rgba(156, 81, 255, 0.4); background: #fff;}
-        
         .card-obayashi { background: var(--bg-pale-purple); }
         .card-tamai { background: var(--bg-pale-pink); }
-        
-        .trainer-img-box {
-            width: 100%; height: auto; aspect-ratio: 3 / 4;
-            overflow: hidden; background: rgba(255,255,255,0.5);
-            display: flex; align-items: flex-end; justify-content: center;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
+        .trainer-img-box { width: 100%; height: auto; aspect-ratio: 3 / 4; overflow: hidden; background: rgba(255,255,255,0.5); display: flex; align-items: flex-end; justify-content: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
         .trainer-img-box img { width: 100%; height: 100%; object-fit: contain; object-position: bottom center; }
-        
         .trainer-info { padding: 35px 30px; text-align: center; flex-grow: 1;}
         .trainer-name { font-size: 24px; color: var(--text-main); margin-bottom: 15px; }
-        .trainer-tag {
-            display: inline-block; font-weight: 700; font-size: 13px; padding: 6px 16px;
-            border-radius: 50px; margin-bottom: 20px;
-        }
+        .trainer-tag { display: inline-block; font-weight: 700; font-size: 13px; padding: 6px 16px; border-radius: 50px; margin-bottom: 20px; }
         .tag-obayashi { color: var(--accent-purple); background: #fff; border: 1px solid rgba(156, 81, 255, 0.2); }
         .tag-tamai { color: var(--primary); background: #fff; border: 1px solid rgba(255, 26, 125, 0.2); }
         .trainer-msg { font-size: 15px; color: var(--text-sub); text-align: left; margin: 0; }
 
-        /* --- 料金表 --- */
+        /* --- 料金プラン --- */
         .price-card {
             background: var(--bg-pale-yellow); border-radius: var(--radius); padding: 50px 30px; 
-            text-align: center; position: relative; transition: 0.3s;
-            box-shadow: var(--shadow-card); border: 2px solid rgba(255, 193, 7, 0.2);
+            text-align: center; position: relative; transition: 0.3s; box-shadow: var(--shadow-card); border: 2px solid rgba(255, 193, 7, 0.2);
         }
         .price-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); background: #fff;}
         .price-card.recommend { 
-            background: linear-gradient(135deg, #fffcf5 0%, #fff4ce 100%); 
-            transform: scale(1.05); z-index: 2; 
-            box-shadow: 0 20px 40px rgba(255, 193, 7, 0.2); border-color: transparent;
+            background: linear-gradient(135deg, #fffcf5 0%, #fff4ce 100%); transform: scale(1.05); z-index: 2; box-shadow: 0 20px 40px rgba(255, 193, 7, 0.2); border-color: transparent;
         }
         .price-card.recommend::before {
-            content: '人気No.1'; position: absolute; top: -18px; left: 50%;
-            transform: translateX(-50%); background: var(--yellow-grad); color: #2d3436;
-            padding: 6px 24px; border-radius: 50px; font-weight: 900; font-size: 13px;
+            content: '人気No.1'; position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--yellow-grad); color: #2d3436; padding: 6px 24px; border-radius: 50px; font-weight: 900; font-size: 13px;
         }
         .price-card h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-main); }
         .price-big { font-family: 'Oswald', sans-serif; font-size: 52px; color: var(--text-main); font-weight: 700; line-height: 1; margin-bottom: 10px; }
@@ -295,76 +235,40 @@
         /* --- アクセス --- */
         #access { margin-bottom: 120px; }
         .access-info { display: flex; gap: 50px; background: var(--bg-pale-mint); padding: 50px; border-radius: var(--radius); border: 2px solid rgba(0, 184, 169, 0.15);}
-        .parking-box { 
-            background: #fff; padding: 20px; border-radius: 12px; 
-            border-left: 5px solid var(--accent-mint); margin: 25px 0; box-shadow: var(--shadow-card);
-        }
+        .parking-box { background: #fff; padding: 20px; border-radius: 12px; border-left: 5px solid var(--accent-mint); margin: 25px 0; box-shadow: var(--shadow-card); }
         .parking-box strong { color: var(--accent-mint); font-size: 16px; display: flex; align-items: center; margin-bottom: 5px;}
 
         /* =======================================================
-           スマホ調整（FVの画像見えない問題の完全解決）
+           スマホ調整
            ======================================================= */
         @media (max-width: 768px) {
-            /* ヘッダー周り */
             .header { padding: 12px 0; }
             .logo { font-size: 18px; }
             .nav-links { gap: 8px; }
-            .nav-links a { 
-                font-size: 11px; 
-                background: rgba(255,255,255,0.5); 
-                padding: 4px 8px; 
-                border-radius: 6px; 
-                border: 1px solid rgba(0,0,0,0.05);
-            }
+            .nav-links a { font-size: 11px; background: rgba(255,255,255,0.5); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05); }
             
-            /* ▼ スマホのヒーローセクション調整 ▼ */
-            .hero { 
-                display: block; /* flexによる押し潰しを解除 */
-                height: auto; 
-                min-height: 100svh; 
-                padding-top: 0; 
-                border-radius: 0 0 30px 30px; 
-                margin-bottom: 30px; 
-            } 
-            .hero-img { 
-                width: 100%; 
-                height: 60vh; /* 画像領域を画面の60%分しっかり確保 */
-                top: 0; right: 0;
-                clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); 
-            }
-            .hero-content { 
-                width: 100%; 
-                margin-top: 50vh; /* 画面の半分まで画像を確実に見せるための余白 */
-                padding: 40px 24px 80px; /* スティッキーフッター被り防止 */
-                background: rgba(255, 255, 255, 0.85); 
-                backdrop-filter: blur(15px); 
-                border-radius: 30px 30px 0 0; 
-                box-shadow: 0 -10px 30px rgba(0,0,0,0.05); 
-                border-top: 1px solid rgba(255,255,255,0.8);
-            }
-            .hero-title { font-size: 34px; } /* スマホ向けに文字サイズを最適化 */
+            .hero { display: block; height: auto; min-height: 100svh; padding-top: 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; } 
+            .hero-img { width: 100%; height: 60vh; top: 0; right: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
+            .hero-content { width: 100%; margin-top: 50vh; padding: 40px 24px 80px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top: 1px solid rgba(255,255,255,0.8); }
+            .hero-title { font-size: 34px; } 
             .hero-copy { font-size: 16px; margin: 15px 0; }
             
-            /* バッジがスマホで窮屈にならないように均等配置 */
             .trust-badges { justify-content: space-between; gap: 10px; margin-top: 25px; }
             .trust-badge { width: 32%; height: auto; padding: 15px 5px; font-size: 11px; }
             .trust-badge .material-icons-round { font-size: 24px; margin-bottom: 8px;}
-            /* ▲ ここまで ▲ */
             
-            /* 横スライド防止のための幅計算調整 */
-            .section-block {
-                margin: 0 auto 40px auto; 
-                width: calc(100% - 30px); /* 画面幅から左右15pxずつ引いて中央寄せ */
-                padding: 50px 20px;
-                border-radius: 30px; 
-            }
+            .section-block { margin: 0 auto 40px auto; width: calc(100% - 30px); padding: 40px 20px; border-radius: 30px; }
 
             /* グリッドを1列に強制 */
-            .bento-grid, .trainer-grid, .price-grid { 
-                grid-template-columns: 1fr; 
-                gap: 20px; 
-            }
+            .bento-grid, .trainer-grid, .price-grid { grid-template-columns: 1fr; gap: 20px; }
+            /* 料金プランブロックもスマホで1列にするための強制上書き */
+            #price .bento-grid { grid-template-columns: 1fr !important; }
+            
             .bento-item.main { grid-column: span 1; }
+            
+            /* スマホでの画像パネルの高さを調整 */
+            .bento-img { min-height: 200px; }
+            .banner-img { height: 180px !important; margin-bottom: 20px !important; }
             
             .price-card { margin-bottom: 20px; padding: 40px 20px; }
             .price-card.recommend { transform: scale(1); }
@@ -405,20 +309,10 @@
                 <span class="hero-badge">高松市今里町・完全個室</span>
                 <h1 class="hero-title">「着たい服」を、<br>着こなす。<span>たまフィット</span></h1>
                 <p class="hero-copy">正直、3ヶ月で素人は変わりません。<br>だからこそ、一生モノの「正しい知識」をここで。</p>
-                
                 <div class="trust-badges">
-                    <div class="trust-badge">
-                        <i class="material-icons-round">accessibility_new</i>
-                        <div>解剖学<br>指導</div>
-                    </div>
-                    <div class="trust-badge">
-                        <i class="material-icons-round">restaurant_menu</i>
-                        <div>PFC<br>管理</div>
-                    </div>
-                    <div class="trust-badge">
-                        <i class="material-icons-round">favorite</i>
-                        <div>リバウンド<br>防止</div>
-                    </div>
+                    <div class="trust-badge"><i class="material-icons-round">accessibility_new</i><div>解剖学<br>指導</div></div>
+                    <div class="trust-badge"><i class="material-icons-round">restaurant_menu</i><div>PFC<br>管理</div></div>
+                    <div class="trust-badge"><i class="material-icons-round">favorite</i><div>リバウンド<br>防止</div></div>
                 </div>
             </div>
         </section>
@@ -433,13 +327,22 @@
                     <div class="bento-item main item-mint">
                         <i class="material-icons-round bento-icon">science</i>
                         <h3>解剖学×完全オーダーメイド</h3>
-                        <p>あなたの骨格、筋肉量を分析し、最も効率的なメニューを作成。運動が苦手な方こそ、最短距離で結果が出るロジックを体感してください。</p>
+                        <p>骨格や筋肉量を分析し、最も効率的なメニューを作成。運動が苦手な方こそ、結果が出るロジックを体感してください。</p>
                     </div>
                     <div class="bento-item item-yellow">
                         <i class="material-icons-round bento-icon">lunch_dining</i>
                         <h3>食べて痩せる食事指導</h3>
-                        <p>無理な糖質制限は禁止。外食も楽しみながら、理想のPFCバランスを身につける。一生続く「美習慣」をサポートします。</p>
+                        <p>無理な糖質制限は禁止。外食も楽しみながら、理想のPFCバランスを身につけます。</p>
                     </div>
+                    
+                    <div class="bento-img">
+                        <img src="gym-room1.jpg" alt="芝生とピンクのトレーニングルーム" loading="lazy">
+                    </div>
+
+                    <div class="bento-img">
+                        <img src="gym-room2.jpg" alt="清潔なプライベート空間" loading="lazy">
+                    </div>
+
                     <div class="bento-item item-purple">
                         <i class="material-icons-round bento-icon">vpn_key</i>
                         <h3>完全個室の隠れ家</h3>
@@ -448,7 +351,7 @@
                     <div class="bento-item main item-pink">
                         <i class="material-icons-round bento-icon">checkroom</i>
                         <h3>手ぶらでOK、隙間時間で</h3>
-                        <p>ウェア、タオル完備。仕事帰りや買い物のついでに、日常のルーティンにフィットネスを。あなたのライフスタイルを尊重します。</p>
+                        <p>ウェア、タオル完備。仕事帰りや買い物のついでに、日常のルーティンにフィットネスを。</p>
                     </div>
                 </div>
             </div>
@@ -461,35 +364,21 @@
                     <h2 class="sec-title">私たちがサポートします</h2>
                     <p style="color:var(--text-sub); margin-top:15px; font-weight: 700;">経験豊富なトレーナーが、あなたの「変わりたい」に寄り添います。</p>
                 </div>
-
                 <div class="trainer-grid">
                     <div class="trainer-card card-obayashi">
-                        <div class="trainer-img-box">
-                            <img src="trainer-obayashi.jpg" alt="大林トレーナー" loading="lazy">
-                        </div>
+                        <div class="trainer-img-box"><img src="trainer-obayashi.jpg" alt="大林トレーナー" loading="lazy"></div>
                         <div class="trainer-info">
                             <h3 class="trainer-name">大林トレーナー</h3>
                             <span class="trainer-tag tag-obayashi">運動初心者・中高年の方歓迎</span>
-                            <p class="trainer-msg">
-                                不安な方にこそ、寄り添ってご案内します！
-                                体力や年齢、柔軟性を考慮し、段階的にメニューを調整。
-                                「楽しく続けられる」セッションを何より大切にしています。
-                            </p>
+                            <p class="trainer-msg">不安な方にこそ、寄り添ってご案内します！体力や年齢、柔軟性を考慮し、段階的にメニューを調整。「楽しく続けられる」セッションを何より大切にしています。</p>
                         </div>
                     </div>
-
                     <div class="trainer-card card-tamai">
-                        <div class="trainer-img-box">
-                            <img src="trainer-tamai.jpg" alt="玉井トレーナー" loading="lazy">
-                        </div>
+                        <div class="trainer-img-box"><img src="trainer-tamai.jpg" alt="玉井トレーナー" loading="lazy"></div>
                         <div class="trainer-info">
                             <h3 class="trainer-name">玉井トレーナー</h3>
                             <span class="trainer-tag tag-tamai">ボディメイク・大会指導可能</span>
-                            <p class="trainer-msg">
-                                初心者の方のダイエットから、コンテスト向けの本格指導まで。
-                                ボディメイクのプロとして、美しいボディライン作りを
-                                様々なご希望に応じて全力でサポートいたします！
-                            </p>
+                            <p class="trainer-msg">初心者の方のダイエットから、コンテスト向けの本格指導まで。ボディメイクのプロとして、様々なご希望に応じて全力でサポートいたします！</p>
                         </div>
                     </div>
                 </div>
@@ -501,12 +390,14 @@
                 <div class="sec-header">
                     <span class="sec-sub">PRICE</span>
                     <h2 class="sec-title">料金プラン</h2>
-                    <p style="font-weight: 900; color: var(--accent-yellow); margin-top: 15px; font-size: 18px;">
-                        <i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中
-                    </p>
+                    <p style="font-weight: 900; color: var(--accent-yellow); margin-top: 15px; font-size: 18px;"><i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中</p>
                 </div>
                 
-                <div class="bento-grid">
+                <div class="bento-img banner-img" style="margin-bottom: 40px; height: 250px; width: 100%;">
+                    <img src="gym-room3.jpg" alt="たまフィットのトレーニング風景" loading="lazy">
+                </div>
+
+                <div class="bento-grid" style="grid-template-columns: repeat(3, 1fr);">
                     <div class="price-card">
                         <h3>まずは体験</h3>
                         <div class="price-big">3,300<span style="font-size:16px;">円</span></div>
@@ -534,7 +425,12 @@
                     <h2 class="sec-title">店舗・アクセス</h2>
                 </div>
                 <div class="access-info">
-                    <div style="flex: 1;">
+                    <div style="flex: 1; display: flex; flex-direction: column;">
+                        
+                        <div class="bento-img banner-img" style="margin-bottom: 30px; height: 180px; border-radius: 16px;">
+                            <img src="gym-room4.jpg" alt="店舗外観・内観" loading="lazy">
+                        </div>
+
                         <p style="font-size: 16px; margin-bottom: 20px;">
                             <i class="material-icons-round" style="color:var(--accent-mint);">location_on</i>
                             <strong>所在地:</strong><br>〒760-0078<br>香川県高松市今里町393-1 前川ビル1F
@@ -547,11 +443,11 @@
                             <i class="material-icons-round" style="color:var(--accent-mint);">access_time</i>
                             <strong>営業時間:</strong> 10:00 - 22:00（予約制）
                         </p>
-                        <a href="https://line.me/R/ti/p/@072WKBWC" style="display: block; background: #06C755; color: #fff; text-align: center; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 900; margin-top: 30px; box-shadow: 0 5px 15px rgba(6,199,85,0.3);">
+                        <a href="https://line.me/R/ti/p/@072WKBWC" style="display: block; background: #06C755; color: #fff; text-align: center; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 900; margin-top: auto; box-shadow: 0 5px 15px rgba(6,199,85,0.3);">
                             <i class="material-icons-round">map</i> Googleマップアプリで開く
                         </a>
                     </div>
-                    <div style="flex: 1.2; height: 350px; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card);">
+                    <div style="flex: 1.2; height: 450px; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card);">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3295.6387342376!2d134.0596!3d34.3185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDE5JzA2LjYiTiAxMzTCsDAzJzM0LjYiRQ!5e0!3m2!1sja!2sjp!4v1600000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
@@ -568,3 +464,4 @@
 
 </body>
 </html>
+
