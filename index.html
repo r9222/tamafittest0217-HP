@@ -75,7 +75,12 @@
             padding: 15px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.6);
         }
         .header-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        
         .logo { font-weight: 900; color: var(--text-main); font-size: 24px; letter-spacing: 0.05em; display: flex; align-items: center; text-decoration: none; }
+        
+        /* ▼ NEW! ヘッダーロゴ画像のCSS ▼ */
+        .logo-img { height: 28px; width: auto; margin-right: 8px; object-fit: contain; }
+
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-sub); font-weight: 700; font-size: 14px; transition: color 0.3s; }
         .nav-links a:hover { color: var(--primary); }
@@ -219,10 +224,7 @@
             display: flex; flex-wrap: nowrap; gap: 20px; 
             overflow-x: auto; scroll-snap-type: x mandatory; 
             -webkit-overflow-scrolling: touch; 
-            padding: 0 40px 20px;
-            cursor: grab;
-            user-select: none;
-            -webkit-user-select: none;
+            padding: 0 40px 20px; cursor: grab; user-select: none; -webkit-user-select: none;
         }
         .gallery-scroll.active { cursor: grabbing; }
         .gallery-scroll::-webkit-scrollbar { height: 10px; }
@@ -232,7 +234,6 @@
 
         .gallery-item { flex: 0 0 auto; width: 60%; max-width: 450px; scroll-snap-align: center; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid rgba(0, 184, 169, 0.15); transition: transform 0.3s; }
         .gallery-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); }
-        
         .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-bottom: 1px solid #f0f0f0; pointer-events: none;}
         .gallery-caption { padding: 20px; text-align: center; font-weight: 700; font-size: 16px; color: var(--text-main); }
 
@@ -242,22 +243,7 @@
         .price-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); background: #fff;}
         .price-card.recommend { background: linear-gradient(135deg, #fffcf5 0%, #fff4ce 100%); transform: scale(1.05); z-index: 2; box-shadow: 0 20px 40px rgba(255, 193, 7, 0.2); border-color: transparent; }
         
-        /* ▼ 人気No.1バッジが絶対にズレないように強力に固定 ▼ */
-        .price-card.recommend::before { 
-            content: '人気No.1'; 
-            position: absolute; 
-            top: -18px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            background: var(--yellow-grad); 
-            color: #2d3436; 
-            padding: 6px 24px; 
-            border-radius: 50px; 
-            font-weight: 900; 
-            font-size: 13px; 
-            white-space: nowrap; 
-            z-index: 10;
-        }
+        .price-card.recommend::before { content: '人気No.1'; position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--yellow-grad); color: #2d3436; padding: 6px 24px; border-radius: 50px; font-weight: 900; font-size: 13px; white-space: nowrap; z-index: 10;}
         
         .price-card h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-main); }
         .price-big { font-family: 'Oswald', sans-serif; font-size: 52px; color: var(--text-main); font-weight: 700; line-height: 1; margin-bottom: 10px; }
@@ -272,19 +258,7 @@
         .step-box i { font-size: 40px; color: var(--primary); margin-bottom: 15px; }
         .step-box h3 { font-size: 18px; }
 
-        /* ▼ 修正：カレンダーの縦幅を大幅に広げ、枠内スクロールを許可 ▼ */
-        .gcal-container { 
-            width: 100%; 
-            max-width: 800px; 
-            margin: 0 auto; 
-            border-radius: 16px; 
-            overflow: hidden; 
-            box-shadow: var(--shadow-card); 
-            background: #fff; 
-            border: 1px solid #eee; 
-            height: 800px; /* PCでの高さを大幅に拡張 */
-            -webkit-overflow-scrolling: touch; /* スマホでの滑らかなスクロール */
-        }
+        .gcal-container { width: 100%; max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid #eee; height: 800px; -webkit-overflow-scrolling: touch; }
         .gcal-container iframe { width: 100%; height: 100%; border: 0; }
 
         /* --- アクセス --- */
@@ -304,6 +278,9 @@
         @media (max-width: 768px) {
             .header { padding: 12px 0; }
             .logo { font-size: 18px; }
+            /* スマホ時のロゴ画像のサイズ調整 */
+            .logo-img { height: 22px; margin-right: 5px; }
+
             .nav-links { gap: 8px; }
             .nav-links a { font-size: 11px; background: rgba(255,255,255,0.5); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05); }
             .header-btn { display: none; } 
@@ -343,8 +320,6 @@
             .gallery-scroll::-webkit-scrollbar { display: none; }
 
             .step-wrap { flex-direction: column; gap: 30px; }
-            
-            /* ▼ 修正：スマホでもカレンダーの高さをしっかり確保 ▼ */
             .gcal-container { height: 700px; padding-bottom: 0; } 
 
             .access-banner { margin-bottom: 20px; }
@@ -360,7 +335,8 @@
     <header class="header">
         <div class="header-container">
             <a href="#" class="logo">
-                <span style="color: var(--primary); margin-right: 3px;">●</span>たまフィット
+                <img src="logo.png" alt="たまフィット" class="logo-img">
+                たまフィット
             </a>
             <nav class="nav-links">
                 <a href="#reason">理由</a>
@@ -619,7 +595,7 @@
                     </div>
                     
                     <div class="map-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3295.6387342376!2d134.0596!3d34.3185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDE5JzA2LjYiTiAxMzTCsDAzJzM0LjYiRQ!5e0!3m2!1sja!2sjp!4v1600000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy"></iframe>
+                        <iframe src="https://maps.google.co.jp/maps?output=embed&q=香川県高松市今里町393-1" allowfullscreen="" loading="lazy"></iframe>
                     </div>
 
                 </div>
