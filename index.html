@@ -214,22 +214,33 @@
         .price-sub { font-size: 14px; color: var(--text-sub); font-weight: 700; margin-bottom: 20px; }
         .price-card p { font-size: 15px; color: var(--text-sub); margin: 0; }
 
-        /* --- アクセス（空白バグ修正） --- */
+        /* --- アクセス（マップの空白バグ完全修正） --- */
         #access { margin-bottom: 120px; }
-        .access-info { display: flex; gap: 50px; background: var(--bg-pale-mint); padding: 50px; border-radius: var(--radius); border: 2px solid rgba(0, 184, 169, 0.15);}
+        .access-info { 
+            display: flex; gap: 50px; background: var(--bg-pale-mint); 
+            padding: 50px; border-radius: var(--radius); border: 2px solid rgba(0, 184, 169, 0.15);
+        }
         .parking-box { background: #fff; padding: 20px; border-radius: 12px; border-left: 5px solid var(--accent-mint); margin: 25px 0; box-shadow: var(--shadow-card); }
         .parking-box strong { color: var(--accent-mint); font-size: 16px; display: flex; align-items: center; margin-bottom: 5px;}
         
-        /* ▼ ここでマップの高さを自動追従に設定 ▼ */
+        /* ▼ ここがマップの空白を防ぐ絶対配置の仕組み ▼ */
         .map-container {
             flex: 1.2;
             border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--shadow-card);
-            display: flex;
+            position: relative; /* 子要素（iframe）を絶対配置するための基準 */
             min-height: 400px;
+            width: 100%;
         }
-        .map-container iframe { width: 100%; height: 100%; flex-grow: 1; border: 0; }
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; /* 親要素の高さいっぱいに強制的に広げる */
+            border: 0;
+        }
 
         /* =======================================================
            スマホ・タブレット調整
@@ -274,7 +285,11 @@
             
             .access-info { flex-direction: column; padding: 30px 20px; gap: 30px;}
             
-            .map-container { min-height: 350px; }
+            /* スマホ版でのマップの高さ設定 */
+            .map-container {
+                height: 300px; /* スマホで最適な高さに固定 */
+                min-height: 300px;
+            }
         }
     </style>
 </head>
@@ -397,7 +412,7 @@
                 <div class="sec-header">
                     <span class="sec-sub">PRICE</span>
                     <h2 class="sec-title">料金プラン</h2>
-                    <p class="sec-desc" style="color: var(--accent-yellow);"><i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中</p>
+                    <p class="sec-desc" style="color: var(--accent-yellow); font-size: 1.2em;"><i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中</p>
                 </div>
                 
                 <div class="bento-img banner-img-large">
