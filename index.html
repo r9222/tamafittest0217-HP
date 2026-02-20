@@ -211,7 +211,7 @@
         .trainer-msg { font-size: 15px; color: var(--text-sub); text-align: left; margin: 0; }
 
         /* =======================================================
-           横スクロール ギャラリー（PCドラッグ対応）
+           横スクロール ギャラリー（バグ完全修正版）
            ======================================================= */
         .gallery-wrapper { width: 100%; overflow: hidden; padding-bottom: 20px; margin-left: -20px; width: calc(100% + 40px); }
         .gallery-hint { text-align: center; font-weight: 700; color: var(--primary); font-size: 14px; margin-bottom: 15px; animation: pulse-text 2s infinite; }
@@ -222,13 +222,13 @@
             overflow-x: auto; scroll-snap-type: x mandatory; 
             -webkit-overflow-scrolling: touch; 
             padding: 0 40px 20px;
-            /* ▼ PC用：マウスカーソルを手のひらマークに ▼ */
             cursor: grab;
+            
+            /* ▼ バグ修正1：ドラッグ中のテキスト選択（紫のハイライト等）を禁止 ▼ */
+            user-select: none;
+            -webkit-user-select: none;
         }
-        /* ドラッグ中はカーソルを握ったマークに変更 */
-        .gallery-scroll.active {
-            cursor: grabbing;
-        }
+        .gallery-scroll.active { cursor: grabbing; }
 
         .gallery-scroll::-webkit-scrollbar { height: 10px; }
         .gallery-scroll::-webkit-scrollbar-track { background: rgba(0, 184, 169, 0.05); border-radius: 10px; }
@@ -238,8 +238,12 @@
         .gallery-item { flex: 0 0 auto; width: 60%; max-width: 450px; scroll-snap-align: center; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid rgba(0, 184, 169, 0.15); transition: transform 0.3s; }
         .gallery-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); }
         
-        /* ギャラリー内の画像はドラッグ時に邪魔にならないよう設定 */
-        .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-bottom: 1px solid #f0f0f0; pointer-events: none;}
+        /* ▼ バグ修正2：画像自体のデフォルトドラッグ操作（ゴースト）を禁止 ▼ */
+        .gallery-item img { 
+            width: 100%; aspect-ratio: 4/3; object-fit: cover; 
+            border-bottom: 1px solid #f0f0f0; 
+            pointer-events: none; /* 画像をつまめなくする */
+        }
         .gallery-caption { padding: 20px; text-align: center; font-weight: 700; font-size: 16px; color: var(--text-main); }
 
         /* --- 料金プラン（画像削除でスッキリ） --- */
@@ -618,19 +622,22 @@
             slider.addEventListener('mousedown', (e) => {
                 isDown = true;
                 slider.classList.add('active');
-                // ドラッグ中はピタッと止まる機能を一時的にオフにして滑らかに動かす
                 slider.style.scrollSnapType = 'none'; 
                 startX = e.pageX - slider.offsetLeft;
                 scrollLeft = slider.scrollLeft;
             });
 
+            // 枠外に出たときの処理
             slider.addEventListener('mouseleave', () => {
+                if (!isDown) return;
                 isDown = false;
                 slider.classList.remove('active');
                 slider.style.scrollSnapType = 'x mandatory';
             });
 
-            slider.addEventListener('mouseup', () => {
+            // 画面のどこで指（マウス）を離しても確実にストップさせる処理
+            document.addEventListener('mouseup', () => {
+                if (!isDown) return;
                 isDown = false;
                 slider.classList.remove('active');
                 slider.style.scrollSnapType = 'x mandatory';
@@ -638,10 +645,16 @@
 
             slider.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
-                e.preventDefault();
+                e.preventDefault(); // ここで文字のハイライト選択を防止
                 const x = e.pageX - slider.offsetLeft;
-                const walk = (x - startX) * 2; // スクロール速度（数字が大きいほど速く動く）
+                const walk = (x - startX) * 2; 
                 slider.scrollLeft = scrollLeft - walk;
+            });
+            
+            // 画像のゴーストドラッグを禁止する処理
+            const images = slider.querySelectorAll('img');
+            images.forEach(img => {
+                img.addEventListener('dragstart', (e) => e.preventDefault());
             });
         });
     </script>
