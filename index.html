@@ -79,6 +79,12 @@
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-sub); font-weight: 700; font-size: 14px; transition: color 0.3s; }
         .nav-links a:hover { color: var(--primary); }
+        
+        /* ▼ NEW! ヘッダー予約ボタン（PC用） ▼ */
+        .header-btn {
+            background: var(--primary-grad); color: #fff; padding: 10px 24px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 4px 15px rgba(255, 26, 125, 0.3); transition: transform 0.3s;
+        }
+        .header-btn:hover { transform: scale(1.05); color: #fff; }
 
         /* --- スティッキーフッター --- */
         .sticky-footer {
@@ -102,16 +108,19 @@
             padding-top: 70px; margin-bottom: 50px; border-radius: 0 0 40px 40px; 
             box-shadow: var(--shadow-block); border-bottom: 1px solid rgba(255,255,255,0.6);
         }
-        /* PC版：テキストエリアに余裕を持たせるため画像の幅を微調整 */
         .hero-img {
             position: absolute; top: 0; right: 0; width: 50%; height: 100%;
             background: url('hero.jpg') no-repeat center center / cover;
             clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); z-index: 1;
         }
-        /* PC版：テキストエリアの幅を広げて改行を防ぐ */
         .hero-content { position: relative; z-index: 10; width: 60%; padding-left: 5%; }
         
-        .hero-badge { display: inline-block; background: var(--primary-grad); color: #fff; padding: 6px 16px; border-radius: 50px; font-weight: 900; font-size: 13px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(255, 26, 125, 0.3); }
+        /* ▼ NEW! FVの限定オファーバッジ ▼ */
+        .offer-badge {
+            display: inline-block; background: #fff; color: var(--primary); padding: 10px 24px; border-radius: 50px; font-weight: 900; font-size: 16px; border: 2px solid var(--primary); margin-bottom: 20px; box-shadow: 0 10px 25px rgba(255, 26, 125, 0.2); animation: float 3s ease-in-out infinite; line-height: 1.4;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
         .hero-title { font-size: clamp(36px, 6vw, 72px); line-height: 1.15; margin: 0; color: var(--text-main); }
         .hero-title span.title-brand { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-top: 10px; font-size: 1.1em; }
         .hero-copy { font-size: 18px; font-weight: 700; margin: 25px 0; color: var(--text-sub); }
@@ -140,36 +149,49 @@
         .sec-desc { font-size: 18px; color: var(--text-sub); margin-top: 20px; font-weight: 700; }
         .sec-header::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 6px; border-radius: 3px; }
         
+        /* セクションごとのテーマカラー指定 */
+        #trial .sec-sub { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #trial .sec-header::after { background: var(--primary-grad); }
         #reason .sec-sub { background: var(--mint-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         #reason .sec-header::after { background: var(--mint-grad); }
         #trainer .sec-sub { background: var(--purple-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         #trainer .sec-header::after { background: var(--purple-grad); }
+        #gallery .sec-sub { background: var(--mint-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #gallery .sec-header::after { background: var(--mint-grad); }
         #price .sec-sub { background: var(--yellow-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         #price .sec-header::after { background: var(--yellow-grad); }
+        #reserve .sec-sub { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #reserve .sec-header::after { background: var(--primary-grad); }
         #access .sec-sub { background: var(--mint-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         #access .sec-header::after { background: var(--mint-grad); }
 
         /* =======================================================
-           選ばれる理由（ジグザグレイアウト）
+           NEW! 体験オファーチケット
            ======================================================= */
-        .reason-list { display: flex; flex-direction: column; gap: 50px; }
-        .reason-row {
-            display: flex; align-items: center; gap: 60px;
-            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
-            padding: 60px; border-radius: var(--radius); box-shadow: var(--shadow-card);
-            border: 2px solid transparent; transition: transform 0.3s, box-shadow 0.3s;
+        .ticket-box {
+            background: linear-gradient(135deg, #ffffff 0%, var(--bg-pale-pink) 100%);
+            border: 3px dashed var(--primary);
+            border-radius: 24px; padding: 50px; text-align: center;
+            box-shadow: var(--shadow-card); position: relative;
         }
+        .ticket-price { font-family: 'Oswald', sans-serif; font-size: 64px; color: var(--primary); font-weight: 700; line-height: 1; margin: 20px 0; }
+        .ticket-btn {
+            display: inline-block; background: var(--primary-grad); color: #fff; padding: 20px 60px; border-radius: 50px; font-weight: 900; font-size: 20px; text-decoration: none; box-shadow: 0 10px 25px rgba(255, 26, 125, 0.3); margin-top: 20px; transition: transform 0.3s;
+        }
+        .ticket-btn:hover { transform: translateY(-5px); }
+
+        /* --- 選ばれる理由（ジグザグレイアウト） --- */
+        .reason-list { display: flex; flex-direction: column; gap: 50px; }
+        .reason-row { display: flex; align-items: center; gap: 60px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); padding: 60px; border-radius: var(--radius); box-shadow: var(--shadow-card); border: 2px solid transparent; transition: transform 0.3s, box-shadow 0.3s; }
         .reason-row:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); background: #fff; }
         .reason-row:nth-child(even) { flex-direction: row-reverse; }
 
         .reason-mint { border-color: rgba(0, 184, 169, 0.2); background: var(--bg-pale-mint); }
         .reason-mint .reason-icon { color: var(--accent-mint); background: rgba(0, 184, 169, 0.1); }
         .reason-mint h3 { color: var(--accent-mint); }
-
         .reason-yellow { border-color: rgba(255, 193, 7, 0.2); background: var(--bg-pale-yellow); }
         .reason-yellow .reason-icon { color: var(--accent-yellow); background: rgba(255, 193, 7, 0.1); }
         .reason-yellow h3 { color: var(--accent-yellow); }
-
         .reason-purple { border-color: rgba(156, 81, 255, 0.2); background: var(--bg-pale-purple); }
         .reason-purple .reason-icon { color: var(--accent-purple); background: rgba(156, 81, 255, 0.1); }
         .reason-purple h3 { color: var(--accent-purple); }
@@ -188,10 +210,8 @@
         .trainer-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); border-color: rgba(156, 81, 255, 0.4); background: #fff;}
         .card-obayashi { background: var(--bg-pale-purple); }
         .card-tamai { background: var(--bg-pale-pink); }
-        
         .trainer-img-box { width: 100%; height: auto; aspect-ratio: 1 / 1; overflow: hidden; background: rgba(255,255,255,0.5); display: flex; align-items: flex-end; justify-content: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
         .trainer-img-box img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-        
         .trainer-info { padding: 35px 30px; text-align: center; flex-grow: 1;}
         .trainer-name { font-size: 24px; color: var(--text-main); margin-bottom: 15px; }
         .trainer-tag { display: inline-block; font-weight: 700; font-size: 13px; padding: 6px 16px; border-radius: 50px; margin-bottom: 20px; }
@@ -199,27 +219,22 @@
         .tag-tamai { color: var(--primary); background: #fff; border: 1px solid rgba(255, 26, 125, 0.2); }
         .trainer-msg { font-size: 15px; color: var(--text-sub); text-align: left; margin: 0; }
 
-        /* --- 画像バナー（完全正方形化） --- */
-        .bento-img { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); }
-        .bento-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-        
-        /* ▼ 料金プラン上の画像を完全な正方形かつ大きすぎないサイズに ▼ */
-        .banner-square { 
-            width: 100%; 
-            max-width: 500px; /* PC画面で大きくなりすぎるのを防ぐ */
-            height: auto; 
-            aspect-ratio: 1 / 1; 
-            margin: 0 auto 50px auto; /* 左右中央寄せ */
-        }
-        /* ▼ アクセス上の画像を完全な正方形に ▼ */
-        .access-banner { 
-            width: 100%; 
-            height: auto; 
-            aspect-ratio: 1 / 1; 
-            margin-bottom: 30px; 
-        }
+        /* =======================================================
+           NEW! 横スライド ギャラリー
+           ======================================================= */
+        .gallery-wrapper { width: 100%; overflow: hidden; padding: 20px 0; margin-left: -20px; /* 枠からはみ出してスクロール感を出す */ width: calc(100% + 40px); }
+        .gallery-scroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 0 40px 20px; }
+        .gallery-scroll::-webkit-scrollbar { display: none; }
+        .gallery-item { flex: 0 0 60%; max-width: 450px; scroll-snap-align: center; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid rgba(0, 184, 169, 0.15); transition: transform 0.3s; }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); }
+        .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-bottom: 1px solid #f0f0f0;}
+        .gallery-caption { padding: 20px; text-align: center; font-weight: 700; font-size: 16px; color: var(--text-main); }
 
         /* --- 料金プラン --- */
+        .bento-img { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); }
+        .bento-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+        .banner-img-large { height: 400px; width: 100%; margin-bottom: 50px; }
+        
         .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .price-card { background: var(--bg-pale-yellow); border-radius: var(--radius); padding: 50px 30px; text-align: center; position: relative; transition: 0.3s; box-shadow: var(--shadow-card); border: 2px solid rgba(255, 193, 7, 0.2); }
         .price-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); background: #fff;}
@@ -231,16 +246,30 @@
         .price-sub { font-size: 14px; color: var(--text-sub); font-weight: 700; margin-bottom: 20px; }
         .price-card p { font-size: 15px; color: var(--text-sub); margin: 0; }
 
+        /* =======================================================
+           NEW! 予約ステップ ＆ カレンダー
+           ======================================================= */
+        .step-wrap { display: flex; gap: 20px; justify-content: center; align-items: stretch; margin-bottom: 60px; }
+        .step-box { flex: 1; background: #fff; padding: 40px 20px; border-radius: 20px; text-align: center; box-shadow: var(--shadow-card); position: relative; border: 1px solid rgba(255,26,125,0.1);}
+        .step-num { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--primary-grad); color: #fff; width: 36px; height: 36px; line-height: 36px; border-radius: 50%; font-weight: 900; font-size: 18px;}
+        .step-box i { font-size: 40px; color: var(--primary); margin-bottom: 15px; }
+        .step-box h3 { font-size: 18px; }
+
+        .cal-wrapper { background: #fff; border-radius: 20px; padding: 30px; box-shadow: var(--shadow-card); max-width: 700px; margin: 0 auto; text-align: center;}
+        .calendar-table { width: 100%; border-collapse: collapse; }
+        .calendar-table th, .calendar-table td { padding: 15px; text-align: center; border: 1px solid #eee; font-size: 18px;}
+        .calendar-table th { background: var(--bg-pale-pink); color: var(--primary); font-weight: 700; }
+        .cal-o { color: #06C755; font-weight: 900; font-size: 24px; } /* マル */
+        .cal-t { color: var(--accent-yellow); font-weight: 900; font-size: 24px; } /* サンカク */
+        .cal-x { color: #ccc; font-weight: 900; font-size: 20px; } /* バツ */
+
         /* --- アクセス --- */
         #access { margin-bottom: 120px; }
+        .banner-img-small { height: 300px; width: 100%; margin-bottom: 40px; }
         .access-info { display: flex; gap: 50px; background: var(--bg-pale-mint); padding: 50px; border-radius: var(--radius); border: 2px solid rgba(0, 184, 169, 0.15);}
         .parking-box { background: #fff; padding: 20px; border-radius: 12px; border-left: 5px solid var(--accent-mint); margin: 25px 0; box-shadow: var(--shadow-card); }
         .parking-box strong { color: var(--accent-mint); font-size: 16px; display: flex; align-items: center; margin-bottom: 5px;}
-        
-        .map-container {
-            flex: 1.2; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card);
-            position: relative; min-height: 400px; width: 100%;
-        }
+        .map-container { flex: 1.2; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); position: relative; min-height: 400px; width: 100%; }
         .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
         /* =======================================================
@@ -251,10 +280,12 @@
             .logo { font-size: 18px; }
             .nav-links { gap: 8px; }
             .nav-links a { font-size: 11px; background: rgba(255,255,255,0.5); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05); }
-            
+            .header-btn { display: none; } /* スマホでは下部固定ボタンがあるため非表示 */
+
             .hero { display: block; height: auto; min-height: 100svh; padding-top: 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; } 
             .hero-img { width: 100%; height: 60vh; top: 0; right: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
             .hero-content { width: 100%; margin-top: 50vh; padding: 40px 24px 80px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top: 1px solid rgba(255,255,255,0.8); }
+            .offer-badge { font-size: 14px; padding: 8px 16px; }
             .hero-title { font-size: 34px; } 
             .hero-copy { font-size: 15px; margin: 15px 0; word-break: keep-all; overflow-wrap: anywhere;}
             
@@ -263,12 +294,16 @@
             .trust-badge .material-icons-round { font-size: 24px; margin-bottom: 8px;}
             
             .section-block { margin: 0 auto 40px auto; width: calc(100% - 30px); padding: 40px 20px; border-radius: 30px; }
-
             .sec-header { margin-bottom: 40px; padding-bottom: 20px; }
             .sec-sub { font-size: 18px; margin-bottom: 10px; }
             .sec-title { font-size: 32px; } 
             .sec-desc { font-size: 15px; margin-top: 15px; }
             .sec-header::after { width: 50px; height: 5px; }
+
+            /* 体験チケット調整 */
+            .ticket-box { padding: 30px 20px; }
+            .ticket-price { font-size: 48px; }
+            .ticket-btn { font-size: 16px; padding: 15px 30px; width: 100%; display: block;}
 
             .reason-row, .reason-row:nth-child(even) { flex-direction: column; gap: 20px; padding: 30px 20px; }
             .reason-img-box { order: -1; width: 100%; aspect-ratio: 1 / 1; }
@@ -278,15 +313,21 @@
 
             .trainer-grid, .price-grid { grid-template-columns: 1fr; gap: 20px; }
             
-            /* スマホ時のバナー余白調整 */
-            .banner-square { max-width: 100%; margin-bottom: 30px; }
-            .access-banner { margin-bottom: 20px; }
-            
+            /* ギャラリー調整 */
+            .gallery-wrapper { padding: 10px 0; margin-left: -20px; width: calc(100% + 40px); }
+            .gallery-scroll { padding: 0 20px 20px; }
+            .gallery-item { flex: 0 0 85%; scroll-snap-align: start; }
+
+            /* 予約ステップ調整 */
+            .step-wrap { flex-direction: column; gap: 30px; }
+            .cal-wrapper { padding: 20px 10px; }
+            .calendar-table th, .calendar-table td { padding: 10px; font-size: 15px;}
+
+            .banner-img-large { height: 250px; margin-bottom: 30px; }
+            .banner-img-small { height: 200px; margin-bottom: 25px; }
             .price-card { margin-bottom: 20px; padding: 40px 20px; }
             .price-card.recommend { transform: scale(1); }
-            
             .access-info { flex-direction: column; padding: 30px 20px; gap: 30px;}
-            
             .map-container { height: 300px; min-height: 300px; }
         }
     </style>
@@ -303,6 +344,7 @@
                 <a href="#trainer">トレーナー</a>
                 <a href="#price">料金</a>
                 <a href="#access">店舗</a>
+                <a href="https://line.me/R/ti/p/@072WKBWC" class="header-btn">体験予約はこちら</a>
             </nav>
         </div>
     </header>
@@ -320,8 +362,8 @@
         <section class="hero">
             <div class="hero-img"></div>
             <div class="hero-content">
-                <span class="hero-badge">高松市今里町・完全個室</span>
-                
+                <div class="offer-badge">＼ 毎月5名様限定！ ／<br>入会金 0円 キャンペーン実施中</div>
+
                 <h1 class="hero-title">
                     <span style="display: inline-block;">「着たい服」を、</span><br>
                     <span style="display: inline-block;">着こなす。</span>
@@ -334,6 +376,24 @@
                     <div class="trust-badge"><i class="material-icons-round">accessibility_new</i><div>解剖学<br>指導</div></div>
                     <div class="trust-badge"><i class="material-icons-round">restaurant_menu</i><div>PFC<br>管理</div></div>
                     <div class="trust-badge"><i class="material-icons-round">favorite</i><div>リバウンド<br>防止</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trial" class="section-block">
+            <div class="container">
+                <div class="sec-header" style="margin-bottom: 30px;">
+                    <span class="sec-sub">TRIAL</span>
+                    <h2 class="sec-title">まずは初回体験へ！</h2>
+                    <p class="sec-desc">ジム選びで失敗しないために、まずは手ぶらで遊びに来てください。</p>
+                </div>
+                
+                <div class="ticket-box">
+                    <h3 style="font-size: 22px; margin-bottom: 10px;">カウンセリング ＋ 体験トレーニング (60分)</h3>
+                    <p style="color: var(--text-sub); margin: 0;">手ぶらOK / 無料ウェア・タオル貸出</p>
+                    <div class="ticket-price">3,300<span style="font-size: 24px;">円</span></div>
+                    <p style="font-size: 14px; font-weight: 700; color: var(--primary);">※毎月5名様限定で、体験当日ご入会で【入会金0円】に！</p>
+                    <a href="https://line.me/R/ti/p/@072WKBWC" class="ticket-btn"><i class="material-icons-round">calendar_today</i> LINEで体験を予約する</a>
                 </div>
             </div>
         </section>
@@ -352,31 +412,23 @@
                             <h3>1. 解剖学ベースの指導</h3>
                             <p>あなたの骨格、筋肉量を詳細に分析し、最も効率的なメニューを作成します。運動が苦手な方こそ、無理なく結果が出る論理的なトレーニングを体感してください。</p>
                         </div>
-                        <div class="reason-img-box">
-                            <img src="gym-room1.jpg" alt="指導風景" loading="lazy">
-                        </div>
+                        <div class="reason-img-box"><img src="gym-room1.jpg" alt="指導風景" loading="lazy"></div>
                     </div>
-
                     <div class="reason-row reason-yellow">
                         <div class="reason-text">
                             <i class="material-icons-round reason-icon">lunch_dining</i>
                             <h3>2. 食べて痩せる食事管理</h3>
                             <p>糖質を完全に抜くような、一生続けられない無理な制限は禁止です。香川の食文化や外食も楽しみながら、理想のPFCバランスを身につける「美習慣」をサポートします。</p>
                         </div>
-                        <div class="reason-img-box">
-                            <img src="gym-room2.jpg" alt="食事指導イメージ" loading="lazy">
-                        </div>
+                        <div class="reason-img-box"><img src="gym-room2.jpg" alt="食事指導イメージ" loading="lazy"></div>
                     </div>
-
                     <div class="reason-row reason-purple">
                         <div class="reason-text">
                             <i class="material-icons-round reason-icon">vpn_key</i>
                             <h3>3. 完全個室の隠れ家空間</h3>
                             <p>高松市今里町の静かなエリアにある、あなただけのプライベート空間です。人目を気にせず、ウェアやタオルの無料レンタルで手ぶらでサクッと通えます。</p>
                         </div>
-                        <div class="reason-img-box">
-                            <img src="gym-room3.jpg" alt="完全個室のジム内観" loading="lazy">
-                        </div>
+                        <div class="reason-img-box"><img src="gym-room3.jpg" alt="完全個室のジム内観" loading="lazy"></div>
                     </div>
                 </div>
             </div>
@@ -410,6 +462,36 @@
             </div>
         </section>
 
+        <section id="gallery" class="section-block">
+            <div class="container">
+                <div class="sec-header">
+                    <span class="sec-sub">GALLERY</span>
+                    <h2 class="sec-title">施設・セッション風景</h2>
+                    <p class="sec-desc">楽しく、無理なく、綺麗な空間で。あなたのペースに合わせます。</p>
+                </div>
+            </div>
+            <div class="gallery-wrapper">
+                <div class="gallery-scroll">
+                    <div class="gallery-item">
+                        <img src="gallery1.jpg" alt="笑顔のカウンセリング" loading="lazy">
+                        <div class="gallery-caption">丁寧なカウンセリングからスタート</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="gallery2.jpg" alt="優しいフォーム補助" loading="lazy">
+                        <div class="gallery-caption">プロが正しい姿勢を優しくサポート</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="gallery3.jpg" alt="トレーニング風景" loading="lazy">
+                        <div class="gallery-caption">あなたのペースで、楽しく体を動かす</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="gallery4.jpg" alt="無料レンタルウェア" loading="lazy">
+                        <div class="gallery-caption">手ぶらで通える充実の無料レンタル</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="price" class="section-block">
             <div class="container">
                 <div class="sec-header">
@@ -418,7 +500,7 @@
                     <p class="sec-desc" style="color: var(--accent-yellow); font-size: 1.2em;"><i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中</p>
                 </div>
                 
-                <div class="bento-img banner-square">
+                <div class="bento-img banner-img-large">
                     <img src="gym-room4.jpg" alt="たまフィットのトレーニング風景" loading="lazy">
                 </div>
 
@@ -443,6 +525,64 @@
             </div>
         </section>
 
+        <section id="reserve" class="section-block">
+            <div class="container">
+                <div class="sec-header">
+                    <span class="sec-sub">RESERVE</span>
+                    <h2 class="sec-title">ご予約の流れ・空き状況</h2>
+                    <p class="sec-desc">LINEで簡単に予約完了！面倒な手続きはありません。</p>
+                </div>
+
+                <div class="step-wrap">
+                    <div class="step-box">
+                        <div class="step-num">1</div>
+                        <i class="material-icons-round">person_add</i>
+                        <h3>公式LINEを追加</h3>
+                        <p style="font-size:14px; color:var(--text-sub); margin-top:10px;">下のボタンから公式LINEを<br>お友だち追加してください。</p>
+                    </div>
+                    <div class="step-box">
+                        <div class="step-num">2</div>
+                        <i class="material-icons-round">send</i>
+                        <h3>希望日時を送信</h3>
+                        <p style="font-size:14px; color:var(--text-sub); margin-top:10px;">トーク画面から、体験希望の<br>日時をお送りください。</p>
+                    </div>
+                    <div class="step-box">
+                        <div class="step-num">3</div>
+                        <i class="material-icons-round">directions_run</i>
+                        <h3>手ぶらでご来店</h3>
+                        <p style="font-size:14px; color:var(--text-sub); margin-top:10px;">当日はウェアもタオルも<br>こちらでご用意しております。</p>
+                    </div>
+                </div>
+
+                <div class="cal-wrapper">
+                    <h3 style="margin-bottom: 20px; color: var(--text-main); font-size: 22px;"><i class="material-icons-round" style="color:var(--primary);">event_available</i> 現在の予約枠の空き状況</h3>
+                    <table class="calendar-table">
+                        <tr>
+                            <th>時間帯</th>
+                            <th>平日</th>
+                            <th>土日祝</th>
+                        </tr>
+                        <tr>
+                            <td>10:00 - 13:00</td>
+                            <td class="cal-o">〇</td>
+                            <td class="cal-t">△</td>
+                        </tr>
+                        <tr>
+                            <td>13:00 - 18:00</td>
+                            <td class="cal-o">〇</td>
+                            <td class="cal-o">〇</td>
+                        </tr>
+                        <tr>
+                            <td>18:00 - 22:00</td>
+                            <td class="cal-t">△</td>
+                            <td class="cal-x">✕</td>
+                        </tr>
+                    </table>
+                    <p style="font-size: 13px; color: var(--text-sub); margin-top: 15px;">※〇：空きあり / △：残りわずか / ✕：キャンセル待ち<br>（変動する場合がございますので、まずはLINEでお問い合わせください）</p>
+                </div>
+            </div>
+        </section>
+
         <section id="access" class="section-block">
             <div class="container">
                 <div class="sec-header">
@@ -452,7 +592,7 @@
                 <div class="access-info">
                     <div style="flex: 1; display: flex; flex-direction: column;">
                         
-                        <div class="bento-img access-banner">
+                        <div class="bento-img banner-img-small">
                             <img src="gym-room5.jpg" alt="店舗外観・内観" loading="lazy">
                         </div>
 
@@ -491,3 +631,7 @@
 
 </body>
 </html>
+
+</body>
+</html>
+
