@@ -78,8 +78,8 @@
         
         .logo { font-weight: 900; color: var(--text-main); font-size: 24px; letter-spacing: 0.05em; display: flex; align-items: center; text-decoration: none; }
         
-        /* ▼ ヘッダーロゴ画像のCSS（サイズを大幅に拡大） ▼ */
-        .logo-img { height: 42px; width: auto; margin-right: 10px; object-fit: contain; }
+        /* ▼ PC版ロゴの基本設定 ▼ */
+        .logo-img { height: 60px; width: auto; object-fit: contain; }
 
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-sub); font-weight: 700; font-size: 14px; transition: color 0.3s; }
@@ -273,16 +273,33 @@
         .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
         /* =======================================================
-           スマホ・タブレット調整
+           スマホ・タブレット調整（ヘッダー大幅改修）
            ======================================================= */
         @media (max-width: 768px) {
             .header { padding: 12px 0; }
-            .logo { font-size: 18px; }
-            /* ▼ スマホ時のロゴ画像のサイズを拡大 ▼ */
-            .logo-img { height: 32px; margin-right: 8px; }
+            
+            /* ▼ スマホ用ヘッダー：上下2段レイアウトに変更 ▼ */
+            .header-container { 
+                flex-direction: column; 
+                justify-content: center; 
+                gap: 12px; 
+            }
+            .logo { width: 100%; justify-content: center; }
+            
+            /* ▼ スマホ版のロゴを限界まで超巨大化 ▼ */
+            .logo-img { height: 75px; max-width: 90vw; margin-right: 0; }
 
-            .nav-links { gap: 8px; }
-            .nav-links a { font-size: 11px; background: rgba(255,255,255,0.5); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05); }
+            /* ▼ メニューボタンを綺麗に並べる ▼ */
+            .nav-links { width: 100%; justify-content: center; gap: 8px; }
+            .nav-links a { 
+                font-size: 12px; 
+                background: rgba(255,255,255,0.8); 
+                padding: 6px 14px; 
+                border-radius: 50px; 
+                border: 1px solid rgba(0,0,0,0.05); 
+                white-space: nowrap; /* テキストの改行を絶対に防ぐ */
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            }
             .header-btn { display: none; } 
 
             .hero { display: block; height: auto; min-height: 100svh; padding-top: 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; } 
@@ -336,7 +353,6 @@
         <div class="header-container">
             <a href="#" class="logo">
                 <img src="logo.png" alt="たまフィット" class="logo-img">
-                たまフィット
             </a>
             <nav class="nav-links">
                 <a href="#reason">理由</a>
