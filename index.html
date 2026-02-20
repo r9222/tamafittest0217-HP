@@ -131,7 +131,6 @@
         }
         .section-block .container { max-width: 1000px; margin: 0 auto; padding: 0; position: relative; z-index: 2;}
 
-        /* ▼ PC版：見出し関連をダイナミックに大きく変更 ▼ */
         .sec-header { margin-bottom: 70px; text-align: center; position: relative; padding-bottom: 30px; }
         .sec-sub { font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 0.2em; display: block; margin-bottom: 15px; }
         .sec-title { font-size: 46px; color: var(--text-main); }
@@ -201,7 +200,6 @@
         .bento-img { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); }
         .bento-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
         
-        /* ▼ PC版：バナーの高さを拡大 ▼ */
         .banner-img-large { height: 400px; width: 100%; margin-bottom: 50px; }
         .banner-img-small { height: 300px; width: 100%; margin-bottom: 40px; }
 
@@ -216,13 +214,25 @@
         .price-sub { font-size: 14px; color: var(--text-sub); font-weight: 700; margin-bottom: 20px; }
         .price-card p { font-size: 15px; color: var(--text-sub); margin: 0; }
 
+        /* --- アクセス（空白バグ修正） --- */
         #access { margin-bottom: 120px; }
         .access-info { display: flex; gap: 50px; background: var(--bg-pale-mint); padding: 50px; border-radius: var(--radius); border: 2px solid rgba(0, 184, 169, 0.15);}
         .parking-box { background: #fff; padding: 20px; border-radius: 12px; border-left: 5px solid var(--accent-mint); margin: 25px 0; box-shadow: var(--shadow-card); }
         .parking-box strong { color: var(--accent-mint); font-size: 16px; display: flex; align-items: center; margin-bottom: 5px;}
+        
+        /* ▼ ここでマップの高さを自動追従に設定 ▼ */
+        .map-container {
+            flex: 1.2;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            min-height: 400px;
+        }
+        .map-container iframe { width: 100%; height: 100%; flex-grow: 1; border: 0; }
 
         /* =======================================================
-           スマホ・タブレット調整（文字サイズ・バナー高さを元の「いい感じ」にキープ）
+           スマホ・タブレット調整
            ======================================================= */
         @media (max-width: 768px) {
             .header { padding: 12px 0; }
@@ -242,7 +252,6 @@
             
             .section-block { margin: 0 auto 40px auto; width: calc(100% - 30px); padding: 40px 20px; border-radius: 30px; }
 
-            /* 見出し類をスマホで「いい感じ」だったサイズに戻す */
             .sec-header { margin-bottom: 40px; padding-bottom: 20px; }
             .sec-sub { font-size: 18px; margin-bottom: 10px; }
             .sec-title { font-size: 32px; } 
@@ -257,7 +266,6 @@
 
             .trainer-grid, .price-grid { grid-template-columns: 1fr; gap: 20px; }
             
-            /* バナーの高さをスマホで「いい感じ」だったサイズに戻す */
             .banner-img-large { height: 250px; margin-bottom: 30px; }
             .banner-img-small { height: 200px; margin-bottom: 25px; }
             
@@ -265,6 +273,8 @@
             .price-card.recommend { transform: scale(1); }
             
             .access-info { flex-direction: column; padding: 30px 20px; gap: 30px;}
+            
+            .map-container { min-height: 350px; }
         }
     </style>
 </head>
@@ -387,7 +397,7 @@
                 <div class="sec-header">
                     <span class="sec-sub">PRICE</span>
                     <h2 class="sec-title">料金プラン</h2>
-                    <p class="sec-desc" style="color: var(--accent-yellow); font-size: 1.2em;"><i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中</p>
+                    <p class="sec-desc" style="color: var(--accent-yellow);"><i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中</p>
                 </div>
                 
                 <div class="bento-img banner-img-large">
@@ -444,9 +454,11 @@
                             <i class="material-icons-round">map</i> Googleマップアプリで開く
                         </a>
                     </div>
-                    <div style="flex: 1.2; height: 450px; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card);">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3295.6387342376!2d134.0596!3d34.3185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDE5JzA2LjYiTiAxMzTCsDAzJzM0LjYiRQ!5e0!3m2!1sja!2sjp!4v1600000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3295.6387342376!2d134.0596!3d34.3185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDE5JzA2LjYiTiAxMzTCsDAzJzM0LjYiRQ!5e0!3m2!1sja!2sjp!4v1600000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy"></iframe>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -461,4 +473,3 @@
 
 </body>
 </html>
-
