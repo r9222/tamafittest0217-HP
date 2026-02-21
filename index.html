@@ -264,19 +264,47 @@
         .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-bottom: 1px solid #f0f0f0; pointer-events: none;}
         .gallery-caption { padding: 20px; text-align: center; font-weight: 700; font-size: 16px; color: var(--text-main); }
 
-        /* --- 料金プラン --- */
-        .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .price-card { background: var(--bg-pale-yellow); border-radius: var(--radius); padding: 50px 30px; text-align: center; position: relative; transition: 0.3s; box-shadow: var(--shadow-card); border: 2px solid rgba(255, 193, 7, 0.2); }
-        .price-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-floating); background: #fff;}
-        .price-card.recommend { background: linear-gradient(135deg, #fffcf5 0%, #fff4ce 100%); transform: scale(1.05); z-index: 2; box-shadow: 0 20px 40px rgba(255, 193, 7, 0.2); border-color: transparent; }
+        /* =======================================================
+           ▼ NEW! 料金プラン（テーブル形式） ▼
+           ======================================================= */
+        .price-table-wrapper {
+            background: #fff; border-radius: 20px; box-shadow: var(--shadow-card);
+            overflow: hidden; margin: 0 auto; max-width: 900px;
+            border: 2px solid rgba(255, 193, 7, 0.2);
+        }
+        .price-table { width: 100%; border-collapse: collapse; text-align: center; }
+        .price-table th, .price-table td { padding: 25px 20px; border-bottom: 1px solid #eee; }
+        .price-table th {
+            background: var(--bg-pale-yellow); color: var(--text-main);
+            font-size: 18px; font-weight: 900; border-right: 1px solid #fff;
+        }
+        .price-table th:last-child { border-right: none; }
         
-        .price-card.recommend::before { content: '人気No.1'; position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--yellow-grad); color: #2d3436; padding: 6px 24px; border-radius: 50px; font-weight: 900; font-size: 13px; white-space: nowrap; z-index: 10;}
+        .col-course { width: 34%; }
+        .col-60 { width: 33%; background: rgba(0, 184, 169, 0.05); }
+        .col-30 { width: 33%; }
         
-        .price-card h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-main); }
-        .price-big { font-family: 'Oswald', sans-serif; font-size: 52px; color: var(--text-main); font-weight: 700; line-height: 1; margin-bottom: 10px; }
-        .price-card.recommend .price-big { color: var(--accent-yellow); }
-        .price-sub { font-size: 14px; color: var(--text-sub); font-weight: 700; margin-bottom: 20px; }
-        .price-card p { font-size: 15px; color: var(--text-sub); margin: 0; }
+        .price-table tbody tr:last-child td { border-bottom: none; }
+        .price-table tbody tr:hover { background: #fafafa; }
+        
+        .course-name { font-weight: 900; font-size: 18px; color: var(--text-main); border-right: 1px dashed #eee; }
+        .price-val { font-family: 'Oswald', sans-serif; font-size: 28px; font-weight: 700; color: var(--text-main); border-right: 1px dashed #eee; }
+        .price-val:last-child { border-right: none; }
+        
+        /* 一番人気の週1回 60分を強調 */
+        .price-val.highlight { color: var(--accent-yellow); font-size: 34px; }
+        .yen { font-size: 14px; font-family: 'Noto Sans JP', sans-serif; font-weight: 700; margin-left: 2px;}
+        
+        .recommend-row { background: linear-gradient(135deg, #fffcf5 0%, #fff4ce 100%) !important; }
+        .recommend-badge {
+            display: inline-block; background: var(--yellow-grad); color: #2d3436;
+            padding: 4px 12px; border-radius: 50px; font-size: 11px; margin-bottom: 5px; font-weight: 900;
+        }
+        
+        .price-note {
+            padding: 20px; background: #fff; margin: 0; font-size: 14px;
+            color: var(--text-sub); font-weight: 700; text-align: left;
+        }
 
         /* --- 予約ステップ ＆ カレンダー --- */
         .step-wrap { display: flex; gap: 20px; justify-content: center; align-items: stretch; margin-bottom: 60px; }
@@ -288,41 +316,16 @@
         .gcal-container { width: 100%; max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid #eee; height: 800px; -webkit-overflow-scrolling: touch; }
         .gcal-container iframe { width: 100%; height: 100%; border: 0; }
 
-        /* =======================================================
-           ▼ NEW! FAQ（アコーディオン） ▼
-           ======================================================= */
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* PCは2列 */
-            gap: 20px 40px;
-        }
-        .faq-item {
-            background: #fff; border-radius: 16px; box-shadow: var(--shadow-card);
-            overflow: hidden; cursor: pointer; transition: 0.3s;
-            border: 2px solid transparent;
-            align-self: start;
-        }
+        /* --- FAQ（アコーディオン） --- */
+        .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 40px; }
+        .faq-item { background: #fff; border-radius: 16px; box-shadow: var(--shadow-card); overflow: hidden; cursor: pointer; transition: 0.3s; border: 2px solid transparent; align-self: start; }
         .faq-item:hover { border-color: rgba(156, 81, 255, 0.3); transform: translateY(-3px); }
-        .faq-q {
-            padding: 20px 25px; font-size: 16px; font-weight: 700;
-            display: flex; align-items: center; justify-content: space-between;
-            color: var(--text-main);
-        }
+        .faq-q { padding: 20px 25px; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; color: var(--text-main); }
         .faq-q-left { display: flex; align-items: center; }
-        .faq-q-icon {
-            background: var(--text-main); color: #fff; width: 32px; height: 32px;
-            display: inline-flex; align-items: center; justify-content: center;
-            border-radius: 8px; margin-right: 15px; flex-shrink: 0; font-family: 'Oswald', sans-serif; font-size: 18px;
-        }
+        .faq-q-icon { background: var(--text-main); color: #fff; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; margin-right: 15px; flex-shrink: 0; font-family: 'Oswald', sans-serif; font-size: 18px; }
         .faq-q .toggle-icon { transition: transform 0.3s ease; color: var(--text-sub); }
-        
-        .faq-a {
-            max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease;
-            background: rgba(156, 81, 255, 0.03); border-top: 1px dashed rgba(0,0,0,0.05);
-        }
+        .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; background: rgba(156, 81, 255, 0.03); border-top: 1px dashed rgba(0,0,0,0.05); }
         .faq-a p { margin: 0; padding: 0 25px 25px 25px; color: var(--text-sub); font-size: 15px; line-height: 1.8;}
-        
-        /* アコーディオン開いた時の状態 */
         .faq-item.active { border-color: rgba(156, 81, 255, 0.5); box-shadow: var(--shadow-floating); }
         .faq-item.active .faq-a { max-height: 300px; padding-top: 20px; }
         .faq-item.active .faq-q .toggle-icon { transform: rotate(180deg); color: var(--accent-purple); }
@@ -402,16 +405,24 @@
             .reason-text h3 { font-size: 22px; margin-bottom: 12px; line-height: 1.3; } 
             .reason-text p { font-size: 15px; text-align: left; } 
 
-            .trainer-grid, .price-grid { grid-template-columns: 1fr; gap: 20px; }
+            .trainer-grid { grid-template-columns: 1fr; gap: 20px; }
             
             .gallery-hint { font-size: 12px; }
             .gallery-item { width: 85%; scroll-snap-align: start; }
             .gallery-scroll::-webkit-scrollbar { display: none; }
 
+            /* スマホ版 料金テーブル調整 */
+            .price-table th, .price-table td { padding: 15px 10px; }
+            .price-table th { font-size: 13px; }
+            .course-name { font-size: 14px; }
+            .price-val { font-size: 20px; }
+            .price-val.highlight { font-size: 24px; }
+            .yen { font-size: 11px; }
+            .price-note { font-size: 12px; padding: 15px; }
+
             .step-wrap { flex-direction: column; gap: 30px; }
             .gcal-container { height: 700px; padding-bottom: 0; } 
             
-            /* スマホ版 FAQ調整（縦並びに） */
             .faq-grid { grid-template-columns: 1fr; gap: 15px; }
             .faq-q { font-size: 15px; padding: 15px 20px; }
             .faq-q-icon { width: 28px; height: 28px; font-size: 16px; margin-right: 10px;}
@@ -419,8 +430,6 @@
             .faq-item.active .faq-a { max-height: 400px; padding-top: 15px; }
 
             .access-banner { margin-bottom: 20px; }
-            .price-card { margin-bottom: 20px; padding: 40px 20px; }
-            .price-card.recommend { transform: scale(1); }
             .access-info { flex-direction: column; padding: 30px 20px; gap: 30px;}
             .map-container { height: 300px; min-height: 300px; }
         }
@@ -478,7 +487,7 @@
         <section class="hero">
             <div class="hero-img"></div>
             <div class="hero-content">
-                <div class="offer-badge">＼ 毎月5名様限定！ ／<br>入会金 0円 キャンペーン実施中</div>
+                <div class="offer-badge">＼ まずはお試し！ ／<br>カウンセリング＋体験(60分) 完全無料</div>
                 <h1 class="hero-title">
                     <span style="display: inline-block;">「着たい服」を、</span><br>
                     <span style="display: inline-block;">着こなす。</span>
@@ -497,15 +506,15 @@
             <div class="container">
                 <div class="sec-header" style="margin-bottom: 30px;">
                     <span class="sec-sub">TRIAL</span>
-                    <h2 class="sec-title">まずは初回体験へ！</h2>
+                    <h2 class="sec-title">まずは無料体験へ！</h2>
                     <p class="sec-desc">ジム選びで失敗しないために、まずは手ぶらで遊びに来てください。</p>
                 </div>
                 <div class="ticket-box">
                     <h3 style="font-size: 22px; margin-bottom: 10px;">カウンセリング ＋ 体験トレーニング (60分)</h3>
                     <p style="color: var(--text-sub); margin: 0;">手ぶらOK / 無料ウェア・タオル貸出</p>
-                    <div class="ticket-price">3,300<span style="font-size: 24px;">円</span></div>
-                    <p style="font-size: 14px; font-weight: 700; color: var(--primary);">※毎月5名様限定で、体験当日ご入会で【入会金0円】に！</p>
-                    <a href="https://line.me/R/ti/p/@072WKBWC" class="ticket-btn"><i class="material-icons-round">calendar_today</i> LINEで体験を予約する</a>
+                    <div class="ticket-price">無料<span style="font-size: 24px;"> (¥0)</span></div>
+                    <p style="font-size: 14px; font-weight: 700; color: var(--primary);">※毎月先着5名様限定！お早めにお申し込みください。</p>
+                    <a href="https://line.me/R/ti/p/@072WKBWC" class="ticket-btn"><i class="material-icons-round">calendar_today</i> LINEで無料体験を予約する</a>
                 </div>
             </div>
         </section>
@@ -610,27 +619,49 @@
             <div class="container">
                 <div class="sec-header">
                     <span class="sec-sub">PRICE</span>
-                    <h2 class="sec-title">料金プラン</h2>
-                    <p class="sec-desc" style="color: var(--accent-yellow); font-size: 1.2em;"><i class="material-icons-round">campaign</i> 入会金 0円 キャンペーン実施中</p>
+                    <h2 class="sec-title">料金表（チケット制）</h2>
+                    <p class="sec-desc" style="color: var(--accent-yellow); font-size: 1.2em;"><i class="material-icons-round">campaign</i> 入会金 無料</p>
                 </div>
 
-                <div class="price-grid">
-                    <div class="price-card">
-                        <h3>まずは体験</h3>
-                        <div class="price-big">3,300<span style="font-size:16px;">円</span></div>
-                        <p>カウンセリング＋<br>体験トレーニング60分</p>
-                    </div>
-                    <div class="price-card recommend">
-                        <h3>週1回コース</h3>
-                        <div class="price-big">7,700<span style="font-size:16px;">円/回</span></div>
-                        <div class="price-sub">月額 30,800円</div>
-                        <p>迷ったらこれ！<br>一番人気の継続プラン</p>
-                    </div>
-                    <div class="price-card">
-                        <h3>都度払い</h3>
-                        <div class="price-big">9,900<span style="font-size:16px;">円/回</span></div>
-                        <p>自分のペースで<br>必要な時だけ通いたい方</p>
-                    </div>
+                <div class="price-table-wrapper">
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th class="col-course">コース<br><span style="font-size:12px; font-weight:normal;">(※4回セットチケット)</span></th>
+                                <th class="col-60">60分<br><span style="font-size:14px; font-weight:normal;">1回あたり</span></th>
+                                <th class="col-30">30分<br><span style="font-size:14px; font-weight:normal;">1回あたり</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="recommend-row">
+                                <td class="course-name">
+                                    <span class="recommend-badge">人気No.1</span><br>
+                                    週1回コース
+                                </td>
+                                <td class="price-val highlight">7,700<span class="yen">円</span></td>
+                                <td class="price-val">4,400<span class="yen">円</span></td>
+                            </tr>
+                            <tr>
+                                <td class="course-name">週2回コース</td>
+                                <td class="price-val">6,600<span class="yen">円</span></td>
+                                <td class="price-val">3,850<span class="yen">円</span></td>
+                            </tr>
+                            <tr>
+                                <td class="course-name">月2回コース</td>
+                                <td class="price-val">8,800<span class="yen">円</span></td>
+                                <td class="price-val">4,950<span class="yen">円</span></td>
+                            </tr>
+                            <tr>
+                                <td class="course-name">単発<br><span style="font-size:12px; color:var(--text-sub); font-weight:normal;">(通常料金・都度払い)</span></td>
+                                <td class="price-val">9,900<span class="yen">円</span></td>
+                                <td class="price-val">5,500<span class="yen">円</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="price-note">
+                        ※料金はすべて税込です。単発以外は4回分の回数券（チケット）でのご購入となります。<br>
+                        ※例：一番人気の「週1回コース(60分)」の場合、7,700円×4回分 ＝ 30,800円(税込) のお支払いとなります。
+                    </p>
                 </div>
             </div>
         </section>
@@ -810,6 +841,7 @@
                             <i class="material-icons-round" style="color:var(--accent-mint);">access_time</i>
                             <strong>営業時間:</strong> 10:00 - 22:00（予約制）
                         </p>
+                        
                         <a href="https://maps.google.com/maps?q=香川県高松市今里町393-1" target="_blank" rel="noopener noreferrer" style="display: block; background: var(--accent-mint); color: #fff; text-align: center; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 900; margin-top: auto; box-shadow: 0 5px 15px rgba(0,184,169,0.3);">
                             <i class="material-icons-round">map</i> Googleマップアプリで開く
                         </a>
@@ -903,19 +935,10 @@
                 img.addEventListener('dragstart', (e) => e.preventDefault());
             });
 
-            // ▼ NEW! FAQ（アコーディオン）の開閉プログラム ▼
+            // FAQ（アコーディオン）の開閉プログラム
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 item.addEventListener('click', () => {
-                    // 他の開いているQ&Aを閉じる場合は下のコメントアウトを外す
-                    /*
-                    faqItems.forEach(otherItem => {
-                        if(otherItem !== item) {
-                            otherItem.classList.remove('active');
-                        }
-                    });
-                    */
-                    // タップしたアイテムの開閉を切り替え
                     item.classList.toggle('active');
                 });
             });
