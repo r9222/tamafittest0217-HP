@@ -91,19 +91,16 @@
             font-weight: 900; color: var(--text-main); font-size: 28px; letter-spacing: 0.05em; 
         }
 
-        /* ハンバーガーボタン（PCでは非表示） */
         .hamburger-btn {
             display: none; background: transparent; border: none; cursor: pointer; 
             padding: 5px; z-index: 4001; color: var(--text-main);
         }
         .hamburger-btn .material-icons-round { font-size: 32px; margin: 0; }
 
-        /* メニューの黒背景（PCでは非表示） */
         .menu-overlay { display: none; }
 
-        /* メニューリンク */
         .nav-links { 
-            display: flex; gap: 30px; align-items: center; flex-shrink: 1; 
+            display: flex; gap: 25px; align-items: center; flex-shrink: 1; 
         }
         .nav-links a.nav-item { 
             text-decoration: none; color: var(--text-sub); font-weight: 700; font-size: 14px; 
@@ -118,7 +115,6 @@
         }
         .header-btn:hover { transform: scale(1.05); color: #fff; }
 
-        /* ▼ メニュー内のボタン群（PCでは非表示） ▼ */
         .mobile-menu-btns { display: none; }
 
         /* --- スティッキーフッター --- */
@@ -195,6 +191,8 @@
         #price .sec-header::after { background: var(--yellow-grad); }
         #reserve .sec-sub { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         #reserve .sec-header::after { background: var(--primary-grad); }
+        #faq .sec-sub { background: var(--purple-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #faq .sec-header::after { background: var(--purple-grad); }
         #access .sec-sub { background: var(--mint-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         #access .sec-header::after { background: var(--mint-grad); }
 
@@ -290,6 +288,45 @@
         .gcal-container { width: 100%; max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); background: #fff; border: 1px solid #eee; height: 800px; -webkit-overflow-scrolling: touch; }
         .gcal-container iframe { width: 100%; height: 100%; border: 0; }
 
+        /* =======================================================
+           ▼ NEW! FAQ（アコーディオン） ▼
+           ======================================================= */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* PCは2列 */
+            gap: 20px 40px;
+        }
+        .faq-item {
+            background: #fff; border-radius: 16px; box-shadow: var(--shadow-card);
+            overflow: hidden; cursor: pointer; transition: 0.3s;
+            border: 2px solid transparent;
+            align-self: start;
+        }
+        .faq-item:hover { border-color: rgba(156, 81, 255, 0.3); transform: translateY(-3px); }
+        .faq-q {
+            padding: 20px 25px; font-size: 16px; font-weight: 700;
+            display: flex; align-items: center; justify-content: space-between;
+            color: var(--text-main);
+        }
+        .faq-q-left { display: flex; align-items: center; }
+        .faq-q-icon {
+            background: var(--text-main); color: #fff; width: 32px; height: 32px;
+            display: inline-flex; align-items: center; justify-content: center;
+            border-radius: 8px; margin-right: 15px; flex-shrink: 0; font-family: 'Oswald', sans-serif; font-size: 18px;
+        }
+        .faq-q .toggle-icon { transition: transform 0.3s ease; color: var(--text-sub); }
+        
+        .faq-a {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease;
+            background: rgba(156, 81, 255, 0.03); border-top: 1px dashed rgba(0,0,0,0.05);
+        }
+        .faq-a p { margin: 0; padding: 0 25px 25px 25px; color: var(--text-sub); font-size: 15px; line-height: 1.8;}
+        
+        /* アコーディオン開いた時の状態 */
+        .faq-item.active { border-color: rgba(156, 81, 255, 0.5); box-shadow: var(--shadow-floating); }
+        .faq-item.active .faq-a { max-height: 300px; padding-top: 20px; }
+        .faq-item.active .faq-q .toggle-icon { transform: rotate(180deg); color: var(--accent-purple); }
+
         /* --- アクセス --- */
         #access { margin-bottom: 120px; }
         .bento-img { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); }
@@ -302,24 +339,18 @@
         .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
         /* =======================================================
-           ▼ スマホ・タブレット調整（ハンバーガーメニュー＋ボタン拡充版） ▼
+           ▼ スマホ・タブレット調整 ▼
            ======================================================= */
         @media (max-width: 768px) {
             .header { padding: 12px 0; }
-            
-            .header-container { 
-                flex-direction: row; justify-content: space-between; padding: 0 20px;
-            }
+            .header-container { flex-direction: row; justify-content: space-between; padding: 0 20px; }
             .logo { width: auto; justify-content: flex-start; }
             .logo-img { height: 32px; margin-right: 8px; }
             .logo-text { font-size: 20px; letter-spacing: 0; }
 
             .hamburger-btn { display: block; }
-
-            /* PC用の予約ボタンは非表示 */
             .header-btn.pc-only { display: none; }
 
-            /* スライドインするモバイルメニュー */
             .nav-links { 
                 position: fixed; top: 0; right: -100%; width: 70%; max-width: 320px; height: 100vh;
                 background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px);
@@ -333,28 +364,16 @@
                 background: transparent; border-radius: 0; width: 100%; text-align: left;
             }
             
-            /* ▼ 追加：メニュー内のアクションボタン群 ▼ */
-            .mobile-menu-btns { 
-                display: flex; flex-direction: column; gap: 15px; 
-                padding: 30px 20px; width: 100%; 
-            }
-            .mobile-menu-btns .header-btn { 
-                display: flex; align-items: center; justify-content: center; 
-                width: 100%; margin: 0; padding: 15px; font-size: 16px; border-radius: 12px; 
-                white-space: normal;
-            }
+            .mobile-menu-btns { display: flex; flex-direction: column; gap: 15px; padding: 30px 20px; width: 100%; }
+            .mobile-menu-btns .header-btn { display: flex; align-items: center; justify-content: center; width: 100%; margin: 0; padding: 15px; font-size: 16px; border-radius: 12px; white-space: normal;}
             .mobile-menu-btns .btn-reserve { background: var(--primary-grad); box-shadow: 0 5px 15px rgba(255, 26, 125, 0.3); }
             .mobile-menu-btns .btn-consult { background: #06C755; box-shadow: 0 5px 15px rgba(6, 199, 85, 0.3); }
             .mobile-menu-btns .btn-map { background: #4285F4; box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3); }
             .mobile-menu-btns .material-icons-round { margin-right: 8px; font-size: 20px; }
 
-            .menu-overlay {
-                display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-                background: rgba(0,0,0,0.4); z-index: 3500; opacity: 0; transition: opacity 0.3s;
-            }
+            .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.4); z-index: 3500; opacity: 0; transition: opacity 0.3s; }
             .menu-overlay.active { display: block; opacity: 1; }
 
-            /* 以下は今までのレイアウト調整 */
             .hero { display: block; height: auto; min-height: 100svh; padding-top: 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; } 
             .hero-img { width: 100%; height: 60vh; top: 0; right: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
             .hero-content { width: 100%; margin-top: 50vh; padding: 40px 24px 80px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top: 1px solid rgba(255,255,255,0.8); }
@@ -391,6 +410,13 @@
 
             .step-wrap { flex-direction: column; gap: 30px; }
             .gcal-container { height: 700px; padding-bottom: 0; } 
+            
+            /* スマホ版 FAQ調整（縦並びに） */
+            .faq-grid { grid-template-columns: 1fr; gap: 15px; }
+            .faq-q { font-size: 15px; padding: 15px 20px; }
+            .faq-q-icon { width: 28px; height: 28px; font-size: 16px; margin-right: 10px;}
+            .faq-a p { padding: 0 20px 20px 20px; font-size: 14px; }
+            .faq-item.active .faq-a { max-height: 400px; padding-top: 15px; }
 
             .access-banner { margin-bottom: 20px; }
             .price-card { margin-bottom: 20px; padding: 40px 20px; }
@@ -417,6 +443,7 @@
                 <a href="#reason" class="nav-item">理由</a>
                 <a href="#trainer" class="nav-item">トレーナー</a>
                 <a href="#price" class="nav-item">料金</a>
+                <a href="#faq" class="nav-item">Q&A</a>
                 <a href="#access" class="nav-item">店舗</a>
                 
                 <a href="https://line.me/R/ti/p/@072WKBWC" class="header-btn pc-only">体験予約はこちら</a>
@@ -654,6 +681,114 @@
             </div>
         </section>
 
+        <section id="faq" class="section-block">
+            <div class="container">
+                <div class="sec-header">
+                    <span class="sec-sub">Q & A</span>
+                    <h2 class="sec-title">よくあるご質問</h2>
+                    <p class="sec-desc">お客様からよくいただくご質問にお答えします。</p>
+                </div>
+
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <div class="faq-q-left">
+                                <span class="faq-q-icon">Q</span> 運動初心者でも大丈夫ですか？
+                            </div>
+                            <i class="material-icons-round toggle-icon">expand_more</i>
+                        </div>
+                        <div class="faq-a">
+                            <p>もちろん大丈夫です！フォームの基礎から丁寧にサポートしますので、「運動が苦手」「ジム経験ゼロ」の方でも安心して始められます。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <div class="faq-q-left">
+                                <span class="faq-q-icon">Q</span> 完全マンツーマンですか？
+                            </div>
+                            <i class="material-icons-round toggle-icon">expand_more</i>
+                        </div>
+                        <div class="faq-a">
+                            <p>はい、完全マンツーマン指導です。希望に応じ2名様まででしたら友達や友人の方と一緒にペアでセッションを受けることもできます。</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <div class="faq-q-left">
+                                <span class="faq-q-icon">Q</span> 40代でも効果は期待できますか？
+                            </div>
+                            <i class="material-icons-round toggle-icon">expand_more</i>
+                        </div>
+                        <div class="faq-a">
+                            <p>むしろ40代～60代の方をメインターゲットとしているので、年齢関係なく続けられて変化を実感しやすい環境をご用意しています。</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <div class="faq-q-left">
+                                <span class="faq-q-icon">Q</span> 相談だけでもできますか
+                            </div>
+                            <i class="material-icons-round toggle-icon">expand_more</i>
+                        </div>
+                        <div class="faq-a">
+                            <p>もちろんOKです！公式LINEからご質問だけでもお気軽にご連絡ください。無理な営業は一切いたしません。</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <div class="faq-q-left">
+                                <span class="faq-q-icon">Q</span> トレーニングはキツいですか？
+                            </div>
+                            <i class="material-icons-round toggle-icon">expand_more</i>
+                        </div>
+                        <div class="faq-a">
+                            <p>必要以上に追い込むことはありません。楽しく続けられる強度を大切にしていますので、「続けられない」という心配なく通えます。</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <div class="faq-q-left">
+                                <span class="faq-q-icon">Q</span> 続けられる自信がありません。
+                            </div>
+                            <i class="material-icons-round toggle-icon">expand_more</i>
+                        </div>
+                        <div class="faq-a">
+                            <p>「運動が続けられること」を前提に作ったジムです。あなたの体力や生活リズムに合わせて段階的に強度を調整します。</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <div class="faq-q-left">
+                                <span class="faq-q-icon">Q</span> パーソナルジムは高そう
+                            </div>
+                            <i class="material-icons-round toggle-icon">expand_more</i>
+                        </div>
+                        <div class="faq-a">
+                            <p>チケット制なので、「気づいたら毎月引き落とされていた…」という心配はありません。もちろん入会金や手数料も不要です。</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <div class="faq-q-left">
+                                <span class="faq-q-icon">Q</span> 本当に痩せられますか？
+                            </div>
+                            <i class="material-icons-round toggle-icon">expand_more</i>
+                        </div>
+                        <div class="faq-a">
+                            <p>無責任に「絶対痩せます」とは言いません。でも、あなたが続けられて変化を実感できる方法を全力で提案します。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="access" class="section-block">
             <div class="container">
                 <div class="sec-header">
@@ -675,7 +810,6 @@
                             <i class="material-icons-round" style="color:var(--accent-mint);">access_time</i>
                             <strong>営業時間:</strong> 10:00 - 22:00（予約制）
                         </p>
-                        
                         <a href="https://maps.google.com/maps?q=香川県高松市今里町393-1" target="_blank" rel="noopener noreferrer" style="display: block; background: var(--accent-mint); color: #fff; text-align: center; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 900; margin-top: auto; box-shadow: 0 5px 15px rgba(0,184,169,0.3);">
                             <i class="material-icons-round">map</i> Googleマップアプリで開く
                         </a>
@@ -699,12 +833,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // ハンバーガーメニュー制御
             const hamburgerBtn = document.getElementById('hamburger-btn');
             const hamburgerIcon = document.getElementById('hamburger-icon');
             const navLinks = document.getElementById('nav-links');
             const menuOverlay = document.getElementById('menu-overlay');
-
-            // リンクとボタンをすべて取得
             const allLinks = document.querySelectorAll('.nav-links a');
 
             function toggleMenu() {
@@ -721,7 +854,6 @@
             hamburgerBtn.addEventListener('click', toggleMenu);
             menuOverlay.addEventListener('click', toggleMenu);
 
-            // リンクやボタンを押したらメニューを閉じる
             allLinks.forEach(item => {
                 item.addEventListener('click', () => {
                     if (navLinks.classList.contains('active')) {
@@ -769,6 +901,23 @@
             const images = slider.querySelectorAll('img');
             images.forEach(img => {
                 img.addEventListener('dragstart', (e) => e.preventDefault());
+            });
+
+            // ▼ NEW! FAQ（アコーディオン）の開閉プログラム ▼
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    // 他の開いているQ&Aを閉じる場合は下のコメントアウトを外す
+                    /*
+                    faqItems.forEach(otherItem => {
+                        if(otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    */
+                    // タップしたアイテムの開閉を切り替え
+                    item.classList.toggle('active');
+                });
             });
         });
     </script>
