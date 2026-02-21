@@ -1002,10 +1002,10 @@ markdown記号（**など）は使わないでたま。
                     const data = await response.json();
                     
                     if (data.error) {
-                        console.error("API Error:", data.error);
-                        updateMessage(loadingId, `エラーが発生したたま... (${data.error.message})`);
-                        return;
-                    }
+    console.error("API Error:", data.error);
+    updateMessage(loadingId, `たまっ！今ちょっと頭がいっぱいなのだ💦 数秒待ってからもう一度聞いてほしいのだ！`);
+    return;
+}
 
                     let botText = "ごめんたま、うまく答えられないたま...";
                     if (data.candidates && data.candidates[0].content.parts[0].text) {
@@ -1047,4 +1047,5 @@ markdown記号（**など）は使わないでたま。
         });
     </script>
 </body>
+
 </html>
