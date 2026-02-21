@@ -110,26 +110,58 @@
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 26, 125, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 26, 125, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 26, 125, 0); } }
 
         /* =======================================================
-           ▼ NEW! チャットボット UI ▼
+           ▼ NEW! チャットボット UI（プロフェッショナル仕様） ▼
            ======================================================= */
         .chat-widget {
             position: fixed; bottom: 90px; right: 20px; z-index: 5000;
             display: flex; flex-direction: column; align-items: flex-end;
         }
         
+        /* ▼ 丸型アイコンボタン ▼ */
         .chat-button {
-            display: flex; align-items: center; gap: 10px; cursor: pointer;
-            background: #fff; border-radius: 50px; padding: 6px 20px 6px 6px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15); transition: transform 0.3s;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            width: 65px; height: 65px; border-radius: 50%;
+            background: #fff; box-shadow: 0 10px 25px rgba(255, 26, 125, 0.3);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 2px solid var(--primary);
+            position: relative; /* 吹き出しの基準位置 */
         }
-        .chat-button:hover { transform: translateY(-5px); }
+        .chat-button:hover { transform: translateY(-5px) scale(1.05); }
+        
         .chat-icon-img {
-            width: 45px; height: 45px; border-radius: 50%; object-fit: cover;
-            background: var(--bg-pale-pink); border: 2px solid #fff;
+            width: 55px; height: 55px; border-radius: 50%; object-fit: cover;
+            background: var(--bg-pale-pink);
         }
-        .chat-button-text { font-weight: 900; color: var(--primary); font-size: 14px; }
 
+        /* ▼ フワフワ動く吹き出し（ツールチップ） ▼ */
+        .chat-tooltip {
+            position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+            background: #fff; border: 2px solid var(--primary); color: var(--primary);
+            padding: 10px 18px; border-radius: 20px; font-size: 14px; font-weight: 900;
+            white-space: nowrap; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: float-tooltip 3s ease-in-out infinite;
+            pointer-events: none; /* クリックの邪魔にならないように */
+        }
+        /* 吹き出しのしっぽ（右向きの三角形） */
+        .chat-tooltip::after {
+            content: ''; position: absolute; top: 50%; right: -8px; transform: translateY(-50%);
+            border-width: 8px 0 8px 8px; border-style: solid;
+            border-color: transparent transparent transparent var(--primary);
+        }
+        /* 白いしっぽを重ねて枠線っぽく見せる */
+        .chat-tooltip::before {
+            content: ''; position: absolute; top: 50%; right: -5px; transform: translateY(-50%);
+            border-width: 6px 0 6px 6px; border-style: solid;
+            border-color: transparent transparent transparent #fff;
+            z-index: 2;
+        }
+
+        @keyframes float-tooltip {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-8px); }
+        }
+
+        /* チャットウィンドウ本体 */
         .chat-window {
             display: none; width: 350px; height: 500px; max-height: 70vh;
             background: #fff; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
@@ -394,8 +426,13 @@
             .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.4); z-index: 3500; opacity: 0; transition: opacity 0.3s; }
             .menu-overlay.active { display: block; opacity: 1; }
 
-            /* スマホ版 ボットUI調整 */
-            .chat-widget { bottom: 80px; right: 15px; } 
+            /* ▼ スマホ版 ボットUI調整（フッターに被らないように） ▼ */
+            .chat-widget { bottom: 85px; right: 15px; } 
+            
+            /* スマホ版では吹き出しの文字サイズを少し小さくし、位置を調整 */
+            .chat-tooltip {
+                right: 70px; padding: 8px 12px; font-size: 12px;
+            }
             .chat-window { width: calc(100vw - 30px); height: 450px; }
 
             .hero { display: block; height: auto; min-height: 100svh; padding-top: 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; } 
@@ -518,8 +555,8 @@
         </div>
         
         <div class="chat-button" id="chat-button">
+            <div class="chat-tooltip">質問あるたま？</div>
             <img src="tamachan.png" alt="たまちゃん" class="chat-icon-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23ff1a7d%22/><text x=%2250%22 y=%2265%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22>🥚</text></svg>'">
-            <span class="chat-button-text">たまちゃんに質問する</span>
         </div>
     </div>
 
@@ -864,7 +901,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- ハンバーガーメニュー制御 ---
+            // ハンバーガーメニュー制御
             const hamburgerBtn = document.getElementById('hamburger-btn');
             const hamburgerIcon = document.getElementById('hamburger-icon');
             const navLinks = document.getElementById('nav-links');
@@ -889,7 +926,7 @@
                 });
             });
 
-            // --- ギャラリーのドラッグ用プログラム ---
+            // ギャラリーのドラッグ用プログラム
             const slider = document.getElementById('drag-slider');
             let isDown = false; let startX; let scrollLeft;
             slider.addEventListener('mousedown', (e) => { isDown = true; slider.classList.add('active'); slider.style.scrollSnapType = 'none'; startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; });
@@ -899,23 +936,26 @@
             const images = slider.querySelectorAll('img');
             images.forEach(img => { img.addEventListener('dragstart', (e) => e.preventDefault()); });
 
-            // --- FAQ（アコーディオン）の開閉プログラム ---
+            // FAQ
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 item.addEventListener('click', () => { item.classList.toggle('active'); });
             });
 
             // ==========================================
-            // ▼ たまちゃんチャットボット (安全な中継所経由版) ▼
+            // ▼ たまちゃんチャットボット ▼
             // ==========================================
             const chatButton = document.getElementById('chat-button');
             const chatWindow = document.getElementById('chat-window');
             const chatClose = document.getElementById('chat-close');
             
-            chatButton.addEventListener('click', () => { chatWindow.classList.toggle('active'); });
-            chatClose.addEventListener('click', () => { chatWindow.classList.remove('active'); });
+            chatButton.addEventListener('click', () => { 
+                chatWindow.classList.toggle('active'); 
+            });
+            chatClose.addEventListener('click', () => { 
+                chatWindow.classList.remove('active'); 
+            });
 
-            // ▼ ここに作成したGASのURLを設定しました ▼
             const gasUrl = "https://script.google.com/macros/s/AKfycbyFzkLXylHCM7RpBWre5WJ8Nl2izRYZpxydqGBghlpoUYWwxIk2QqWEhWxFY6M1C6vO/exec";
             let chatHistory = [];
 
@@ -951,10 +991,9 @@ markdown記号（**など）は使わないでたま。
 `;
 
                 try {
-                    // ★直接APIではなく、あなたの作ったGAS（金庫）へ通信する
                     const response = await fetch(gasUrl, {
                         method: "POST",
-                        headers: { "Content-Type": "text/plain" }, // CORSエラーを防ぐためtext/plain
+                        headers: { "Content-Type": "text/plain" },
                         body: JSON.stringify({
                             contents: [{ parts: [{ text: fullPrompt }] }] 
                         })
