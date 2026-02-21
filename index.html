@@ -202,7 +202,7 @@
         }
         .chat-send:hover { background: #e0126b; transform: scale(1.05); }
         
-        /* ▼ NEW! 連打防止時のボタンと入力欄のスタイル ▼ */
+        /* ▼ 連打防止時のボタンと入力欄のスタイル ▼ */
         .chat-input:disabled { background-color: #f9f9f9; color: #999; cursor: not-allowed; }
         .chat-send:disabled { background-color: #ccc; cursor: not-allowed; transform: none !important; box-shadow: none; }
 
@@ -956,7 +956,8 @@
                 chatWindow.classList.remove('active'); 
             });
 
-            const gasUrl = "https://script.google.com/macros/s/AKfycbyFzkLXylHCM7RpBWre5WJ8Nl2izRYZpxydqGBghlpoUYWwxIk2QqWEhWxFY6M1C6vO/exec";
+            // ▼ 教えていただいた最新のGAS URLを設定！ ▼
+            const gasUrl = "https://script.google.com/macros/s/AKfycby6THg5PeEHYWWwxFV9VvY7kJ3MAMwoEuaJNs_EK_VZWv9alxqsi25RxDQ2wikkI1-H/exec";
             let chatHistory = [];
 
             window.sendChat = async function() {
@@ -1009,7 +1010,7 @@ markdown記号（**など）は使わないでたま。
                     if (data.error) {
                         console.error("API Error:", data.error);
                         updateMessage(loadingId, `エラーが発生したたま... (${data.error.message})`);
-                        return; // ここで return しても finally ブロックは必ず実行されます
+                        return;
                     }
 
                     let botText = "ごめんたま、うまく答えられないたま...";
@@ -1030,7 +1031,7 @@ markdown記号（**など）は使わないでたま。
                     // ▼ ロック解除：返答が来たら（またはエラーでも）元に戻す
                     inputEl.disabled = false;
                     sendBtn.disabled = false;
-                    inputEl.focus(); // 入力欄にフォーカスを戻してあげる（親切設計）
+                    inputEl.focus(); 
                 }
             };
 
