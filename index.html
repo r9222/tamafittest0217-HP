@@ -76,43 +76,20 @@
             z-index: 4000; box-shadow: 0 4px 20px rgba(255, 26, 125, 0.05);
             padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.6);
         }
-        .header-container { 
-            max-width: 1200px; margin: 0 auto; padding: 0 24px; 
-            display: flex; justify-content: space-between; align-items: center; 
-        }
-        
-        .logo { 
-            display: flex; align-items: center; text-decoration: none; flex-shrink: 0; z-index: 4001;
-        }
-        .logo-img { 
-            height: 48px; width: auto; margin-right: 12px; object-fit: contain; 
-        }
-        .logo-text { 
-            font-weight: 900; color: var(--text-main); font-size: 28px; letter-spacing: 0.05em; 
-        }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; z-index: 4001; }
+        .logo-img { height: 48px; width: auto; margin-right: 12px; object-fit: contain; }
+        .logo-text { font-weight: 900; color: var(--text-main); font-size: 28px; letter-spacing: 0.05em; }
 
-        .hamburger-btn {
-            display: none; background: transparent; border: none; cursor: pointer; 
-            padding: 5px; z-index: 4001; color: var(--text-main);
-        }
+        .hamburger-btn { display: none; background: transparent; border: none; cursor: pointer; padding: 5px; z-index: 4001; color: var(--text-main); }
         .hamburger-btn .material-icons-round { font-size: 32px; margin: 0; }
-
         .menu-overlay { display: none; }
 
-        .nav-links { 
-            display: flex; gap: 25px; align-items: center; flex-shrink: 1; 
-        }
-        .nav-links a.nav-item { 
-            text-decoration: none; color: var(--text-sub); font-weight: 700; font-size: 14px; 
-            transition: color 0.3s; white-space: nowrap; 
-        }
+        .nav-links { display: flex; gap: 25px; align-items: center; flex-shrink: 1; }
+        .nav-links a.nav-item { text-decoration: none; color: var(--text-sub); font-weight: 700; font-size: 14px; transition: color 0.3s; white-space: nowrap; }
         .nav-links a.nav-item:hover { color: var(--primary); }
         
-        .header-btn { 
-            background: var(--primary-grad); color: #fff; padding: 10px 24px; border-radius: 50px; 
-            font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 4px 15px rgba(255, 26, 125, 0.3); 
-            transition: transform 0.3s; white-space: nowrap; 
-        }
+        .header-btn { background: var(--primary-grad); color: #fff; padding: 10px 24px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 4px 15px rgba(255, 26, 125, 0.3); transition: transform 0.3s; white-space: nowrap; }
         .header-btn:hover { transform: scale(1.05); color: #fff; }
 
         .mobile-menu-btns { display: none; }
@@ -131,6 +108,72 @@
         .btn-line { background: #06C755; color: #fff; box-shadow: 0 8px 20px rgba(6,199,85,0.2); }
         .btn-web { background: var(--primary-grad); color: #fff; box-shadow: 0 10px 25px rgba(255, 26, 125, 0.3); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 26, 125, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 26, 125, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 26, 125, 0); } }
+
+        /* =======================================================
+           ▼ NEW! チャットボット UI ▼
+           ======================================================= */
+        .chat-widget {
+            position: fixed; bottom: 90px; right: 20px; z-index: 5000;
+            display: flex; flex-direction: column; align-items: flex-end;
+        }
+        
+        .chat-button {
+            display: flex; align-items: center; gap: 10px; cursor: pointer;
+            background: #fff; border-radius: 50px; padding: 6px 20px 6px 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); transition: transform 0.3s;
+            border: 2px solid var(--primary);
+        }
+        .chat-button:hover { transform: translateY(-5px); }
+        .chat-icon-img {
+            width: 45px; height: 45px; border-radius: 50%; object-fit: cover;
+            background: var(--bg-pale-pink); border: 2px solid #fff;
+        }
+        .chat-button-text { font-weight: 900; color: var(--primary); font-size: 14px; }
+
+        .chat-window {
+            display: none; width: 350px; height: 500px; max-height: 70vh;
+            background: #fff; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            overflow: hidden; flex-direction: column; margin-bottom: 15px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .chat-window.active { display: flex; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .chat-header {
+            background: var(--primary-grad); color: #fff; padding: 15px 20px;
+            font-weight: 900; display: flex; justify-content: space-between; align-items: center;
+        }
+        .chat-close {
+            cursor: pointer; background: transparent; border: none; color: #fff;
+            display: flex; align-items: center; justify-content: center; padding: 0;
+        }
+        
+        .chat-body {
+            flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column;
+            gap: 15px; background: var(--bg-pale-pink);
+        }
+        
+        .chat-msg { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.6; word-wrap: break-word;}
+        .chat-msg.bot {
+            background: #fff; color: var(--text-main); align-self: flex-start;
+            border-bottom-left-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .chat-msg.user {
+            background: var(--primary); color: #fff; align-self: flex-end;
+            border-bottom-right-radius: 4px; box-shadow: 0 2px 5px rgba(255,26,125,0.2);
+        }
+        
+        .chat-input-area { padding: 15px; background: #fff; display: flex; gap: 10px; border-top: 1px solid #eee; }
+        .chat-input {
+            flex: 1; padding: 10px 15px; border: 1px solid #ddd; border-radius: 50px;
+            font-size: 14px; outline: none; transition: 0.3s;
+        }
+        .chat-input:focus { border-color: var(--primary); }
+        .chat-send {
+            background: var(--primary); color: #fff; border: none; width: 42px; height: 42px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
+        }
+        .chat-send:hover { background: #e0126b; transform: scale(1.05); }
 
         /* --- ヒーローセクション --- */
         .hero {
@@ -204,9 +247,7 @@
             box-shadow: var(--shadow-card); position: relative;
         }
         .ticket-price { font-family: 'Oswald', sans-serif; font-size: 64px; color: var(--primary); font-weight: 700; line-height: 1; margin: 20px 0; }
-        .ticket-btn {
-            display: inline-block; background: var(--primary-grad); color: #fff; padding: 20px 60px; border-radius: 50px; font-weight: 900; font-size: 20px; text-decoration: none; box-shadow: 0 10px 25px rgba(255, 26, 125, 0.3); margin-top: 20px; transition: transform 0.3s;
-        }
+        .ticket-btn { display: inline-block; background: var(--primary-grad); color: #fff; padding: 20px 60px; border-radius: 50px; font-weight: 900; font-size: 20px; text-decoration: none; box-shadow: 0 10px 25px rgba(255, 26, 125, 0.3); margin-top: 20px; transition: transform 0.3s; }
         .ticket-btn:hover { transform: translateY(-5px); }
 
         /* --- 選ばれる理由 --- */
@@ -264,47 +305,23 @@
         .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-bottom: 1px solid #f0f0f0; pointer-events: none;}
         .gallery-caption { padding: 20px; text-align: center; font-weight: 700; font-size: 16px; color: var(--text-main); }
 
-        /* =======================================================
-           ▼ NEW! 料金プラン（テーブル形式） ▼
-           ======================================================= */
-        .price-table-wrapper {
-            background: #fff; border-radius: 20px; box-shadow: var(--shadow-card);
-            overflow: hidden; margin: 0 auto; max-width: 900px;
-            border: 2px solid rgba(255, 193, 7, 0.2);
-        }
+        /* --- 料金プラン（テーブル形式） --- */
+        .price-table-wrapper { background: #fff; border-radius: 20px; box-shadow: var(--shadow-card); overflow: hidden; margin: 0 auto; max-width: 900px; border: 2px solid rgba(255, 193, 7, 0.2); }
         .price-table { width: 100%; border-collapse: collapse; text-align: center; }
         .price-table th, .price-table td { padding: 25px 20px; border-bottom: 1px solid #eee; }
-        .price-table th {
-            background: var(--bg-pale-yellow); color: var(--text-main);
-            font-size: 18px; font-weight: 900; border-right: 1px solid #fff;
-        }
+        .price-table th { background: var(--bg-pale-yellow); color: var(--text-main); font-size: 18px; font-weight: 900; border-right: 1px solid #fff; }
         .price-table th:last-child { border-right: none; }
-        
-        .col-course { width: 34%; }
-        .col-60 { width: 33%; background: rgba(0, 184, 169, 0.05); }
-        .col-30 { width: 33%; }
-        
+        .col-course { width: 34%; } .col-60 { width: 33%; background: rgba(0, 184, 169, 0.05); } .col-30 { width: 33%; }
         .price-table tbody tr:last-child td { border-bottom: none; }
         .price-table tbody tr:hover { background: #fafafa; }
-        
         .course-name { font-weight: 900; font-size: 18px; color: var(--text-main); border-right: 1px dashed #eee; }
         .price-val { font-family: 'Oswald', sans-serif; font-size: 28px; font-weight: 700; color: var(--text-main); border-right: 1px dashed #eee; }
         .price-val:last-child { border-right: none; }
-        
-        /* 一番人気の週1回 60分を強調 */
         .price-val.highlight { color: var(--accent-yellow); font-size: 34px; }
         .yen { font-size: 14px; font-family: 'Noto Sans JP', sans-serif; font-weight: 700; margin-left: 2px;}
-        
         .recommend-row { background: linear-gradient(135deg, #fffcf5 0%, #fff4ce 100%) !important; }
-        .recommend-badge {
-            display: inline-block; background: var(--yellow-grad); color: #2d3436;
-            padding: 4px 12px; border-radius: 50px; font-size: 11px; margin-bottom: 5px; font-weight: 900;
-        }
-        
-        .price-note {
-            padding: 20px; background: #fff; margin: 0; font-size: 14px;
-            color: var(--text-sub); font-weight: 700; text-align: left;
-        }
+        .recommend-badge { display: inline-block; background: var(--yellow-grad); color: #2d3436; padding: 4px 12px; border-radius: 50px; font-size: 11px; margin-bottom: 5px; font-weight: 900; }
+        .price-note { padding: 20px; background: #fff; margin: 0; font-size: 14px; color: var(--text-sub); font-weight: 700; text-align: left; }
 
         /* --- 予約ステップ ＆ カレンダー --- */
         .step-wrap { display: flex; gap: 20px; justify-content: center; align-items: stretch; margin-bottom: 60px; }
@@ -377,6 +394,10 @@
             .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.4); z-index: 3500; opacity: 0; transition: opacity 0.3s; }
             .menu-overlay.active { display: block; opacity: 1; }
 
+            /* スマホ版 ボットUI調整 */
+            .chat-widget { bottom: 80px; right: 15px; } 
+            .chat-window { width: calc(100vw - 30px); height: 450px; }
+
             .hero { display: block; height: auto; min-height: 100svh; padding-top: 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; } 
             .hero-img { width: 100%; height: 60vh; top: 0; right: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
             .hero-content { width: 100%; margin-top: 50vh; padding: 40px 24px 80px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top: 1px solid rgba(255,255,255,0.8); }
@@ -406,12 +427,10 @@
             .reason-text p { font-size: 15px; text-align: left; } 
 
             .trainer-grid { grid-template-columns: 1fr; gap: 20px; }
-            
             .gallery-hint { font-size: 12px; }
             .gallery-item { width: 85%; scroll-snap-align: start; }
             .gallery-scroll::-webkit-scrollbar { display: none; }
 
-            /* スマホ版 料金テーブル調整 */
             .price-table th, .price-table td { padding: 15px 10px; }
             .price-table th { font-size: 13px; }
             .course-name { font-size: 14px; }
@@ -481,6 +500,27 @@
         <a href="https://line.me/R/ti/p/@072WKBWC" class="footer-btn btn-web">
             <span><i class="material-icons-round" style="font-size:14px;">calendar_today</i> 簡単30秒</span>無料体験を予約
         </a>
+    </div>
+
+    <div class="chat-widget">
+        <div class="chat-window" id="chat-window">
+            <div class="chat-header">
+                <span>たまちゃんに相談</span>
+                <button class="chat-close" id="chat-close"><i class="material-icons-round">close</i></button>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <div class="chat-msg bot">こんにちはたま！ジムのことで分からないことがあったら何でも聞いてたま！</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" class="chat-input" placeholder="メッセージを入力..." onkeypress="if(event.key === 'Enter') sendChat()">
+                <button id="chat-send" class="chat-send" onclick="sendChat()"><i class="material-icons-round">send</i></button>
+            </div>
+        </div>
+        
+        <div class="chat-button" id="chat-button">
+            <img src="tamachan.png" alt="たまちゃん" class="chat-icon-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23ff1a7d%22/><text x=%2250%22 y=%2265%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22>🥚</text></svg>'">
+            <span class="chat-button-text">たまちゃんに質問する</span>
+        </div>
     </div>
 
     <main>
@@ -723,98 +763,59 @@
                 <div class="faq-grid">
                     <div class="faq-item">
                         <div class="faq-q">
-                            <div class="faq-q-left">
-                                <span class="faq-q-icon">Q</span> 運動初心者でも大丈夫ですか？
-                            </div>
+                            <div class="faq-q-left"><span class="faq-q-icon">Q</span> 運動初心者でも大丈夫ですか？</div>
                             <i class="material-icons-round toggle-icon">expand_more</i>
                         </div>
-                        <div class="faq-a">
-                            <p>もちろん大丈夫です！フォームの基礎から丁寧にサポートしますので、「運動が苦手」「ジム経験ゼロ」の方でも安心して始められます。</p>
-                        </div>
+                        <div class="faq-a"><p>もちろん大丈夫です！フォームの基礎から丁寧にサポートしますので、「運動が苦手」「ジム経験ゼロ」の方でも安心して始められます。</p></div>
                     </div>
-                    
                     <div class="faq-item">
                         <div class="faq-q">
-                            <div class="faq-q-left">
-                                <span class="faq-q-icon">Q</span> 完全マンツーマンですか？
-                            </div>
+                            <div class="faq-q-left"><span class="faq-q-icon">Q</span> 完全マンツーマンですか？</div>
                             <i class="material-icons-round toggle-icon">expand_more</i>
                         </div>
-                        <div class="faq-a">
-                            <p>はい、完全マンツーマン指導です。希望に応じ2名様まででしたら友達や友人の方と一緒にペアでセッションを受けることもできます。</p>
-                        </div>
+                        <div class="faq-a"><p>はい、完全マンツーマン指導です。希望に応じ2名様まででしたら友達や友人の方と一緒にペアでセッションを受けることもできます。</p></div>
                     </div>
-
                     <div class="faq-item">
                         <div class="faq-q">
-                            <div class="faq-q-left">
-                                <span class="faq-q-icon">Q</span> 40代でも効果は期待できますか？
-                            </div>
+                            <div class="faq-q-left"><span class="faq-q-icon">Q</span> 40代でも効果は期待できますか？</div>
                             <i class="material-icons-round toggle-icon">expand_more</i>
                         </div>
-                        <div class="faq-a">
-                            <p>むしろ40代～60代の方をメインターゲットとしているので、年齢関係なく続けられて変化を実感しやすい環境をご用意しています。</p>
-                        </div>
+                        <div class="faq-a"><p>むしろ40代～60代の方をメインターゲットとしているので、年齢関係なく続けられて変化を実感しやすい環境をご用意しています。</p></div>
                     </div>
-
                     <div class="faq-item">
                         <div class="faq-q">
-                            <div class="faq-q-left">
-                                <span class="faq-q-icon">Q</span> 相談だけでもできますか
-                            </div>
+                            <div class="faq-q-left"><span class="faq-q-icon">Q</span> 相談だけでもできますか</div>
                             <i class="material-icons-round toggle-icon">expand_more</i>
                         </div>
-                        <div class="faq-a">
-                            <p>もちろんOKです！公式LINEからご質問だけでもお気軽にご連絡ください。無理な営業は一切いたしません。</p>
-                        </div>
+                        <div class="faq-a"><p>もちろんOKです！公式LINEからご質問だけでもお気軽にご連絡ください。無理な営業は一切いたしません。</p></div>
                     </div>
-
                     <div class="faq-item">
                         <div class="faq-q">
-                            <div class="faq-q-left">
-                                <span class="faq-q-icon">Q</span> トレーニングはキツいですか？
-                            </div>
+                            <div class="faq-q-left"><span class="faq-q-icon">Q</span> トレーニングはキツいですか？</div>
                             <i class="material-icons-round toggle-icon">expand_more</i>
                         </div>
-                        <div class="faq-a">
-                            <p>必要以上に追い込むことはありません。楽しく続けられる強度を大切にしていますので、「続けられない」という心配なく通えます。</p>
-                        </div>
+                        <div class="faq-a"><p>必要以上に追い込むことはありません。楽しく続けられる強度を大切にしていますので、「続けられない」という心配なく通えます。</p></div>
                     </div>
-
                     <div class="faq-item">
                         <div class="faq-q">
-                            <div class="faq-q-left">
-                                <span class="faq-q-icon">Q</span> 続けられる自信がありません。
-                            </div>
+                            <div class="faq-q-left"><span class="faq-q-icon">Q</span> 続けられる自信がありません。</div>
                             <i class="material-icons-round toggle-icon">expand_more</i>
                         </div>
-                        <div class="faq-a">
-                            <p>「運動が続けられること」を前提に作ったジムです。あなたの体力や生活リズムに合わせて段階的に強度を調整します。</p>
-                        </div>
+                        <div class="faq-a"><p>「運動が続けられること」を前提に作ったジムです。あなたの体力や生活リズムに合わせて段階的に強度を調整します。</p></div>
                     </div>
-
                     <div class="faq-item">
                         <div class="faq-q">
-                            <div class="faq-q-left">
-                                <span class="faq-q-icon">Q</span> パーソナルジムは高そう
-                            </div>
+                            <div class="faq-q-left"><span class="faq-q-icon">Q</span> パーソナルジムは高そう</div>
                             <i class="material-icons-round toggle-icon">expand_more</i>
                         </div>
-                        <div class="faq-a">
-                            <p>チケット制なので、「気づいたら毎月引き落とされていた…」という心配はありません。もちろん入会金や手数料も不要です。</p>
-                        </div>
+                        <div class="faq-a"><p>チケット制なので、「気づいたら毎月引き落とされていた…」という心配はありません。もちろん入会金や手数料も不要です。</p></div>
                     </div>
-
                     <div class="faq-item">
                         <div class="faq-q">
-                            <div class="faq-q-left">
-                                <span class="faq-q-icon">Q</span> 本当に痩せられますか？
-                            </div>
+                            <div class="faq-q-left"><span class="faq-q-icon">Q</span> 本当に痩せられますか？</div>
                             <i class="material-icons-round toggle-icon">expand_more</i>
                         </div>
-                        <div class="faq-a">
-                            <p>無責任に「絶対痩せます」とは言いません。でも、あなたが続けられて変化を実感できる方法を全力で提案します。</p>
-                        </div>
+                        <div class="faq-a"><p>無責任に「絶対痩せます」とは言いません。でも、あなたが続けられて変化を実感できる方法を全力で提案します。</p></div>
                     </div>
                 </div>
             </div>
@@ -828,7 +829,6 @@
                 </div>
                 <div class="access-info">
                     <div style="flex: 1; display: flex; flex-direction: column;">
-                        
                         <p style="font-size: 16px; margin-bottom: 20px;">
                             <i class="material-icons-round" style="color:var(--accent-mint);">location_on</i>
                             <strong>所在地:</strong><br>〒760-0078<br>香川県高松市今里町393-1 前川ビル1F
@@ -841,16 +841,13 @@
                             <i class="material-icons-round" style="color:var(--accent-mint);">access_time</i>
                             <strong>営業時間:</strong> 10:00 - 22:00（予約制）
                         </p>
-                        
                         <a href="https://maps.google.com/maps?q=香川県高松市今里町393-1" target="_blank" rel="noopener noreferrer" style="display: block; background: var(--accent-mint); color: #fff; text-align: center; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 900; margin-top: auto; box-shadow: 0 5px 15px rgba(0,184,169,0.3);">
                             <i class="material-icons-round">map</i> Googleマップアプリで開く
                         </a>
                     </div>
-                    
                     <div class="map-container">
                         <iframe src="https://maps.google.co.jp/maps?output=embed&q=香川県高松市今里町393-1" allowfullscreen="" loading="lazy"></iframe>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -863,9 +860,11 @@
         </div>
     </footer>
 
+    <script src="tamachan-data.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // ハンバーガーメニュー制御
+            // --- ハンバーガーメニュー制御 ---
             const hamburgerBtn = document.getElementById('hamburger-btn');
             const hamburgerIcon = document.getElementById('hamburger-icon');
             const navLinks = document.getElementById('nav-links');
@@ -882,66 +881,138 @@
                     hamburgerIcon.textContent = 'menu';
                 }
             }
-
             hamburgerBtn.addEventListener('click', toggleMenu);
             menuOverlay.addEventListener('click', toggleMenu);
-
             allLinks.forEach(item => {
                 item.addEventListener('click', () => {
-                    if (navLinks.classList.contains('active')) {
-                        toggleMenu();
-                    }
+                    if (navLinks.classList.contains('active')) toggleMenu();
                 });
             });
 
-            // ギャラリーのドラッグ用プログラム
+            // --- ギャラリーのドラッグ用プログラム ---
             const slider = document.getElementById('drag-slider');
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-
-            slider.addEventListener('mousedown', (e) => {
-                isDown = true;
-                slider.classList.add('active');
-                slider.style.scrollSnapType = 'none'; 
-                startX = e.pageX - slider.offsetLeft;
-                scrollLeft = slider.scrollLeft;
-            });
-
-            slider.addEventListener('mouseleave', () => {
-                if (!isDown) return;
-                isDown = false;
-                slider.classList.remove('active');
-                slider.style.scrollSnapType = 'x mandatory';
-            });
-
-            document.addEventListener('mouseup', () => {
-                if (!isDown) return;
-                isDown = false;
-                slider.classList.remove('active');
-                slider.style.scrollSnapType = 'x mandatory';
-            });
-
-            slider.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault(); 
-                const x = e.pageX - slider.offsetLeft;
-                const walk = (x - startX) * 2; 
-                slider.scrollLeft = scrollLeft - walk;
-            });
-            
+            let isDown = false; let startX; let scrollLeft;
+            slider.addEventListener('mousedown', (e) => { isDown = true; slider.classList.add('active'); slider.style.scrollSnapType = 'none'; startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; });
+            slider.addEventListener('mouseleave', () => { if (!isDown) return; isDown = false; slider.classList.remove('active'); slider.style.scrollSnapType = 'x mandatory'; });
+            document.addEventListener('mouseup', () => { if (!isDown) return; isDown = false; slider.classList.remove('active'); slider.style.scrollSnapType = 'x mandatory'; });
+            slider.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const x = e.pageX - slider.offsetLeft; const walk = (x - startX) * 2; slider.scrollLeft = scrollLeft - walk; });
             const images = slider.querySelectorAll('img');
-            images.forEach(img => {
-                img.addEventListener('dragstart', (e) => e.preventDefault());
-            });
+            images.forEach(img => { img.addEventListener('dragstart', (e) => e.preventDefault()); });
 
-            // FAQ（アコーディオン）の開閉プログラム
+            // --- FAQ（アコーディオン）の開閉プログラム ---
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    item.classList.toggle('active');
-                });
+                item.addEventListener('click', () => { item.classList.toggle('active'); });
             });
+
+            // ==========================================
+            // ▼ たまちゃんチャットボット (修正版) ▼
+            // ==========================================
+            const chatButton = document.getElementById('chat-button');
+            const chatWindow = document.getElementById('chat-window');
+            const chatClose = document.getElementById('chat-close');
+            
+            chatButton.addEventListener('click', () => { chatWindow.classList.toggle('active'); });
+            chatClose.addEventListener('click', () => { chatWindow.classList.remove('active'); });
+
+            // ▼ 修正: 成功しているアプリと同じ「2.5-flash」のエンドポイントを使用
+            const apiKey = "AIzaSyCEWsDn9idlJlobJ7cEjru1nBI_N2K6wDs";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            let chatHistory = [];
+
+            window.sendChat = async function() {
+                const inputEl = document.getElementById('chat-input');
+                const text = inputEl.value.trim();
+                if (!text) return;
+
+                // ユーザーの入力を画面に追加
+                appendMessage("user", text);
+                inputEl.value = "";
+
+                // 履歴に保存
+                chatHistory.push({ role: 'user', text: text });
+                if (chatHistory.length > 6) chatHistory.shift(); 
+
+                const loadingId = appendMessage("bot", "考え中たま...");
+
+                // プロンプトの組み立て
+                const fallbackPrompt = "あなたはパーソナルジム「たまフィット」の公式マスコット『たまちゃん』です。元気よく、語尾に「〜たま！」をつけて答えてください。";
+                const basePrompt = (typeof SYSTEM_PROMPT !== 'undefined') ? SYSTEM_PROMPT : fallbackPrompt;
+
+                // 過去の会話をテキスト化
+                let historyText = chatHistory.map(m => `${m.role === 'user' ? 'あなた' : 'たまちゃん'}: ${m.text}`).join('\n');
+
+                // 修正: 成功しているアプリと同じように、全体を1つの「text」として合体させる
+                const fullPrompt = `
+${basePrompt}
+
+【直近の会話履歴】
+${historyText}
+
+【ユーザーの最新の質問】
+${text}
+
+上記を踏まえて、短く簡潔に、優しく返信してあげてたま！
+markdown記号（**など）は使わないでたま。
+`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: fullPrompt }] }] // シンプルな構造に変更！
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        console.error("API Error:", data.error);
+                        updateMessage(loadingId, `エラーが発生したたま... (${data.error.message})`);
+                        return;
+                    }
+
+                    let botText = "ごめんたま、うまく答えられないたま...";
+                    if (data.candidates && data.candidates[0].content.parts[0].text) {
+                        botText = data.candidates[0].content.parts[0].text;
+                        // 余計なマークダウン記号を消す
+                        botText = botText.replace(/\*\*/g, "").replace(/\*/g, "・").replace(/#/g, "");
+                    }
+
+                    // 画面を更新
+                    updateMessage(loadingId, botText);
+                    
+                    // 履歴に追加
+                    chatHistory.push({ role: 'model', text: botText });
+                    if (chatHistory.length > 6) chatHistory.shift();
+
+                } catch (e) {
+                    console.error("Chatbot Error:", e);
+                    updateMessage(loadingId, "通信エラーが発生したたま...。通信環境を確認してもう一度送ってたま！");
+                }
+            };
+
+            function appendMessage(role, text) {
+                const chatBody = document.getElementById('chat-body');
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `chat-msg ${role}`;
+                msgDiv.innerHTML = text.replace(/\n/g, '<br>'); 
+                const msgId = "msg-" + Date.now();
+                msgDiv.id = msgId;
+                chatBody.appendChild(msgDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+                return msgId;
+            }
+
+            function updateMessage(id, text) {
+                const msgDiv = document.getElementById(id);
+                if(msgDiv) {
+                    msgDiv.innerHTML = text.replace(/\n/g, '<br>');
+                    const chatBody = document.getElementById('chat-body');
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }
+            }
         });
     </script>
 </body>
