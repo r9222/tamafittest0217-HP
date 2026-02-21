@@ -906,7 +906,7 @@
             });
 
             // ==========================================
-            // ▼ たまちゃんチャットボット (修正版) ▼
+            // ▼ たまちゃんチャットボット (安全な中継所経由版) ▼
             // ==========================================
             const chatButton = document.getElementById('chat-button');
             const chatWindow = document.getElementById('chat-window');
@@ -915,9 +915,8 @@
             chatButton.addEventListener('click', () => { chatWindow.classList.toggle('active'); });
             chatClose.addEventListener('click', () => { chatWindow.classList.remove('active'); });
 
-            // ▼ 修正: 成功しているアプリと同じ「2.5-flash」のエンドポイントを使用
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            // ▼ ここに作成したGASのURLを設定しました ▼
+            const gasUrl = "https://script.google.com/macros/s/AKfycbyFzkLXylHCM7RpBWre5WJ8Nl2izRYZpxydqGBghlpoUYWwxIk2QqWEhWxFY6M1C6vO/exec";
             let chatHistory = [];
 
             window.sendChat = async function() {
@@ -925,24 +924,19 @@
                 const text = inputEl.value.trim();
                 if (!text) return;
 
-                // ユーザーの入力を画面に追加
                 appendMessage("user", text);
                 inputEl.value = "";
 
-                // 履歴に保存
                 chatHistory.push({ role: 'user', text: text });
                 if (chatHistory.length > 6) chatHistory.shift(); 
 
                 const loadingId = appendMessage("bot", "考え中たま...");
 
-                // プロンプトの組み立て
                 const fallbackPrompt = "あなたはパーソナルジム「たまフィット」の公式マスコット『たまちゃん』です。元気よく、語尾に「〜たま！」をつけて答えてください。";
                 const basePrompt = (typeof SYSTEM_PROMPT !== 'undefined') ? SYSTEM_PROMPT : fallbackPrompt;
 
-                // 過去の会話をテキスト化
                 let historyText = chatHistory.map(m => `${m.role === 'user' ? 'あなた' : 'たまちゃん'}: ${m.text}`).join('\n');
 
-                // 修正: 成功しているアプリと同じように、全体を1つの「text」として合体させる
                 const fullPrompt = `
 ${basePrompt}
 
@@ -957,11 +951,12 @@ markdown記号（**など）は使わないでたま。
 `;
 
                 try {
-                    const response = await fetch(apiUrl, {
+                    // ★直接APIではなく、あなたの作ったGAS（金庫）へ通信する
+                    const response = await fetch(gasUrl, {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: { "Content-Type": "text/plain" }, // CORSエラーを防ぐためtext/plain
                         body: JSON.stringify({
-                            contents: [{ parts: [{ text: fullPrompt }] }] // シンプルな構造に変更！
+                            contents: [{ parts: [{ text: fullPrompt }] }] 
                         })
                     });
                     
@@ -976,14 +971,11 @@ markdown記号（**など）は使わないでたま。
                     let botText = "ごめんたま、うまく答えられないたま...";
                     if (data.candidates && data.candidates[0].content.parts[0].text) {
                         botText = data.candidates[0].content.parts[0].text;
-                        // 余計なマークダウン記号を消す
                         botText = botText.replace(/\*\*/g, "").replace(/\*/g, "・").replace(/#/g, "");
                     }
 
-                    // 画面を更新
                     updateMessage(loadingId, botText);
                     
-                    // 履歴に追加
                     chatHistory.push({ role: 'model', text: botText });
                     if (chatHistory.length > 6) chatHistory.shift();
 
@@ -1017,4 +1009,3 @@ markdown記号（**など）は使わないでたま。
     </script>
 </body>
 </html>
-
