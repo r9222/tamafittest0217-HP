@@ -549,7 +549,7 @@
                 <div class="chat-msg bot">こんにちはたま！ジムのことで分からないことがあったら何でも聞いてたま！</div>
             </div>
             <div class="chat-input-area">
-                <input type="text" id="chat-input" class="chat-input" placeholder="メッセージを入力..." onkeypress="if(event.key === 'Enter') sendChat()">
+                <input type="text" id="chat-input" class="chat-input" placeholder="メッセージを入力..." onkeypress="if(event.key === 'Enter' && !event.isComposing) sendChat()">
                 <button id="chat-send" class="chat-send" onclick="sendChat()"><i class="material-icons-round">send</i></button>
             </div>
         </div>
